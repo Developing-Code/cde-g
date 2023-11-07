@@ -1,0 +1,629 @@
+<%- include('./partials/nav.ejs') %>
+
+  <head>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="../public/css/all.min.css">
+    <link rel="stylesheet" href="../public/css/styleNavar.css">
+    <link rel="stylesheet" href="../public/css/bootstrap.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital@1&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="shortcut icon" href="img/4logoMadeinguarne.png" type="image/x-icon">
+    <script src="https://unpkg.com/boxicons@2.1.2/dist/boxicons.js"></script>
+
+    <link rel="stylesheet" href="css/styleTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+      .visor_imagenes {
+        text-align: center;
+      }
+
+      .blanco-rojo {
+        color: black;
+        background-color: rgb(255, 237, 148);
+        border: 1px solid rgb(232, 208, 92);
+        border-radius: 2px;
+        margin-top: 30px;
+      }
+
+      .blanco-rojo2 {
+        color: black;
+        margin-top: 30px;
+        background-color: rgb(162, 255, 148);
+        border: 1px solid rgb(100, 213, 82);
+        border-radius: 2px;
+      }
+
+      .blanco-rojo3 {
+        color: black;
+        background-color: rgb(255, 148, 148);
+        border: 1px solid rgb(232, 97, 97);
+        border-radius: 2px;
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="container pt-3">
+    <div class="row justify-content-between">
+      <div class="col-auto mr-auto">
+        <h1 style="font-size: 20px; margin-bottom: 10px;">Perfil de usuario</h1>
+      </div>
+      <div class="col-auto">
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <br>
+  <div class="container">
+    <div class="accordion" id="accordionExample">
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            Datos de perfil
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="container shadow    rounded">
+
+              <div class="modal fade" id="modalFotoperfil<%=resultado[0].id%>" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog ">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Configurar foto de perfil</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="/actualizarFotoPerfilSend" method="POST" enctype="multipart/form-data">
+                        <div class="container">
+                          <div class="row justify-content-center">
+                            <div class="fotoperfil"
+                              style=" background: url('/uploads/<%=resultado[0].foto_perfil%>'); width: 150px; height: 150px; background-position: center center; background-size: cover; border-radius: 50%; background-repeat: no-repeat;background-color: #160303">
+                            </div>
+                          </div>
+                        </div>
+                        <br>
+
+                        <div class="mb-3">
+                          <input type="file" class="form-control" name="foto_perfil" required>
+                        </div>
+                        <div class="d-grid">
+                          <button type="submit" class="btn btn-primary">Cambiar foto</button>
+                        </div>
+                      </form>
+
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button style="border-color: #ffffff00; background-color: #ffffff00 " data-bs-toggle="modal"
+                data-bs-target="#modalFotoperfil<%=resultado[0].id%>">
+                <div class="fotoperfil"
+                  style=" background: url('/uploads/<%=resultado[0].foto_perfil%>'); width: 150px; height: 150px; background-position: center center; background-size: cover; border-radius: 50%; background-repeat: no-repeat;background-color: #160303">
+                </div>
+              </button>
+              <form class="row g-3">
+                <div class="row g-3">
+                  <div class="col-md-6 col-xs-12">
+                    <label for="inputNombre" class="form-label">Nombre y apellidos</label>
+                    <input type="text" class="form-control" placeholder="<%= resultado[0].nombre %>"
+                      aria-label="First name" id="inputNombre">
+                  </div>
+                  <div class="col-md-6 col-xs-12">
+                    <label for="inputApellido" class="form-label">Rol</label>
+                    <input type="text" class="form-control" placeholder="<%= resultado[0].rol %>" aria-label="Last name"
+                      id="inputApellido">
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <label for="inputUsuario" class="form-label">Usuario</label>
+                  <input type="email" class="form-control" placeholder="<%= resultado[0].user %>" id="inputUsuario">
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <label for="inputPassword4" class="form-label">Password</label>
+                  <input type="password" class="form-control" placeholder="" id="inputPassword4">
+                </div>
+                <hr>
+                <div class="col-12 col-xs-12">
+                  <label for="inputAddress" class="form-label">Direccion</label>
+                  <input type="text" class="form-control" placeholder="<%= resultado[0].direccion %>" id="inputAddress"
+                    placeholder="1234 Main St">
+                </div>
+                <div class="col-md-6 col-xs-12">
+                  <label for="inputCity" class="form-label">Departamento</label>
+                  <input type="text" class="form-control" placeholder="<%= resultado[0].departamento_user %>"
+                    id="inputCity">
+                </div>
+                <div class="col-md-4 col-xs-12">
+                  <label for="inputState" class="form-label">Ciudad</label>
+                  <select id="inputState" class="form-select">
+                    <option selected>Guarne</option>
+                    <option>Marinilla</option>
+                  </select>
+                </div>
+                <div class="col-md-2 col-xs-12">
+                  <label for="inputZip" class="form-label">Coordenadas</label>
+                  <input type="text" class="form-control" id="inputZip">
+                </div>
+                <hr>
+                <div class="col-3 col-xs-12">
+                  <label for="inputEmail4" class="form-label">Email</label>
+                  <input type="email" class="form-control" placeholder="<%= resultado[0].email %>" id="inputEmail4">
+                </div>
+                <div class="col-3 col-xs-12">
+                  <label for="inputEmail4" class="form-label">Celular</label>
+                  <input type="text" class="form-control" placeholder="<%= resultado[0].celular %>" id="inputEmail4">
+                </div>
+                <div class="col-3 col-xs-12">
+                  <label for="inputarl" class="form-label">identificacion</label>
+                  <input type="text" class="form-control" placeholder="<%= resultado[0].identificacion %>"
+                    id="inputarl">
+                </div>
+                <div class="col-3 col-xs-12">
+                  <label for="inputeps" class="form-label">RH</label>
+                  <input type="text" class="form-control" placeholder="<%= resultado[0].Rh %>" id="inputeps">
+                </div>
+
+                <div class="col-3 col-xs-12">
+                  <label for="inputeps" class="form-label">EPS</label>
+                  <input type="text" class="form-control" placeholder="<%= resultado[0].eps %>" id="inputeps">
+                </div>
+                <div class="col-3 col-xs-12">
+                  <label for="inputfondo_pensiones" class="form-label">Fondo de pensiones</label>
+                  <input type="text" class="form-control" placeholder="<%= resultado[0].fondo_pensiones %>"
+                    id="inputfondo_pensiones">
+                </div>
+                <div class="col-3 col-xs-12">
+                  <label for="inputarl" class="form-label">ARL</label>
+                  <input type="text" class="form-control" placeholder="<%= resultado[0].arl %>" id="inputarl">
+                </div>
+                <div class="col-3 col-xs-12">
+                  <label for="inputcaja_compensacion" class="form-label">Caja Compensación</label>
+                  <input type="text" class="form-control" placeholder="<%= resultado[0].caja_compensacion %>"
+                    id="inputcaja_compensacion">
+                </div>
+
+
+                <div class="col-12 col-xs-12">
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Certificaciones
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+           Documentos
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+            Capacitaciones
+          </button>
+        </h2>
+        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingThree"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="container">
+              <div class="row  text-center">
+                <div class="col-md-4 col-sm-12 my-2">
+                  <div class="card text-center" style="width: 18rem;">
+                    <img src="img/cronograma.png" style="width: auto; height: 286px" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Primeros auxilios</h5>
+                      <p class="card-text">Este curso esta orientado</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-12 my-2">
+                  <div class="card text-center" style="width: 18rem;">
+                    <img src="img/cronograma.png" style="width: auto; height: 286px" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Manipulacion de alimentos</h5>
+                      <p class="card-text"></p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-12 my-2">
+                  <div class="card text-center" style="width: 18rem;">
+                    <img src="img/cronograma.png" style="width: auto; height: 286px" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">Cuidado personal</h5>
+                      <p class="card-text"></p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+            Estadísticas
+          </button>
+        </h2>
+        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingThree"
+          data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <div class="container-fluid ">
+              <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+            </div>
+            <div class="row">
+
+              <!-- Earnings (Monthly) Card Example -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-primary shadow h-100 py-2">
+                      <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                              <div class="col ms-3 me-2 ">
+                                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                      Horas Trabajadas (Mes)</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800"><%= horasmestrabajadas %></div>
+                              </div>
+                              <div class="col-auto">
+                                  <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Earnings (Monthly) Card Example -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-success shadow h-100 py-2">
+                      <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                              <div class="col ms-3 me-2">
+                                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                      Salario actual</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800"><%= salarioTotalPesos %></div>
+                              </div>
+                              <div class="col-2">
+                                  <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Earnings (Monthly) Card Example -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-info shadow h-100 py-2">
+                      <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                              <div class="col ms-3 me-2">
+                                  <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                  </div>
+                                  <div class="row no-gutters align-items-center">
+                                      <div class="col-auto">
+                                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                      </div>
+                                      <div class="col-4">
+                                          <div class="progress progress-sm ">
+                                              <div class="progress-bar bg-info" role="progressbar"
+                                                  style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                  aria-valuemax="100"></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-2">
+                                  <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Pending Requests Card Example -->
+              <div class="col-xl-3 col-md-6 mb-4">
+                  <div class="card border-left-warning shadow h-100 py-2">
+                      <div class="card-body">
+                          <div class="row no-gutters align-items-center">
+                              <div class="col ms-3 me-2">
+                                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                      Pending Requests</div>
+                                  <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                              </div>
+                              <div class="col-auto">
+                                  <i class="fas fa-comments fa-2x text-gray-300"></i>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-8 col-lg-7">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Dropdown Header:</div>
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="myAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pie Chart -->
+            <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Dropdown Header:</div>
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                            <canvas id="myPieChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small">
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-primary"></i> Direct
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-success"></i> Social
+                            </span>
+                            <span class="mr-2">
+                                <i class="fas fa-circle text-info"></i> Referral
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+              <div class="row  text-center">
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Tablas</h1>
+                    
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Informe de asistencia</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Jornada</th>
+                                            <th>Horas totales</th>
+                                            <th>Horas extras</th>
+                                            <th>Mes</th>
+                                            <th>Salario</th>
+                                        </tr>
+                                    </thead>
+                                   
+                                    <tbody>
+                                        
+                                        <tr>
+                                            <td><%= resultado_asistencia[0].nombre_empleado %></td>
+                                            <td>8-5</td>
+                                            <td><%= resultado_asistencia[0].horas_total %></td>
+                                            <td><%= resultado_asistencia[0].horas_extras %></td>
+                                            <td><%= resultado_asistencia[0].id_mes %></td>
+                                            <td><%= salarioTotalPesos %></td>
+                                        </tr>
+                                        
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+  <div class="container shadow    rounded">
+
+  </div>
+  </body>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js" defer></script>
+  <script src="https://cdn.datatables.net/1.11.1/js/dataTables.bootstrap5.min.js" defer></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js" defer></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js" defer></script>
+  <script>
+    $(document).ready(function() {
+  $('#dataTable').DataTable();
+});
+    $(document).ready(function () {
+      var table = $('#users').DataTable({
+        responsive: true
+      });
+
+      new $.fn.dataTable.FixedHeader(table);
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+  <script>
+    function alertDelate(id) {
+      Swal.fire({
+        title: '¿Quieres eliminar este equipo de seguridad de forma permanente del inventario?',
+        icon: 'warning',
+        showCancelButton: true,
+        cancelButtonText: 'NO',
+        cancelButtonColor: '#d33',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: ` SI `,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          Swal.fire('equipo de seguridad eliminada exitosamente', '', 'success', 1500)
+          const value = true
+          setTimeout(timeUot, 2000, value, id);
+        }
+      })
+    }
+
+    function timeUot(values, id) {
+      if (values) {
+        window.location = '/delateInvetarioEquipoDeSeguridadRedline/' + id
+      }
+
+    }
+  </script>
+
+
+
+  <%- include('./partials/footer.ejs') %>
+
+
+
+    <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"></script>
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+      <!-- Core plugin JavaScript-->
+      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  
+      <!-- Custom scripts for all pages-->
+      <script src="js/sb-admin-2.min.js"></script>
+  
+      <!-- Page level plugins -->
+      <script src="vendor/chart.js/Chart.min.js"></script>
+  
+      <!-- Page level custom scripts -->
+      <script src="js/demo/chart-area-demo.js"></script>
+      <script src="js/demo/chart-pie-demo.js"></script>
+      <script src="js/demo/chart-bar-demo.js"></script>
+
+    </html>

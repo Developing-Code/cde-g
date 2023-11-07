@@ -1,0 +1,72 @@
+<body>
+  <link rel="shortcut icon" href="img/logop.png" type="image/x-icon">
+
+  <%- include('./partials/nav.ejs') %>
+
+
+    <% if ( role=='admin' ) {%>
+      <div class="container" style="margin-top: 150px;">
+        <div class="container">
+          <div class="row  text-center">
+            <div class="col-md-4 col-sm-12 my-2">
+              <div class="card shadow-sm">
+                <h5 class="card-header bg-secondary text-light">Personal</h5>
+                <div class="card-body">
+                  <img src="img/la-red.png" class="imgimg-fluid m-5" height="100px" width="auto" alt="">
+                  <div class="btn-group justify-content-center" style="width: 100%;" role="group"
+                    aria-label="Basic example">
+                    <a type="button" href="/register" class="shadow    rounded btn ">Lista de personal</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div hidden class="col-md-4 col-sm-12 my-2">
+              <div class="card shadow-sm">
+                <h5 class="card-header bg-secondary text-light">Mi Perfil</h5>
+                <div class="card-body">
+                  <img src="img/perfil.png" class="imgimg-fluid m-5" height="100px" width="auto" alt="">
+                  <div class="btn-group justify-content-center" style="width: 100%;" role="group"
+                    aria-label="Basic example">
+                    <a type="button" href="/myperfil" class="shadow    rounded btn ">Ver mas</a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+
+
+            <div class="col-md-4 col-sm-12 my-2">
+              
+            </div>
+           
+
+          </div>
+          <hr>
+          <div class="row  text-center mt-3">
+            
+           
+
+
+           
+            
+           
+
+          </div>
+        </div>
+
+      </div>
+
+      <% } %>
+
+
+
+
+
+        <!-- </div> -->
+        <%- include('./partials/footer.ejs') %>
+
+
+</body>
+
+</html>

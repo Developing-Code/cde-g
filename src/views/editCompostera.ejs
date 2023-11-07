@@ -1,0 +1,275 @@
+<%- include('./partials/nav.ejs') %>
+
+
+<style>
+  .login {
+    background-color: rgb(238, 238, 238);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+
+
+  }
+
+  .listaUsuarios {
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+
+  }
+
+  h5 {
+    color: rgb(94, 93, 93);
+  }
+</style>
+
+<body class="login">
+
+
+
+    <div class="container" style="margin-top: 80px; ">
+      <div class="row justify-content-center mt-5 ">
+        <div class=" col-lg-9 col-md-12 col-sm-12">
+          <div class="card">
+            <div class="card-title text-center border-bottom">
+              <h2 class="p-3">Editar compostera</h2>
+            </div>
+            <div class="card-body">
+
+              <form action="/editarComposterasSend" method="POST" enctype="multipart/form-data">
+                <div class="container ">
+                  <div class="row justify-content-evenly">
+                    <div class="col-lg-6 col-sm-12">
+                     
+                      <div class="mb-3">
+                        <input hidden type="text" value="<%= ID%>" class="form-control" style="font-size: 12px;"
+                          name="id_quienEntrega" required>
+                        <input hidden type="text" value="<%= name%>" class="form-control" style="font-size: 12px;"
+                          name="nombre_quienEntrega" required>
+
+
+                      </div>
+
+                      <div class="mb-3">
+                        <h5 for="nombreInstitucion">Código beneficiario</h5>
+                        <input style="font-size: 12px;" value="<%= data.codBenefic %>" type="text" class="form-control" name="codBenefic" required>
+                      </div>
+                      <div class="mb-3">
+                        <h5 for="nombreInstitucion">Nombre Institución</h5>
+                        <input style="font-size: 12px;" value="<%= data.nombre_institucion %>" type="text" class="form-control" name="nombreInstitucion"
+                          required>
+                      </div>
+                      <div class="mb-3">
+                        <h5 for="nombreResponsable">Nombre Responsable</h5>
+                        <input style="font-size: 12px;" value="<%= data.nombre_responsable %>" type="text" class="form-control" name="nombreResponsable"
+                          required>
+                      </div>
+
+                      <div class="mb-3">
+                        <h5 for="celularResponsable">Celular/Contacto</h5>
+                        <input style="font-size: 12px;" value="<%= data.celular_responsable %>" type="text" class="form-control" name="celularResponsable"
+                          required>
+                      </div>
+                      <div class="mb-3">
+                        <h5 for="identificacionResponsable">Identificacion</h5>
+                        <div class="row">
+                          <div class="col-3">
+                            <select style="font-size: 12px;" id="tipoIdentifi" class="form-control" name="tipoIdentifi"
+                              style="font-size: 12px;" >
+                              <option value="CC" style="font-size: 12px;">CC</option>
+                              <option value="NIT" style="font-size: 12px;">NIT</option>
+                              <option value="TI" style="font-size: 12px;">TI</option>
+                            </select>
+                          </div>
+                          <div class="col-9">
+                            <input style="font-size: 12px;" type="number" class="form-control"
+                              name="identificacionResponsable" value="<%= results[0].identificacion %>" required>
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="mb-3" hidden> 
+                        <h5 for="capacidadCompostera">Capacidad compostera</h5>
+
+                        <select style="font-size: 12px;" id="capacidadCompostera" class="form-control"
+                          name="capacidadCompostera" style="font-size: 12px;" >
+                          <option value="20" style="font-size: 12px;">20 kg/dia</option>
+                          <option value="40" style="font-size: 12px;">40 kg/dia</option>
+                          <option value="60" style="font-size: 12px;">60 kg/dia</option>
+                        </select>
+                      </div>
+
+
+
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                      <div class="mb-3">
+                        <h5 for="direccionInstitucion">Direccion</h5>
+                        <input value="<%= data.Direccion_compostera %>" class="form-control" name="direccionInstitucion" style="font-size: 12px;" type="text"
+                          id="address" placeholder="Ingresa una dirección" oninput="debouncedLocate()" required>
+                        <div id="suggestions"></div>
+                      </div>
+                      <div class="mb-3">
+
+                        <h5 for="coordenadas">Coordenadas de la ubicación</h5>
+                        <div class="row">
+                          <div class="col-4">
+                            <input style="font-size: 12px;" value="<%= data.coordenas %>" type="text" id="latloguser" class="form-control"
+                              name="coordenadas" required>
+                          </div>
+                          <div class="col-4">
+                            <input style="font-size: 12px;" value="<%= data.lat %>" type="text" id="lat" class="form-control" name="lat"
+                              required>
+                          </div>
+                          <div class="col-4">
+                            <input style="font-size: 12px;" value="<%= data.log %>" type="text" id="log" class="form-control" name="log"
+                              required>
+                          </div>
+                        </div>
+
+
+
+                        <br>
+                        <div id="map"></div>
+
+
+                      </div>
+                      
+                      <div class="mb-3">
+                        <h5 for="usuario">Correo</h5>
+                        <input style="font-size: 12px;" type="text" value="<%= results[0].email %>" class="form-control" name="email">
+                      </div>
+                      <div class="mb-3">
+                        <h5 for="usuario">Nota de la cita</h5>
+                        <input style="font-size: 12px;" type="text" value="<%= data.Nota %>" class="form-control" name="notaCompostera">
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <input type="text" value="<%= data.id %>" name="id_compostera" hidden>
+                    <input type="text" value="<%= data.id_usuario %>" name="id_usuario" hidden>
+                   
+                    <div class="mb-3">
+                      <input class="form-check-input" type="checkbox" id="uploadSwitch" onchange="toggleUpload()">
+                      
+                      <label for="uploadSwitch">Actualizar imagen</label>
+                      <input type="file" id="fileInput" class="form-control" name="evidencia_foto" disabled>
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+
+
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-success">Continuar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert !="undefined" ) { %>
+      <script>
+        Swal.fire({
+          title: '<%=alertTitle %>',
+          text: '<%= alertMessage%>',
+          icon: '<%=alertIcon %>',
+          showConfirmButton: '<%= showConfirmButton %>',
+          timer: '<%= timer %>'
+        }).then(() => {
+          window.location = '/<%= ruta %>'
+        })
+      </script>
+      <% } %>
+        <script>
+          var inputs = $("input[type=text]");
+          for (var i = 0; i < inputs.length; i++) {
+            var aux = $(inputs[i]).val().trim();
+            $(inputs[i]).val(aux);
+          }
+        </script>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+          function seleccionado() {
+            var opt = $('#opcion').val();
+
+            // alert(opt);
+            if (opt == "U") {
+              $('#categoria').show();
+              $('#subcategoria').hide();
+              $('#producto').hide();
+            } else {
+              if (opt == "M") {
+                $('#categoria').hide();
+                $('#subcategoria').show();
+                $('#producto').hide();
+              } else {
+                $('#categoria').hide();
+                $('#subcategoria').hide();
+                $('#producto').show();
+              }
+            }
+          }
+        </script>
+
+
+        <script>
+
+
+
+
+        </script>
+
+        <script>
+          $(document).ready(function () {
+
+            var now = new Date();
+
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var hour = (now.getHours() < 10 ? '0' : '') + now.getHours() + ":" + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            $("#fecha").val(today);
+            $("#hora").val(hour);
+          });
+
+          function toggleUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadSwitch = document.getElementById('uploadSwitch');
+            fileInput.disabled = !uploadSwitch.checked;
+          }
+
+        </script>
+
+
+        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+          integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+          crossorigin=""></script>
+
+        <script src="/js/scriptsMapedit.js"></script>
+        <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

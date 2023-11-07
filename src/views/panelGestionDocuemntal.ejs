@@ -1,0 +1,148 @@
+<body>
+  <link rel="shortcut icon" href="img/logop.png" type="image/x-icon">
+
+  <%- include('./partials/nav.ejs') %>
+
+
+    <% if ( role=='admin' ) {%>
+      <div class="container  p-md-2 p-sm-0" style="margin-top: 150px;">
+        <h1 class="text-center my-md-5">Sistema de gestión documental</h1>
+        <hr>
+        <div class="row text-center">
+            <div class="col-md-4 col-sm-12 my-2">
+                <div class="card shadow-sm">
+                  <h5 class="card-header bg-primary text-light">Nuevo Documento</h5>
+                  <div class="card-body">
+                    <img src="img/add-file.png" class="imgimg-fluid m-5" height="100px" width="auto"
+                      alt="">
+                    <div class="btn-group justify-content-center" style="width: 100%;" role="group"
+                      aria-label="Basic example">
+                      <a href="/pgdocnewdocument" type="button"
+                        class="shadow    rounded btn">Ver mas</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <div class="col-md-4 col-sm-12 my-2">
+                <div class="card shadow-sm">
+                  <h5 class="card-header bg-primary text-light">Mis documentos</h5>
+                  <div class="card-body">
+                    <img src="img/documentation.png" class="imgimg-fluid m-5" height="100px" width="auto"
+                      alt="">
+                    <div class="btn-group justify-content-center" style="width: 100%;" role="group"
+                      aria-label="Basic example">
+                      <a href="/" type="button"
+                        class="shadow    rounded btn">Ver mas</a>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+             
+            <div class="col-md-4 col-sm-12 my-2">
+                <div class="card shadow-sm">
+                  <h5 class="card-header bg-primary text-light">Buscar Documentos</h5>
+                  <div class="card-body">
+                    <img src="img/searchDoc.png" class="imgimg-fluid m-5" height="100px" width="auto"
+                      alt="">
+                    <div class="btn-group justify-content-center" style="width: 100%;" role="group"
+                      aria-label="Basic example">
+                      <a href="/" type="button"
+                        class="shadow    rounded btn">Ver mas</a>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            <div class="col-md-4 col-sm-12 my-2">
+                <div class="card shadow-sm">
+                  <h5 class="card-header bg-primary text-light">Biblioteca de Documentos</h5>
+                  <div class="card-body">
+                    <img src="img/biblitecadoc.png" class="imgimg-fluid m-5" height="100px" width="auto"
+                      alt="">
+                    <div class="btn-group justify-content-center" style="width: 100%;" role="group"
+                      aria-label="Basic example">
+                      <a href="/prestamosActuales" type="button"
+                        class="shadow    rounded btn">Ver mas</a>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+
+        </div>
+        <hr>
+        <div class="row text-center">
+            <div class="col-md-4 col-sm-12 my-2">
+                <div class="card shadow-sm">
+                  <h5 class="card-header bg-primary text-light">Listado documentos radicados</h5>
+                  <div class="card-body">
+                    <img src="img/inventario.png" class="imgimg-fluid m-5" height="100px" width="auto"
+                      alt="">
+                    <div class="btn-group justify-content-center" style="width: 100%;" role="group"
+                      aria-label="Basic example">
+                      <a href="/radicadosActuales" type="button"
+                        class="shadow    rounded btn">Ver mas</a>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            <div class="col-md-4 col-sm-12 my-2">
+                <div class="card shadow-sm">
+                  <h5 class="card-header bg-primary text-light">Radicar nuevo documento</h5>
+                  <div class="card-body">
+                    <img src="img/inventario.png" class="imgimg-fluid m-5" height="100px" width="auto"
+                      alt="">
+                    <div class="btn-group justify-content-center" style="width: 100%;" role="group"
+                      aria-label="Basic example">
+                      <a href="/pnuevoradicado" type="button"
+                        class="shadow    rounded btn">Ver mas</a>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            <div class="col-md-4 col-sm-12 my-2">
+                <div class="card shadow-sm">
+                  <h5 class="card-header bg-primary text-light">Tipos de correspondencia</h5>
+                  <div class="card-body">
+                    <img src="img/inventario.png" class="imgimg-fluid m-5" height="100px" width="auto"
+                      alt="">
+                    <div class="btn-group justify-content-center" style="width: 100%;" role="group"
+                      aria-label="Basic example">
+                      <a href="/panelTipoDocumental" type="button"
+                        class="shadow    rounded btn">Ver mas</a>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+            <div class="col-md-4 col-sm-12 my-2">
+                <div class="card shadow-sm">
+                  <h5 class="card-header bg-primary text-light">Ver mis documentos radicados</h5>
+                  <div class="card-body">
+                    <img src="img/inventario.png" class="imgimg-fluid m-5" height="100px" width="auto"
+                      alt="">
+                    <div class="btn-group justify-content-center" style="width: 100%;" role="group"
+                      aria-label="Basic example">
+                      <a href="/misDocumetos" type="button"
+                        class="shadow    rounded btn">Ver mas</a>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+
+        </div>
+        
+        
+    </div>
+
+
+      <% } %>
+
+
+
+
+
+        <!-- </div> -->
+        <%- include('./partials/footer.ejs') %>
+
+
+</body>
+
+</html>

@@ -1,0 +1,472 @@
+<%- include('./partials/nav.ejs') %>
+
+  <style>
+    @media (max-width: 767.98px) {
+      .fixed-bottom-mobile {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-bottom: 0px;
+        height: max-content;
+      }
+
+      .fixed-top-mobile-busqueda {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin-bottom: 0px;
+        margin-top: 40px;
+        height: max-content;
+      }
+
+      .fixed-bottom-mobile-img {
+        display: none;
+      }
+
+      .leaflet-map {
+        margin-top: 15px;
+        height: 100%;
+      }
+
+      .esdado-emergencia-div {
+        display: none;
+      }
+
+      html,
+      body {
+        overflow: hidden;
+      }
+
+
+    }
+    
+    #map{
+    height: 600px;
+    width: 100%;
+}
+  </style>
+
+  <body>
+
+   
+
+    <div class="container-fluid px-0 px-sm-3" style="margin-top: 80px;">
+      <div class="container-fluid px-0 px-sm-3">
+        <div class="row " style="text-align: center">
+         
+          <div class="col-md-8">
+            <div class="btn-group" role="group" aria-label="Basic example">
+
+              <a type="button" class="btn btn-primary" style="margin-bottom: 2px;" href="/vistamapacomposteras">Lista
+                total <i class='bx bxs-notepad'></i></a>
+                <% if(role=='admin' || role=='servicioCliente' ){ %>
+              <a type="button" class="btn btn-success" style="margin-bottom: 2px;" href="/agregarNuevaCompostera">nueva compost
+                <i class='bx bx-add-to-queue'></i></a>
+                <% }%>
+              <a type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/vistamapacmc">Todos<i
+                  class='bx bxs-map'></i></a>
+
+            </div>
+
+          </div>
+         
+
+
+        </div>
+        <hr>
+        <div class="row   mt-3">
+          <div class="col-lg-2 col-md-12 col-sm-12">
+            <div class="mb-3 fixed-top-mobile-busqueda">
+
+              <div class="card shadow">
+                <div class="card-header">
+                  Busqueda
+                </div>
+                <div class="card-body">
+                  <form id="formceldatauser" action="/buscarcasamapa" method="post">
+                    <h5 class="card-title"></h5>
+                    <div class="mb-3">
+                      <h6 for="usuario">Id de registro</h6>
+                      <input id="numcasainput" style="font-size: 12px;" type="text" class="form-control" name="numcasa"
+                        required>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                  <button type="submit" class="btn btn-primary"><i class='bx bx-search'></i></button>
+                  </form>
+                  <button id="calcular-ruta" disabled class="btn btn-success"><i class='bx bx-shape-triangle'></i></button>
+                  <a type="button" class="btn btn-dark" href="/vistamapacmc"><i class='bx bxs-notepad'></i></a>
+                  <a id="verenmaps" hidden type="button" class="btn btn-dark" href=""><i class="fa-solid fa-map-location-dot"></i></a>
+                </div>
+              </div>
+
+
+            </div>
+            <div id="contenerdor-camara" hidden>
+              <iframe id="iframe-camara" width="100%" height="auto" src="" frameborder="0" autoplay
+                allowfullscreen></iframe>
+            </div>
+            <% if (datacasa) {%>
+              <div class="fixed-bottom-mobile">
+
+                <div class="card shadow mb-0">
+                  <div class="card-body row">
+                    <div class="col-12">
+                      <img  style=" width: 100%; height: 300px; object-fit: cover; " src="/uploads/<%=coordenadas[0].foto1_compostera%>" alt="">
+                    </div>
+                    <div class="col-6 mt-4">
+                      <a href=""><img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""
+                          class="img-fluid rounded-circle w-60"></a>
+                    </div>
+                    <div class="col-6 card-title align-self-center mt-4">
+                      <h5>
+                        <%= coordenadas[0].nombre_responsable %>
+                      </h5>
+                      <p class="m-0">
+                        <%= coordenadas[0].numeroCasa %>
+                      </p>
+                    </div>
+                  </div>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Serial : <a href="#">
+                        <%= coordenadas[0].serial_compostera %> <i class='bx bxl-gmail'></i>
+                      </a></li>
+                    <li class="list-group-item">Phone : <%= coordenadas[0].celular_responsable %> <i
+                          class='bx bxs-phone'></i></li>
+                  </ul>
+                  
+                </div>
+
+              </div>
+
+              <% } %>
+
+
+
+
+                <div>
+                  <div id="routing-container" class="routing-container"></div>
+                </div>
+
+
+
+
+
+          </div>
+
+
+          <div class="col-lg-8 col-md-8 col-sm-12 mx-0 mx-md-auto">
+            <div id="map" class="leaflet-map"></div>
+            <div class="shadow" style="height:150px; width: 100%;">
+             <div class="row">
+              <div class="col-4">
+               
+              </div>
+              <div class="col-4">
+              
+              </div>
+              <div class="col-4">
+               
+              </div>
+             </div>
+            </div>
+            
+          </div>
+          <div class="col-lg-2 col-md-4 col-sm-12 esdado-emergencia-div">
+            
+
+
+            <% coordenadas.forEach((anormal)=> { %>
+              <% if (anormal.estado=='ANORMAL' ) {%>
+                <div class="card shadow radius-10 border-start border-0 border-3 border-danger">
+                  <div class="card-body">
+                    <div class="d-flex align-items-center">
+                      <div>
+                        <p class="mb-0 text-secondary">
+                          <%= anormal.nombre_responsable %>
+                        </p>
+                        <h4 class="my-1 text-info">
+                          <%= anormal.numeroCasa %>
+                        </h4>
+                        <p class="mb-0 font-13">
+                          <%= anormal.celular_responsable %>
+                        </p>
+                        <div class="mt-2">
+                          <input hidden id="socketId" style="font-size: 12px;" type="text" class="form-control"
+                            name="socketId" required>
+                          <input hidden id="numcasainput2" value="<%= anormal.numeroCasa %>" style="font-size: 12px;"
+                            type="text" class="form-control" name="numcasainput2" required>
+
+                          <button id="enviar-ruta" hidden class="btn btn-success"><i
+                              class="fa-sharp fa-solid fa-share"></i></button>
+
+                        </div>
+
+                      </div>
+                      <a href="https://www.google.com/maps/place/<%= anormal.lat %>,<%= anormal.log %>"
+                        style="background-color: #ffffff00; border: 0px; width: 100%; height: 100%;color: #ffffff"
+                        title="Detalles" class="">
+                        <div class="widgets-icons-2 rounded-circle bg-gradient-bloody   text-white ms-auto">
+                          <i class="fa-solid fa-house-fire"></i>
+                        </div>
+                      </a>
+
+
+                    </div>
+                  </div>
+                </div>
+                <% } %>
+
+
+
+                  <% }) %>
+
+
+          </div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+      integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+      crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+
+
+
+
+
+
+    <script>
+      (function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+    </script>
+
+
+    <script>
+
+
+      const accessToken = 'pk.eyJ1IjoiYWxlam9kYzQxMiIsImEiOiJjbGhmY2lvb2YxNTk0M2NweHhybzA2dmdpIn0.ftPfmclwZVSDFkWni0UGfw';
+      var socket = io();
+      var selectedMarker = null;
+      var selectedMarkerCoords = null;
+      var routingControl = null;
+      var currentCoordinates = null;
+      var destinoMarker = null;
+      let inicioLatitud;
+      let inicioLongitud;
+      let reproduciendo = false;
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          currentCoordinates = [position.coords.latitude, position.coords.longitude];
+          initializeMap(); // Inicializar el mapa una vez que se obtengan las coordenadas actuales.
+
+          inicioLatitud = currentCoordinates[0]
+          inicioLongitud = currentCoordinates[1]
+        });
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+
+      function initializeMap() {
+        const map = L.map('map').setView(currentCoordinates, 16);
+
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+
+        map.on('contextmenu', function (e) {
+          L.marker(e.latlng).addTo(map);
+        });
+
+
+
+
+        var ubicacionesLayer = L.layerGroup().addTo(map);
+        const icon = L.icon({
+          iconUrl: 'img/marcador2.png',
+          iconSize: [32, 32],
+          iconAnchor: [16, 32],
+          popupAnchor: [0, -32],
+        });
+
+        let markerIcon = null
+
+          <% coordenadas.forEach((place) => { %>
+
+            
+
+
+              
+                markerIcon = L.icon({
+                  iconUrl: 'img/marcador2.png', iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32]
+                });
+              
+              var marker = L.marker([<%= place.lat %>, <%= place.log %>], { icon: markerIcon, title: '<%= place.numeroCasa %>', dataId: '<%= place.id %>' }).addTo(map);
+
+              marker.bindPopup('<h4><%= place.nombre_institucion %>.</h4><p><%= place.nombre_responsable %>.</p><p><%= place.celular_responsable %>.</p><a href="/perfilCompost/<%= place.id %>">Ver más</a>')
+              marker.on('click', function (e) {
+                // Guardar las coordenadas del marcador seleccionado
+                selectedMarker = e;
+                selectedMarkerCoords = e.latlng;
+
+                if (routingControl) {
+                  map.removeControl(routingControl);
+                }
+
+                // Habilitar el botón de "Calcular ruta"
+                document.getElementById("calcular-ruta").disabled = false;
+                document.getElementById("numcasainput").value = '<%= place.id %>';
+                //desabilitar iframe
+                document.getElementById("contenerdor-camara").hidden = true;
+
+                map.setView(e.latlng, 17);
+
+                setActive(e.target._leaflet_id);
+
+              })
+
+           
+  
+  
+              <% }); %>
+
+
+
+
+
+
+
+          document.getElementById("calcular-ruta").addEventListener("click", function () {
+            navigator.geolocation.clearWatch(watchId);
+            if (selectedMarker !== null) {
+              // Crear la ruta solo hacia el marcador seleccionado
+              navigator.geolocation.getCurrentPosition(function (position) {
+                const startLatLng = L.latLng(position.coords.latitude, position.coords.longitude);
+                routingControl = L.Routing.control({
+                  waypoints: [
+                    startLatLng,
+                    selectedMarkerCoords
+                  ],
+                  router: L.Routing.mapbox(accessToken),
+                  lineOptions: {
+                    styles: [
+                      {
+                        color: '#10BEFA',
+                        weight: 8,
+                        opacity: 0.9,
+                      },
+
+                    ]
+                  },
+                  containerClassName: 'routing-container',
+                  collapsible: true,
+                  show: false,
+                  //Añadir efectos
+                  lineCap: 'round',
+                  lineJoin: 'round',
+                  dashArray: '5, 10',
+                  dashOffset: '0',
+                  showAlternatives: false, // Deshabilitar alternativas
+                  createMarker: function (i, waypoint, n) {
+                    return null;
+                  },
+                  title: 'Llegada'
+                }).addTo(map);
+                map.setView(startLatLng, 18);
+
+
+              });
+
+            }
+          });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+        
+        function showError(error) {
+          alert(`Error al obtener la ubicación: ${error.message}`);
+        }
+        if (navigator.geolocation) {
+          var watchId = navigator.geolocation.watchPosition(sendLocation, showError);
+        } else {
+          alert('Geolocalización no soportada por el navegador');
+        }
+
+
+
+
+
+
+
+
+
+
+
+        function onFeatureClick(e) {
+          var coords = e.latlng; // Obtenemos las coordenadas del punto donde se hizo clic
+
+          // Actualizamos el campo de entrada con las coordenadas
+          document.getElementById("verenmaps").hidden = false;
+          document.getElementById("verenmaps").href = 'https://www.google.com/maps/place/' + coords.lat + ", " + coords.lng;
+        }
+
+
+      }
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+    <!-- </div> -->
+    <%- include('./partials/footer.ejs') %>
+
+
+  </body>
+
+  </html>

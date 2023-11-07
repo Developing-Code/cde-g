@@ -1,0 +1,273 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.css">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<%- include('./partials/nav.ejs') %>
+
+  <style>
+    .scrollable-content {
+      width: 100%;
+      /* Tamaño fijo del div, puedes ajustarlo según tus necesidades */
+      height: 235px;
+      /* Tamaño fijo del div, puedes ajustarlo según tus necesidades */
+      overflow: auto;
+      /* Agrega una barra de desplazamiento cuando el contenido exceda el tamaño del div */
+    }
+
+    .border-left-primary {
+      border-left: 5px solid #1EA4E9;
+      /* Cambia "red" al color que desees */
+    }
+
+    .border-left-warning {
+      border-left: 3px solid #E76E09;
+      /* Cambia "red" al color que desees */
+    }
+
+    .border-left-danger {
+      border-left: 3px solid #e91e1e;
+      /* Cambia "red" al color que desees */
+    }
+
+    .border-left-success {
+      border-left: 3px solid #36e91e;
+      /* Cambia "red" al color que desees */
+    }
+  </style>
+
+  <body>
+    <% if ( role=='user1' ) {%>
+
+      <div class="container" style="margin-top: 150px;">
+        <div class="container">
+          <div class="row mb-4">
+            <div class="col">
+             <h5> <strong>Bienvenido</strong>  <%= name %></h5>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+             <h5> </h5>
+            </div>
+           </div>
+          <div class="row">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <a type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/registrosdeoperacion">Registros
+                Operación <i class='bx bxs-book-content'></i></a>
+              <a type="button" class="btn btn-secondary" style="margin-bottom: 2px;"
+                href="/vistamapacomposteras">Informes <i class='bx bxs-detail'></i></a>
+              <a type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/vistamapacomposteras">Alertas
+                <i class='bx bxs-error-circle'></i></a>
+            </div>
+          </div>
+          
+        </div>
+
+
+        <div class="row pt-5">
+          <% results.forEach((data)=> {%>
+
+            <div class="col-md-4 col-sm-12 my-2">
+              <div class="card shadow border-0 " style="border-radius: 22px ;">
+                <div class="card-header border-0 text-center  text-light"
+                  style="border-radius: 22px 22px 0px 0px;background-color:#FC7B3B">
+                  <strong>
+                    Beneficiario:
+                  </strong>
+                  <%= data.codBenefic %>
+                </div>
+                <div class="card-body border-0">
+                  <div class="row">
+                    <% if (data.foto1_compostera != ''  ) {%>
+                      <div class="col-6">
+                        <img class="shadow"
+                          style="border-radius: 22px 22px 22px 22px; width: 100%; height: 300px; object-fit: cover; "
+                          src="/uploads/<%=data.foto1_compostera%>">
+                      </div>
+                      <% }%>
+                        <div class="col">
+                          <label for="Nombre-txt"><strong>Nombre Responsable:</strong></label>
+                          <p id="Nombre-txt">
+                            <%= data.nombre_responsable %>
+                          </p>
+                          
+                          <p class="card-text"><strong>Nota:</strong>
+                            <%= data.Nota %>
+                          </p>
+                          <p class="card-text"><strong>Entregado por: </strong>
+                            <%= data.nombre_quientrega %>
+                          </p>
+                          <div style="width:100%">
+                            <a style="width: 100%;" class=" btn btn-sm btn-secondary mt-1" id="customLink"
+                              href="/formCargeBiomasa/<%= data.id %>">Cargue de Biomasa</a> <br>
+                            <a style="width: 100%;" class="btn btn-sm btn-secondary mt-1" id="customLink"
+                              href="/formDescargeCompost/<%= data.id %>">Descargue de compost</a> <br>
+                            <a style="width: 100%;" class="btn btn-sm btn-secondary mt-1" id="customLink"
+                              href="/formCompostMadurado/<%= data.id %>">Compost madurado</a>
+
+                          </div>
+
+                        </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col">
+                      <div class="btn-group d-flex justify-content-center" role="group"
+                        aria-label="Basic outlined example">
+
+                        <a href="/perfilCompost/<%= data.id %>" type="button" data-bs-toggle="tooltip"
+                          data-bs-placement="top" title="Perfil" class="btn btn-outline-dark"><i
+                            class='bx bxs-notepad'></i> Perfil</a>
+                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
+                          data-bs-target="#modalMapa<%= results[0].id %>">
+                          <i class='bx bx-map'></i>Detalles
+                        </button>
+                        <div class="modal fade" id="modalMapa<%= data.id %>" tabindex="-1"
+                          aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Detalles</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                  aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <ul class="nav nav-tabs" id="modalTabContent">
+                                  <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab"
+                                      href="#contenidoTab1<%= data.id %>">Información</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab"
+                                      href="#contenidoTab2<%= data.id %>">Mapa</a>
+                                  </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link text-warning" data-toggle="tab"
+                                      href="#contenidoTab4<%= data.id %>">Acciones</a>
+                                  </li>
+                                </ul>
+
+                                <div class="tab-content mt-3">
+                                  <div id="contenidoTab1<%= data.id %>" class="tab-pane fade show active">
+                                    <p class="card-text"><strong>Numero de celular:</strong>
+                                      <%= results[0].celular_responsable %> <a
+                                          href="http://wa.me/57<%= data.celular_responsable  %>"
+                                          class="btn btn-outline-dark"><i class='bx bxl-whatsapp'></i></a>
+                                    </p>
+                                    <p class="card-text"><strong>Capacidad:</strong>
+                                      <%= data.Capacidad_compostera %>
+                                    </p>
+                                    <p class="card-text"><strong>Serial:</strong>
+                                      <%= data.serial_compostera %>
+                                    </p>
+                                    <p class="card-text"><strong>Fecha instalacion:</strong>
+                                      <%= data.fecha_inicial %>
+                                    </p>
+                                  </div>
+                                  <div id="contenidoTab2<%= data.id %>" class="tab-pane fade">
+                                    <iframe class="card-img-top"
+                                      src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=<%= data.coordenas %> &amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                                      width="100%" height="300px" style="border:0;" allowfullscreen=""
+                                      loading="lazy"></iframe>
+                                  </div>
+
+                                  <div id="contenidoTab4<%= data.id %>" class="tab-pane fade">
+                                    <h5>Control de parámetros</h5>
+
+                                    <a class=" btn btn-dark mt-3" id="customLink"
+                                      href="/formCargeBiomasa/<%= data.id %>">Cargue de Biomasa
+                                      residual</a> <br>
+                                    <a class="btn btn-dark mt-3" id="customLink"
+                                      href="/formDescargeCompost/<%= data.id %>">Descargue de compost en
+                                      proceso</a> <br>
+                                    <a class="btn btn-dark mt-3" id="customLink"
+                                      href="/formCompostMadurado/<%= data.id %>">Compost madurado</a>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+              </div>
+
+            </div>
+
+            <% }) %>
+              
+
+
+        </div>
+
+        <% } %>
+      </div>
+
+      </div>
+
+
+
+
+
+
+
+
+
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="/toastr/toastr.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+
+
+     
+
+     
+     
+     
+     
+
+
+
+      <% if(typeof alert !="undefined" ) { %>
+        <script>
+          Swal.fire({
+            title: '<%=alertTitle %>',
+            text: '<%= alertMessage%>',
+            icon: '<%=alertIcon %>',
+            showConfirmButton: '<%= showConfirmButton %>',
+            timer: '<%= timer %>'
+          }).then(() => {
+            window.location = '<%= ruta %>'
+          })
+        </script>
+        <% } %>
+
+
+
+         
+
+
+
+
+          <%- include('./partials/footer.ejs') %>
+  </body>
+
+  </html>

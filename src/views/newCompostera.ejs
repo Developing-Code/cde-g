@@ -1,0 +1,379 @@
+<%- include('./partials/nav.ejs') %>
+
+
+  <style>
+    .login {
+      background-color: rgb(238, 238, 238);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center center;
+
+
+    }
+
+    .listaUsuarios {
+
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center center;
+
+    }
+
+    h5 {
+      color: rgb(94, 93, 93);
+    }
+  </style>
+
+  <body class="login">
+
+
+
+    <div class="container" style="margin-top: 80px; color: rgb(128, 128, 128); "> ">
+      <div class="row justify-content-center mt-5 ">
+        <div class=" col-lg-9 col-md-12 col-sm-12">
+          <div class="card">
+            <div class="card-title text-center border-bottom">
+              <h2 class="p-3">Agregar nueva compostera</h2>
+            </div>
+            <div class="card-body">
+
+              <form action="/agregarNuevocomposterasSend" method="POST" enctype="multipart/form-data">
+                <div class="container ">
+                  <div class="row justify-content-evenly">
+                    <div class="col-lg-6 col-sm-12">
+                      <div class="mb-3">
+                        <h6 for="fecha">Fecha entrega</h6>
+                        <input id="fecha" style="font-size: 12px;" type="date" class="form-control" name="fecha_entrega"
+                          required>
+                      </div>
+                      <div class="mb-3">
+                        <input hidden type="text" value="<%= ID%>" class="form-control" style="font-size: 12px;"
+                          name="id_quienEntrega" required>
+                        <input hidden type="text" value="<%= name%>" class="form-control" style="font-size: 12px;"
+                          name="nombre_quienEntrega" required>
+
+
+                      </div>
+
+                      <div class="mb-3">
+                        <h6 for="nombreInstitucion">Código beneficiario</h6>
+                        <input style="font-size: 12px;" type="text" class="form-control" name="codBenefic"
+                          id="codBenefic" oninput="checkcodBenefic()" required>
+                        <div id="validation-message"></div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="nombreInstitucion">Nombre Institución</h6>
+                        <input style="font-size: 12px;" type="text" class="form-control" name="nombreInstitucion">
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="nombreResponsable">Nombre Responsable</h6>
+                        <input style="font-size: 12px;" type="text" class="form-control" name="nombreResponsable">
+                      </div>
+
+                      <div class="mb-3">
+                        <h6 for="celularResponsable">Celular/Contacto</h6>
+                        <input id="celularInput" style="font-size: 12px;" type="text" class="form-control"
+                          name="celularResponsable">
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="identificacionResponsable">Identificacion</h6>
+                        <div class="row">
+                          <div class="col-3">
+                            <select style="font-size: 12px;" id="tipoIdentifi" class="form-control" name="tipoIdentifi"
+                              style="font-size: 12px;">
+                              <option value="CC" selected style="font-size: 12px;">CC</option>
+                              <option value="NIT" style="font-size: 12px;">NIT</option>
+                              <option value="TI" style="font-size: 12px;">TI</option>
+                            </select>
+                          </div>
+                          <div class="col-9">
+                            <input style="font-size: 12px;" type="number" class="form-control"
+                              name="identificacionResponsable" required>
+                          </div>
+                        </div>
+
+
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="capacidadCompostera">Capacidad compostera</h6>
+
+                        <select style="font-size: 12px;" id="capacidadCompostera" class="form-control"
+                          name="capacidadCompostera" style="font-size: 12px;">
+                          <option value="20" selected style="font-size: 12px;">20 kg/dia</option>
+                          <option value="40" style="font-size: 12px;">40 kg/dia</option>
+                          <option value="60" style="font-size: 12px;">60 kg/dia</option>
+                        </select>
+                      </div>
+
+
+
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                      <div class="mb-3">
+                        <h6 for="direccionInstitucion">Dirección</h6>
+                        <div class="row mb-3">
+                          <div class="col-4">
+                            <select style="font-size: 12px;" id="Ciudad" class="form-control" name="Ciudad"
+                              style="font-size: 12px;">
+                              <option value="Bogotá" selected style="font-size: 12px;">Bogotá</option>
+                              <option value="Medellín" style="font-size: 12px;">Medellín</option>
+                              <option value="Cali" style="font-size: 12px;">Cali</option>
+                              <option value="Barranquilla" style="font-size: 12px;">Barranquilla</option>
+                              <option value="Cartagena" style="font-size: 12px;">Cartagena</option>
+                            </select>
+                          </div>
+                          <div class="col-4">
+                            <select style="font-size: 12px;" id="Localidad" class="form-control" name="Localidad"
+                              style="font-size: 12px;">
+                              <option value="Localidad" selected style="font-size: 12px;">Localidad</option>
+                              <option value="Usaquén" style="font-size: 12px;">Usaquén</option>
+                              <option value="Chapinero" style="font-size: 12px;">Chapinero</option>
+                              <option value="Santa Fe" style="font-size: 12px;">Santa Fe</option>
+                              <option value="San Cristóbal" style="font-size: 12px;">San Cristóbal</option>
+                              <option value="Usme" style="font-size: 12px;">Usme</option>
+                              <option value="Tunjuelito" style="font-size: 12px;">Tunjuelito</option>
+                              <option value="Bosa" style="font-size: 12px;">Bosa</option>
+                              <option value="Kennedy" style="font-size: 12px;">Kennedy</option>
+                              <option value="Fontibón" style="font-size: 12px;">Fontibón</option>
+                              <option value="Engativá" style="font-size: 12px;">Engativá</option>
+                              <option value="Suba" style="font-size: 12px;">Suba</option>
+                              <option value="Barrios Unidos" style="font-size: 12px;">Barrios Unidos</option>
+                              <option value="Teusaquillo" style="font-size: 12px;">Teusaquillo</option>
+                              <option value="Los Mártires" style="font-size: 12px;">Los Mártires</option>
+                              <option value="Antonio Nariño" style="font-size: 12px;">Antonio Nariño</option>
+                              <option value="Puente Aranda" style="font-size: 12px;">Puente Aranda</option>
+                              <option value="La Candelaria" style="font-size: 12px;">La Candelaria</option>
+                              <option value="Rafael Uribe Uribe" style="font-size: 12px;">Rafael Uribe Uribe</option>
+                              <option value="Ciudad Bolívar" style="font-size: 12px;">Ciudad Bolívar</option>
+                              <option value="Sumapaz" style="font-size: 12px;">Sumapaz</option>
+                            </select>
+                          </div>
+                          <div class="col-4">
+                            <input style="font-size: 12px;" type="text" id="Barrio" class="form-control" name="Barrio"
+                              placeholder="Barrio">
+                          </div>
+                        </div>
+
+                        <input class="form-control" name="direccionInstitucion" style="font-size: 12px;" type="text"
+                          id="address" placeholder="Ingresa una dirección" oninput="debouncedLocate()">
+                        <div id="suggestions"></div>
+
+
+                      </div>
+                      <div class="mb-3">
+
+                        <h6 for="coordenadas">Coordenadas de la ubicación</h6>
+                        <div class="row">
+                          <div class="col-4">
+                            <input style="font-size: 12px;" value="0" type="text" id="latloguser" class="form-control"
+                              name="coordenadas">
+                          </div>
+                          <div class="col-4">
+                            <input style="font-size: 12px;" value="0" type="text" id="lat" class="form-control"
+                              name="lat">
+                          </div>
+                          <div class="col-4">
+                            <input style="font-size: 12px;" value="0" type="text" id="log" class="form-control"
+                              name="log">
+                          </div>
+                        </div>
+
+
+
+                        <br>
+                        <div id="map"></div>
+
+
+                      </div>
+                      <div class="mb-3">
+                        <input type="text" class="form-control" name="estado" value="INCOMPLETO" hidden>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="email">Correo electrónico
+
+                        </h6>
+                        <input style="font-size: 12px;" type="text" class="form-control" name="email">
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="usuario">Tipo beneficiario</h6>
+                        <select style="font-size: 12px;" id="notaCompostera" class="form-control" name="notaCompostera"
+                          style="font-size: 12px;">
+                          <option value="Colegio" selected style="font-size: 12px;">Colegio</option>
+                          <option value="Huerta" style="font-size: 12px;">Huerta</option>
+                          <option value="Universidad" style="font-size: 12px;">Universidad</option>
+                          <option value="Propiedad Horizontal" style="font-size: 12px;">Propiedad Horizontal</option>
+                          <option value="Institucional" style="font-size: 12px;">Institucional</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="row">
+                    <input type="text" value="" name="id" hidden>
+
+                    <div class="mb-3">
+                      <input class="form-check-input" type="checkbox" id="uploadSwitch" onchange="toggleUpload()">
+                      <label for="uploadSwitch">Subir imagen de la compostera</label>
+                      <input type="file" id="fileInput" class="form-control" name="evidencia_foto" disabled>
+                    </div>
+
+                  </div>
+                </div>
+
+
+
+
+
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-success">Continuar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert !="undefined" ) { %>
+      <script>
+        Swal.fire({
+          title: '<%=alertTitle %>',
+          text: '<%= alertMessage%>',
+          icon: '<%=alertIcon %>',
+          showConfirmButton: '<%= showConfirmButton %>',
+          timer: '<%= timer %>'
+        }).then(() => {
+          window.location = '/<%= ruta %>'
+        })
+      </script>
+      <% } %>
+        <script>
+          var inputs = $("input[type=text]");
+          for (var i = 0; i < inputs.length; i++) {
+            var aux = $(inputs[i]).val().trim();
+            $(inputs[i]).val(aux);
+          }
+        </script>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script>
+          function seleccionado() {
+            var opt = $('#opcion').val();
+
+            // alert(opt);
+            if (opt == "U") {
+              $('#categoria').show();
+              $('#subcategoria').hide();
+              $('#producto').hide();
+            } else {
+              if (opt == "M") {
+                $('#categoria').hide();
+                $('#subcategoria').show();
+                $('#producto').hide();
+              } else {
+                $('#categoria').hide();
+                $('#subcategoria').hide();
+                $('#producto').show();
+              }
+            }
+          }
+        </script>
+
+
+        <script>
+
+
+
+
+        </script>
+
+        <script>
+          $(document).ready(function () {
+
+            var now = new Date();
+
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var hour = (now.getHours() < 10 ? '0' : '') + now.getHours() + ":" + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            $("#fecha").val(today);
+            $("#hora").val(hour);
+          });
+
+          function toggleUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadSwitch = document.getElementById('uploadSwitch');
+            fileInput.disabled = !uploadSwitch.checked;
+          }
+
+
+          const celularInput = document.getElementById('celularInput');
+
+          // Agrega un oyente para el evento 'input'
+          celularInput.addEventListener('input', function () {
+            // Obtén el valor actual del input
+            let valor = celularInput.value;
+
+            // Elimina cualquier carácter que no sea un número, coma o guion
+            valor = valor.replace(/[^0-9,-]/g, '');
+
+            // Actualiza el valor del input
+            celularInput.value = valor;
+          });
+        </script>
+        <script>
+          async function checkcodBenefic() {
+            let timeoutId;
+
+            const inputElement = document.getElementById("codBenefic");
+            const validationMessage = document.getElementById("validation-message");
+            const codBenefic = inputElement.value.trim();
+
+            if (codBenefic === "") {
+              inputElement.style.borderColor = "";
+              validationMessage.innerText = "";
+              return;
+            }
+            // Cancelar el temporizador anterior si existe
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(async () => {
+              try {
+                const response = await fetch(`/checkcodBenefic?codBenefic=${codBenefic}`);
+                const data = await response.json();
+
+                if (data.exists) {
+                  inputElement.style.borderColor = "red";
+                  validationMessage.innerText = "¡El beneficiario ya ha sido registrado!";
+                } else {
+                  inputElement.style.borderColor = "green";
+                  validationMessage.innerText = "beneficiario disponible.";
+                }
+              } catch (error) {
+                console.error(error);
+              }
+            }, 500);
+          }
+        </script>
+
+        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+          integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+          crossorigin=""></script>
+
+        <script src="/js/scriptsMap.js"></script>
+        <%- include('./partials/footer.ejs') %>
+  </body>
+
+  </html>

@@ -1,0 +1,300 @@
+<%- include('./partials/nav.ejs') %>
+
+
+<head>
+
+  <link rel="stylesheet" href="styleTables.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.1/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    .visor_imagenes {
+      text-align: center;
+    }
+
+    .blanco-rojo {
+      color: black;
+      background-color: rgb(255, 237, 148);
+      border: 1px solid rgb(232, 208, 92);
+      border-radius: 2px;
+    }
+
+    .blanco-rojo2 {
+      color: black;
+      background-color: rgb(162, 255, 148);
+      border: 1px solid rgb(100, 213, 82);
+      border-radius: 2px;
+    }
+    .blanco-rojo3 {
+      color: black;
+      background-color: rgb(255, 148, 148);
+      border: 1px solid rgb(232, 97, 97);
+      border-radius: 2px;
+    }
+  </style>
+</head>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+  <div class="row mb-5 ">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/home">Dasboard</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/cronogramaHoyRedline">Cronograma</a>
+            </li>
+            
+            
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  </div>
+  <div class="row">
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                Clientes</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-calendar fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+               Clientes hoy</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-info shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tikets Resueltos
+              </div>
+              <div class="row no-gutters align-items-center">
+                <div class="col-auto">
+                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"></div>
+                </div>
+                <div class="col">
+                  <div class="progress progress-sm mr-2">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 20" aria-valuenow="50"
+                      aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-darnger shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                Tikets sin resolver</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  
+    
+  </div>
+  <div class="row mt-5">
+    
+    <h5 style="font-size: 20px; margin-bottom: 10px;">Lista de clientes</h5>
+    <hr>
+    <div class="row">
+      
+        <br>
+        <div class=" mt-5">
+          <table id="users" class="table table-light table-striped table-hover table-bordered text-center  " style="font-size: 14px;">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Nombre</th>
+                <th>Actividad</th>
+                <th>Tecnologia</th>
+                <th>Horario</th>
+                <th>Ip</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+                
+             
+              </tr>
+            </thead>
+      
+            <tbody>
+              <% results.forEach((user) => {%>
+
+      
+      
+              <tr>
+                <td><%= user.id %> </td>
+                <td><%= user.fecha %> </td>
+                <td><%= user.nombre_cliente %> </td>
+                <td><%= user.tipo_instalacion %> </td>
+                <td><%= user.genero %> </td>
+                <td> <button type="button" class="btn btn-sm ">
+                   <span class="badge text-bg-danger"><%= user.hora %></span>
+                </button></td>
+      
+                <td><%= user.ip %></td>
+                <td><% if (user.estado == 'INCOMPLETO') {%>
+                  <button type="button" class="btn btn-sm ">
+                    <span class="badge text-bg-danger">INCOMPLETO</span>
+                 </button>
+                  <% }else if( user.estado == 'REPROGRAMAR' ){%>
+                    <button type="button" class="btn btn-sm ">
+                      <span class="badge text-bg-warning">REPROGRAMADO</span>
+                   </button>
+                  <% }else if( user.estado == 'INVIABLE' ){%>
+                    <button type="button" class="btn btn-sm ">
+                      <span class="badge text-bg-dark">INVIABLE</span>
+                   </button>
+                  <% }else{%>
+                    <button type="button" class="btn btn-sm ">
+                      <span class="badge text-bg-success ">COMPLETO</span>
+                   </button>
+                  <% } %>
+                </td>
+                <td>
+                  <% if (user.estado == 'REPROGRAMAR') {%>
+                  <a href="/tiketInviable/<%= user.id %>" title="Tiket inviable" class="btn btn-sm btn-dark" style="font-size: 14px;" type="button"><i class='bx bx-x'></i></a>
+                  <% } %>
+                  <a href="/cronogramaDetalles/<%= user.id %>" title="Detalles" class="btn btn-sm btn-dark" style="font-size: 14px;" type="button"><i class='bx bx-category' ></i></a>
+                  <a href="/cronogramaEditar/<%= user.id %>" title="Editar" class="btn btn-sm btn-danger" style="font-size: 14px;" type="button"><i class='bx bx-pencil' ></i></a>
+                  
+                </td>
+                
+               
+              </tr>
+             
+
+              <% }) %>
+            </tbody>
+          </table>
+
+        </div>
+    </div>
+    
+
+  </div>
+
+
+</div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js" defer></script>
+<script src="https://cdn.datatables.net/1.11.1/js/dataTables.bootstrap5.min.js" defer></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js" defer></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js" defer></script>
+<script>
+  $(document).ready(function() {
+    var table = $('#users').DataTable({
+      responsive: true
+    });
+
+    new $.fn.dataTable.FixedHeader(table);
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
+<script>
+  function alertDelate(id) {
+    Swal.fire({
+      title: '¿estas seguro de eliminar este producto permanente?',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'NO',
+      cancelButtonColor: '#d33' ,
+      confirmButtonColor:'#3085d6' ,
+      confirmButtonText: ` SI `,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('el producto se elimino permante de forma exitosa', '', 'success',1500)
+        const value = true
+        setTimeout(timeUot, 2000, value, id);
+      } 
+    })
+  }
+  function timeUot (values, id){
+    if(values){
+      window.location='/delateReferenciaInvetario/'+ id
+    }
+    
+  }
+</script>
+<% if(typeof alert != "undefined") { %>
+  <script>
+    Swal.fire({
+      title: "<%=alertTitle %>",
+      text: "<%= alertMessage%>",
+      icon: "<%=alertIcon %>",
+      showConfirmButton: "<%= showConfirmButton %>",
+      timer: "<%= timer %>",
+    }).then(() => {
+      window.location = "./<%= ruta %>";
+    });
+  </script>
+  <% } %>
+
+<%- include('./partials/footer.ejs') %>
+
+<script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+</html>

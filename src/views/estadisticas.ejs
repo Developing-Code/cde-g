@@ -1,0 +1,258 @@
+<%- include('./partials/nav.ejs') %>
+
+    <div class="container">
+        <div class=" mb-4 mt-4 bannerbg ">
+            <div class="justify-content-center m-4">
+                <h1 class="text-center fa-rotate-180 ">Estadísticas para el administrador</h1>
+            </div>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-6 col-sm-12 ">
+                <div class="p-3 border bg-light" style="width: auto; height: 380px;">
+                    <h4>Total clientes vs Clientes nuevos</h4>
+                    <canvas id="ClientesPorVendedor" height="50px"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 ">
+                <div class="p-3 border bg-light">
+                    <h4>Estado de aprobación de los clientes</h4>
+                    <canvas id="estadoClientes"></canvas>
+                </div>
+
+            </div>
+            <div class="col-md-12 col-sm-12 ">
+                <div class="p-3 border bg-light">
+                    <h6>Clientes por vendedor</h6>
+                    <canvas id="grafico"></canvas>
+                </div>
+            </div>
+
+        </div>
+        <div class="row pt-3">
+            <div class="col-md-12 col-sm-12 " style="width: 100%; height: 200px;">
+                <div class="p-3 border bg-light ">
+                    <label for="select-year">Seleccione un año:</label>
+                    <div class="input-group">
+                        <select class="form-select" id="select-year" onchange="cargarDatos()">
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                        </select>
+                    </div>
+                    <canvas id="grafico2"></canvas>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const varClientesPorVendedor = document.getElementById('ClientesPorVendedor').getContext('2d');
+        const ClientesPorVendedor = new Chart(varClientesPorVendedor, {
+            type: 'pie',
+            data: {
+                labels: ['Numero de clientes total', 'Clientes nuevos'],
+                datasets: [{
+                    label: 'Clientes',
+                    data: ['<%= Clientes.length %>', '<%= estadoPass %>'],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                aspectRatio: 2,
+
+            }
+        });
+    </script>
+    <script>
+        const varClientesNuevosMes = document.getElementById('estadoClientes').getContext('2d');
+        const clientesNuevosMes = new Chart(varClientesNuevosMes, {
+            type: 'bar',
+            data: {
+                labels: ['Clientes aprobados', 'Clientes PreAprobados', 'Clientes SinPreaprovar', 'Clientes Negados'],
+                datasets: [{
+                    label: 'Clientes',
+                    data: [ <%= estadoFormularioaprovado %>, <%= estadoFormularioPre %>,  <%= estadoFormularioSinPre %>, <%= estadoFormularioNegado %>],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+
+
+    <script>
+        // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
+        const datos = JSON.parse('<%- resultcliVendedor %>');
+
+        // Obtén una referencia al elemento canvas
+        const canvas = document.getElementById('grafico');
+
+        // Configura el gráfico utilizando los datos
+        const ctx = canvas.getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+            data: {
+                labels: datos.map(dato => dato.nombre_completo), // Etiquetas para el eje X (vendedores)
+                datasets: [{
+                    label: 'Cantidad de clientes',
+                    data: datos.map(dato => dato.cantidad_clientes), // Datos para el eje Y (cantidad de clientes)
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo de las barras
+                    borderColor: 'rgba(75, 192, 192, 1)', // Color del borde de las barras
+                    borderWidth: 1 // Ancho del borde de las barras
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                aspectRatio: 5,
+                scales: {
+                    y: {
+                        beginAtZero: true // Comienza el eje Y en cero
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        const datos2 = JSON.parse('<%- resultclano %>');
+        console.log(datos2)
+
+        // Obtén el año actual
+        const anioActual = new Date().getFullYear().toString();
+        console.log(anioActual)
+
+        // Filtra los datos iniciales para mostrar el año actual
+        let datosFiltrados = datos2.filter(dato => dato.anio == anioActual);
+        const meses = datosFiltrados.map(dato => dato.mes);
+        const cantidadClientes = datosFiltrados.map(dato => dato.cantidad_clientes);
+        const clientesAprobados = datosFiltrados.map(dato => dato.clientes_aprobados);
+        const clientesNoAprobados = datosFiltrados.map(dato => dato.clientes_no_aprobados);
+
+
+        let chart2;
+
+        // Función para cargar los datos según el año seleccionado
+        function cargarDatos() {
+            const selectYear = document.getElementById('select-year');
+            const selectedYear = selectYear.value;
+
+            datosFiltrados = datos2.filter(dato => dato.anio == selectedYear);
+            const meses = datosFiltrados.map(dato => dato.mes);
+            const cantidadClientes = datosFiltrados.map(dato => dato.cantidad_clientes);
+            const clientesAprobados = datosFiltrados.map(dato => dato.clientes_aprobados);
+            const clientesNoAprobados = datosFiltrados.map(dato => dato.clientes_no_aprobados);
+
+
+            // Destruir el gráfico previo si existe
+            if (chart2) {
+                chart2.destroy();
+                cargarGrafica();
+            }
+        }
+        function cargarGrafica() {
+            // Crear el nuevo gráfico
+            const config = {
+                type: 'line',
+                data: {
+                    labels: meses,
+                    datasets: [
+                        {
+                            label: 'Clientes No Aprobados',
+                            data: clientesNoAprobados,
+                            borderColor: 'red',
+                            backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                            fill: true
+                        },
+                        {
+                            label: 'Clientes Aprobados',
+                            data: clientesAprobados,
+                            borderColor: 'green',
+                            backgroundColor: 'rgba(0, 128, 0, 0.1)',
+                            fill: true
+                        },
+
+                        {
+                            label: 'Total Clientes',
+                            data: cantidadClientes,
+                            borderColor: 'black',
+                            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                            fill: true
+                        }
+
+
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Meses'
+                            }
+                        },
+                        y: {
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Cantidad de Clientes'
+                            }
+                        }
+                    }
+                }
+            };
+
+            // Crear el gráfico
+            const ctx = document.getElementById('grafico2').getContext('2d');
+            new Chart(ctx, config);
+        }
+        // Cargar los datos y mostrar el gráfico inicial
+        cargarGrafica();
+    </script>
+
+
+<%- include('./partials/footer.ejs') %>
