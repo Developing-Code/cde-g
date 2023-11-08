@@ -614,8 +614,8 @@ controller.perfilCompost = (req, res) => {
         if (error) {
           console.log(error);
         } else {
-          var idCompost = results[0].id
-          var idresponsable = results[0].id_usuario
+          console.log(results[0].id_usuario)
+          const idresponsable = results[0].id_usuario;
           req.getConnection((error, conn) => {
             conn.query("SELECT * FROM usuarios WHERE id = ?", [idresponsable], (error, userdata) => {
               if (error) {
@@ -1181,6 +1181,46 @@ controller.checkcodBenefic = (req, res) => {
 
 
 
+
+
+controller.formVisitaSeguimiento = (req, res) => {
+  if (req.session.loggedin) {
+    var idCompost = req.params.id;
+
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM usuarios ",
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query("SELECT * FROM composteras WHERE id = ?", [idCompost], (error, resultscompost) => {
+                if (error) {
+                  console.log(error);
+                } else {
+
+                  res.render("formVisitaSeguimiento", {
+                    results: results,
+                    resultscompost: resultscompost,
+                    login: true,
+                    ID: req.session.ID,
+                    name: req.session.name,
+                    role: req.session.role,
+                    idCompost: idCompost
+                  });
+                }
+              }
+              );
+            });
+          }
+        }
+      );
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
 
 
 controller.formCargeBiomasa = (req, res) => {
