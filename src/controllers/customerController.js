@@ -1637,6 +1637,129 @@ controller.composterasNewSend = async (req, res) => {
 
 
 
+controller.formVisitaSeguimientoSend = (req, res) => {
+  if (req.session.loggedin) {
+    const uploadImages = req.body.uploadImages;
+    const fecha_registro = req.body.fecha_registro;
+    const hora_registro = req.body.hora_registro;
+    const estClima = req.body.estClima;
+    const temperatura_compost = req.body.temperatura_compost;
+    const humedad_compost = req.body.humedad_compost;
+    const prelixiviados = req.body.prelixiviados;
+    const prevectores = req.body.prevectores;
+    const ausenciaolores = req.body.ausenciaolores;
+    const id_quienRegistra = req.body.id_quienRegistra;
+    const nombre_quienRegistra = req.body.nombre_quienRegistra;
+    const idCompost = req.body.idCompost;
+    req.getConnection((error, conn) => {
+      conn.query(
+        "INSERT INTO registrodiarioestadooperacion SET ?",
+        {
+          id_compostera: idCompost,
+          fecha_registro: fecha_registro,
+          hora_registro: hora_registro,
+          clima: estClima,
+          temperatura: temperatura_compost,
+          humedad: humedad_compost,
+          Pinsectos: prevectores,
+          Proedores: prevectores,
+          Polor: ausenciaolores,
+          prelixiviados: prelixiviados,
+          TipoRegistro: 'VISITASEGUIMIENTO',
+          id_quienRegistra: id_quienRegistra
+        },
+        (error) => {
+          if (error) {
+            console.log(error);
+            res.render("notification", {
+              alert: true,
+              alertTitle: "Notificacion",
+              alertMessage: error,
+              alertIcon: "danger",
+              showConfirmButton: false,
+              ruta: "totalcomposteras",
+              timer: 3000,
+            });
+          } else {
+            if (uploadImages == 'on') {
+              res.render("cargarImagen1",{
+                idCompost: idCompost,
+                login: true,
+                ID: req.session.ID,
+                name: req.session.name,
+                role: req.session.role,
+              });
+            } else {
+              res.render("notification", {
+                alert: true,
+                alertTitle: "Notificacion",
+                alertMessage: "Se ha cargado exitosamente",
+                alertIcon: "success",
+                showConfirmButton: false,
+                ruta: "totalcomposteras",
+                timer: 3000,
+              });
+            }
+          }
+        }
+      );
+    });
+    
+
+
+
+
+
+    req.getConnection((error, conn) => {
+      conn.query(
+        "INSERT INTO registrodiarioestadooperacion SET ?",
+        {
+          id_compostera: idCompost,
+          fecha_registro: fecha_registro,
+          hora_registro: hora_registro,
+          clima: estClima,
+          temperatura: temperatura_compost,
+          humedad: humedad_compost,
+          Pinsectos: prevectores,
+          Proedores: prevectores,
+          Polor: ausenciaolores,
+          prelixiviados: prelixiviados,
+          TipoRegistro: 'VISITASEGUIMIENTO',
+          id_quienRegistra: id_quienRegistra
+        },
+        (error) => {
+          if (error) {
+            console.log(error);
+            res.render("notification", {
+              alert: true,
+              alertTitle: "Notificacion",
+              alertMessage: error,
+              alertIcon: "danger",
+              showConfirmButton: false,
+              ruta: "totalcomposteras",
+              timer: 3000,
+            });
+          } else {
+            res.render("notification", {
+              alert: true,
+              alertTitle: "Notificacion",
+              alertMessage: "Se ha cargado exitosamente",
+              alertIcon: "success",
+              showConfirmButton: false,
+              ruta: "totalcomposteras",
+              timer: 3000,
+            });
+
+          }
+        }
+      );
+    });
+
+
+  } else {
+    res.redirect("/login");
+  }
+};
 controller.agregarBiomasaSend = (req, res) => {
   if (req.session.loggedin) {
     let foto = req.file.filename;
@@ -1646,8 +1769,8 @@ controller.agregarBiomasaSend = (req, res) => {
     const hora_registro = req.body.hora_registro;
     const ctnbiomasa = req.body.ctnbiomasa;
     const ctnmaterialestructurante = req.body.ctnmaterialestructurante;
-    var totalctnbiomasa = ctnbiomasa*0.25*0.4*0.6*1000*0.55;
-    var totalctnmestructurante = ctnmaterialestructurante*0.25*0.4*0.6*1000*0.55;
+    var totalctnbiomasa = ctnbiomasa * 0.25 * 0.4 * 0.6 * 1000 * 0.55;
+    var totalctnmestructurante = ctnmaterialestructurante * 0.25 * 0.4 * 0.6 * 1000 * 0.55;
     const prevectores = req.body.prevectores;
     const ausenciaolores = req.body.ausenciaolores;
     const descrPreolores = req.body.descrPreolores;

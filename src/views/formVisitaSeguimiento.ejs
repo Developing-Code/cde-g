@@ -36,10 +36,10 @@
         <div class=" col-lg-6 col-md-12 col-sm-12">
           <div class="card">
             <div class="card-title text-center border-bottom">
-              <h2 class="p-3">Descargue de compost en proceso </h2>
+              <h2 class="p-3">Formulario visita seguimiento</h2>
             </div>
             <div class="card-body">
-              <form action="/descargeCompostSend" method="POST" enctype="multipart/form-data">
+              <form action="/formVisitaSeguimientoSend" method="POST">
                 <div class="container ">
                   <div class="row justify-content-evenly">
                     <div class="col-lg-12 col-sm-12">
@@ -53,45 +53,8 @@
                         <input id="hora" style="font-size: 12px;" type="time" class="form-control" name="hora_registro"
                           required>
                       </div>
-
                       <div class="mb-3">
-                        <h6 for="usuario">Cantidad descargada</h6>
-                        <div class="input-group">
-                          <span class="input-group-text" id="basic-addon1">Kg</span>
-                          <input style="font-size: 12px;" type="number" class="form-control" name="ctnDescargada"
-                            required>
-                        </div>
-
-                      </div>
-                      <div hidden class="mb-3">
-                        <h6 for="usuario">Cantidad de material estructurante</h6>
-                        <div class="input-group">
-                          <span class="input-group-text" id="basic-addon2">Kg</span>
-                          <input style="font-size: 12px;" type="text" class="form-control" value="0" name="ctnmaterialestructurante"
-                            required>
-                        </div>
-
-                      </div>
-
-                      <div class="mb-3" hidden>
-                        <h6 for="usuario">Presencia de vectores</h6>
-                        <select name="prevectores" class="form-control" id="">
-                          <option selected value="NA"></option>
-                        
-                        </select>
-
-                      </div>
-                      <div class="mb-3">
-                        <h6 for="usuario">Presencia de olores ofensivos </h6>
-                        <select name="ausenciaolores" class="form-control" id="">
-                          <option value="si">si</option>
-                          <option value="no">no</option>
-                        </select>
-                        <input style="font-size: 12px;" type="text" class="form-control mt-3"
-                          name="descrPreolores" placeholder="describa el olor" required>
-                      </div>
-                       <div hidden class="mb-3">
-                        <h6 for="usuario">Clima</h6>
+                        <h6 for="estClima">Clima</h6>
                         <select name="estClima" class="form-control" id="">
                           <option value="lluvioso">lluvioso</option>
                           <option value="Soleado">Soleado</option>
@@ -99,55 +62,72 @@
                         </select>
 
                       </div>
-                      <div hidden class="mb-3">
-                        <h6 for="usuario">Coordenadas de la ubicación</h6>
-                        <input style="font-size: 12px;" type="text" id="latloguser" class="form-control"
-                          name="coordenadas" required>
-                        <input style="font-size: 12px;" type="text" id="lat" class="form-control" name="lat" required
-                          hidden>
-                        <input style="font-size: 12px;" type="text" id="log" class="form-control" name="log" required
-                          hidden>
-                        <br>
-                        <div class="marker-position" hidden>Abrir mapa</div>
-                        <div hidden id="map"></div>
 
+                      <div class="mb-3">
+                        <h6 for="ctnDescargada">Humedad del compost</h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">%</span>
+                          <input style="font-size: 12px;" type="number" class="form-control" name="humedad_compost"
+                            required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="ctnDescargada">Temperatura del compost</h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">°C</span>
+                          <input style="font-size: 12px;" type="number" class="form-control" name="temperatura_compost"
+                            required>
+                        </div>
+                      </div>
+                      
+
+                      <div class="mb-3" >
+                        <h6 for="prelixiviados">Presencia lixiviados</h6>
+                        <select name="prelixiviados" class="form-control" id="">
+                          <option selected value="si">si</option>
+                          <option  value="no">no</option>
+                        </select>
 
                       </div>
-                      <div hidden class="mb-3">
-                        <div class="card" style="width: 100%;">
-                          <div class="card-body">
+                      <div class="mb-3" >
+                        <h6 for="prevectores">Presencia de vectores</h6>
+                        <select name="prevectores" class="form-control" id="">
+                          <option selected value="moscos">moscos</option>
+                          <option  value="mosacas">mosacas</option>
+                          <option  value="ratas">ratas</option>
+                          <option  value="otros">otros</option>
+                        </select>
 
-                            <div id="weatherData">
-                              <!-- Aquí se mostrarán los datos meteorológicos -->
-                            </div>
-
-                          </div>
-                        </div>
-                        <input style="font-size: 12px;" type="text" id="temperatura" class="form-control"
-                          name="temperatura" required hidden>
-                        <input style="font-size: 12px;" type="text" id="humedad" class="form-control" name="humedad"
-                          required hidden>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="ausenciaolores">Presencia de olores ofensivos </h6>
+                        <select name="ausenciaolores" class="form-control" id="">
+                          <option value="si">si</option>
+                          <option value="no">no</option>
+                        </select>
+                       
+                      </div>
+                       
+                      
+                      <div  class="mb-3">
                         <input hidden type="text" value="<%= ID%>" class="form-control" style="font-size: 12px;"
                           name="id_quienRegistra" required>
                         <input hidden type="text" value="<%= name%>" class="form-control" style="font-size: 12px;"
                           name="nombre_quienRegistra" required>
-                        <input hidden type="text" value="<%= idCompost%>" class="form-control" style="font-size: 12px;"
+                        <input  type="text" value="<%= idCompost%>" class="form-control" style="font-size: 12px;"
                           name="idCompost" required>
 
+                      </div>
+                      <div  class="mb-3">
+                        <label for="uploadSwitch">Adjuntar evidencias fotográficas</label>
+                        <input class="form-check-input" type="checkbox" id="uploadSwitch" name="uploadImages">
                       </div>
 
                     </div>
                     
 
                   </div>
-                  <div class="row">
-                    <input type="text" value="" name="id" hidden>
-                    <div class="mb-3">
-                      <h6 for="usuario">Foto Compost</h6>
-                      <input type="file" class="form-control" name="evidencia_foto" required>
-                    </div>
-
-                  </div>
+                 
                 </div>
 
 
@@ -223,50 +203,7 @@
         </script>
 
 
-        <script>
-
-          const funcionInit = () => {
-            if (!"geolocation" in navigator) {
-              return alert("Tu navegador no soporta el acceso a la ubicación. Intenta con otro");
-            }
-
-
-
-            const $latitud = document.querySelector("#latitud"),
-              $longitud = document.querySelector("#longitud"),
-              $latlog = document.querySelector("#latlog"),
-              $enlace = document.querySelector("#enlace");
-
-
-            const onUbicacionConcedida = ubicacion => {
-              console.log("Tengo la ubicación: ", ubicacion);
-              const coordenadas = ubicacion.coords;
-              $latitud.innerText = coordenadas.latitude;
-              $longitud.innerText = coordenadas.longitude;
-              $latlog.innerText = coordenadas.latitude + "," + coordenadas.longitude;
-              $enlace.href = `https://www.google.com/maps/@${coordenadas.latitude},${coordenadas.longitude},20z`;
-            }
-            const onErrorDeUbicacion = err => {
-
-              $latitud.innerText = "Error obteniendo ubicación: " + err.message;
-              $longitud.innerText = "Error obteniendo ubicación: " + err.message;
-              console.log("Error obteniendo ubicación: ", err);
-            }
-
-            const opcionesDeSolicitud = {
-              enableHighAccuracy: true, // Alta precisión
-              maximumAge: 0, // No queremos caché
-              timeout: 5000 // Esperar solo 5 segundos
-            };
-
-            $latitud.innerText = "Cargando...";
-            $longitud.innerText = "Cargando...";
-            navigator.geolocation.getCurrentPosition(onUbicacionConcedida, onErrorDeUbicacion, opcionesDeSolicitud);
-
-          };
-          document.addEventListener("DOMContentLoaded", funcionInit);
-
-        </script>
+       
 
         <script>
           $(document).ready(function () {
@@ -284,11 +221,9 @@
         </script>
 
 
-        <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
-          integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
-          crossorigin=""></script>
+       
 
-        <script src="/js/scriptsMap.js"></script>
+       
         <%- include('./partials/footer.ejs') %>
 </body>
 

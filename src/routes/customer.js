@@ -89,11 +89,14 @@ router.get('/registrosdeoperacion', customerController.registrosOperacion)
 
 router.get('/agregarNuevaCompostera', customerController.composteraNew)
 router.get('/checkcodBenefic', customerController.checkcodBenefic)
+router.get('/formVisitaSeguimiento/:id', customerController.formVisitaSeguimiento)
 router.get('/formCargeBiomasa/:id', customerController.formCargeBiomasa)
 router.get('/formDescargeCompost/:id', customerController.formDescargeCompost)
 router.get('/formCompostMadurado/:id', customerController.formCompostMadurado)
 
+
 router.post('/agregarNuevocomposterasSend',uploadEF , customerController.composterasNewSend)
+router.post('/formVisitaSeguimientoSend', customerController.formVisitaSeguimientoSend)
 router.post('/agregarBiomasaSend',uploadEF , customerController.agregarBiomasaSend)
 router.post('/descargeCompostSend',uploadEF , customerController.descargeCompostSend)
 router.post('/compostMaduradoSend',uploadEF , customerController.compostMaduradoSend)

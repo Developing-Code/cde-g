@@ -337,19 +337,26 @@
           <% if ( role=='admin' ) {%>
             <div class="container-fluid" style="margin-top:100px">
               <div class="row">
-                <table id="users" class="table table-light table-striped table-hover table-bordered text-center  "
+                
+                <div class="col-12">
+                  <table id="users" class="table table-light table-striped table-hover table-bordered text-center  "
                   style="font-size: 14px;">
                   <thead>
                     <tr>
-                      <th>Código beneficiario</th>
-                      <th>Responsable</th>
-                      <th>Contacto</th>
-                      <th>Dirección</th>
-                      <th>Capacidad</th>
-                      <th>Id usuario</th>
-                      <th>Nota</th>
-                      <th>Estado</th>
-                      <th>Fecha entrega</th>
+                      <th>id registro</th>
+                      <th>id_compostera</th>
+                      <th>Fecha</th>
+                      <th>Hora</th>
+                      <th>Clima</th>
+                      <th>Temperatura</th>
+                      <th>Humedad</th>
+                      <th>Insectos</th>
+                      <th>Roedores</th>
+                      <th>Presencia lixiviados</th>
+                      <th>Cnt Material estructurante</th>
+                      <th>Cnt Material organico</th>
+                      <th>Cnt Producto</th>
+                      <th>Tipo registro</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
@@ -360,45 +367,61 @@
 
                       <tr>
                         <td>
-                          <%= data1.codBenefic %>
+                          <%= data1.id %>
                         </td>
                         <td>
-                          <%= data1.nombre_responsable %>
+                          <%= data1.id_compostera %>
                         </td>
                         <td>
-                          <%= data1.celular_responsable %>
+                          <%= data1.fecha_registro %>
                         </td>
                         <td>
-                          <%= data1.Direccion_compostera %>
+                          <%= data1.hora_registro %>
                         </td>
                         <td>
-                          <%= data1.Capacidad_compostera %>
+                          <%= data1.clima %>
                         </td>
                         <td>
-                          <%= data1.id_usuario %>
+                          <%= data1.temperatura %> C
                         </td>
                         <td>
-                          <%= data1.Nota %>
+                          <%= data1.humedad %> %
                         </td>
                         <td>
-                          <%= data1.estado %>
+                          <%= data1.Pinsectos %>
                         </td>
                         <td>
-                          <%= data1.fecha_inicial %>
+                          <%= data1.Proedores %>
                         </td>
                         <td>
-                          <a href="/perfilCompost/<%= data1.id %>" class="btn btn-sm btn-morado1" type="button"><i
+                          <%= data1.prelixiviados %>
+                        </td>
+                        <td>
+                          <%= data1.CantidadME %> kg
+                        </td>
+                        <td>
+                          <%= data1.CantidadMO %> kg
+                        </td>
+                        <td>
+                          <%= data1.cantidadCompost %>
+                        </td>
+                        <td>
+                          <%= data1.TipoRegistro %>
+                        </td>
+                        <td>
+                          <a href="/perfilCompost/<%= data1.id_compostera %>" class="btn btn-sm btn-morado1" type="button"><i
                               class='bx bx-dots-vertical-rounded'></i></a>
-                          <a href="/editCompostera/<%= data1.id %>" class="btn btn-sm btn-morado1" type="button"><i
-                              class='bx bx-pencil'></i></a>
+                         
                           <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
-                          <a onclick="alertDelate('<%= data1.id %>')" class="btn btn-sm btn-danger" type="button"><i
+                          <a onclick="alertDelate('<%= data1.id_compostera %>')" class="btn btn-sm btn-danger" type="button"><i
                               class='bx bxs-trash'></i></a>
                         </td>
                       </tr>
                       <% }) %>
                   </tbody>
                 </table>
+                </div>
+                
 
               </div>
             </div>
