@@ -92,11 +92,12 @@
 
 
                       </div>
-                      <div class="mb-3" hidden> 
+                      <div class="mb-3" > 
                         <h5 for="capacidadCompostera">Capacidad compostera</h5>
 
                         <select style="font-size: 12px;" id="capacidadCompostera" class="form-control"
                           name="capacidadCompostera" style="font-size: 12px;" >
+                          <option selected value="<%= data.Capacidad_compostera	 %>" style="font-size: 12px;"><%= data.Capacidad_compostera	 %> kg/dia</option>
                           <option value="20" style="font-size: 12px;">20 kg/dia</option>
                           <option value="40" style="font-size: 12px;">40 kg/dia</option>
                           <option value="60" style="font-size: 12px;">60 kg/dia</option>

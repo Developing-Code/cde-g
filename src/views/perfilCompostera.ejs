@@ -3,37 +3,42 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.css">
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
 <%- include('./partials/nav.ejs') %>
-    <style>
-      .visor_imagenes {
-        text-align: center;
-      }
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    .visor_imagenes {
+      text-align: center;
+    }
 
-      .blanco-rojo {
-        color: black;
-        background-color: rgb(255, 237, 148);
-        border: 1px solid rgb(232, 208, 92);
-        border-radius: 2px;
-        margin-top: 30px;
-      }
+    .blanco-rojo {
+      color: black;
+      background-color: rgb(255, 237, 148);
+      border: 1px solid rgb(232, 208, 92);
+      border-radius: 2px;
+      margin-top: 30px;
+    }
 
-      .blanco-rojo2 {
-        color: black;
-        margin-top: 30px;
-        background-color: rgb(162, 255, 148);
-        border: 1px solid rgb(100, 213, 82);
-        border-radius: 2px;
-      }
+    .blanco-rojo2 {
+      color: black;
+      margin-top: 30px;
+      background-color: rgb(162, 255, 148);
+      border: 1px solid rgb(100, 213, 82);
+      border-radius: 2px;
+    }
 
-      .blanco-rojo3 {
-        color: black;
-        background-color: rgb(255, 148, 148);
-        border: 1px solid rgb(232, 97, 97);
-        border-radius: 2px;
-        margin-top: 30px;
-      }
-    </style>
+    .blanco-rojo3 {
+      color: black;
+      background-color: rgb(255, 148, 148);
+      border: 1px solid rgb(232, 97, 97);
+      border-radius: 2px;
+      margin-top: 30px;
+    }
+
+    #map {
+      height: 400px;
+    }
+  </style>
   </head>
   <br>
   <br>
@@ -85,52 +90,118 @@
             tabindex="0">
             <div class="container mt-5">
               <div class="row">
-               
-                  <div class="col-lg-3">
-                    <% if (results[0].foto1_compostera != ''  ) {%>
+
+                <div class="col-lg-3">
+                  <% if (results[0].foto1_compostera !=null) {%>
                     <img class="shadow"
                       style="border-radius: 22px 22px 22px 22px; width: 100%; height: 300px; object-fit: cover; "
-                      src="/uploads/<%=results[0].foto1_compostera%>"> 
-                      <% }%>
-                      <div class="mt-3">
-                        <h5><%=userdata[0].user%></h5>
-                        <p class="text-muted">Contacto: <%=results[0].celular_responsable%></p>
-                        <p class="text-muted"><strong>Nombre:</strong> <%=userdata[0].nombre%></p>
-                      <p class="text-muted"><strong>Cédula:</strong> <%=userdata[0].identificacion%></p>
-                      <p class="text-muted"><strong>Correo:</strong> <%=userdata[0].email%></p>
-                      <p class="text-muted"><strong>Celular:</strong> <%=userdata[0].celular%></p>
+                      src="/uploads/<%=results[0].foto1_compostera%>">
+                    <% }%>
+                      <div class="mt-4 mb-3">
+                        <h6>
+                          <%=userdata[0].user%>
+                        </h6>
                       </div>
-                    
-                  </div>
-                 
-               
+
+                      <div class="mt-3">
+                        <p class="text-muted"><strong>Contacto: </strong>
+                          <%=results[0].celular_responsable%>
+                        </p>
+                        <p class="text-muted"><strong>Nombre:</strong>
+                          <%=userdata[0].nombre%>
+                        </p>
+                        <p class="text-muted"><strong>Cédula:</strong>
+                          <%=userdata[0].identificacion%>
+                        </p>
+                        <p class="text-muted"><strong>Correo:</strong>
+                          <%=userdata[0].email%>
+                        </p>
+                        <p class="text-muted"><strong>Celular:</strong>
+                          <%=userdata[0].celular%>
+                        </p>
+                      </div>
+
+                </div>
+
+
                 <div class="col-lg-8">
-              
+
                   <div class="card shadow">
                     <div class="card-body">
                       <h3 class="card-title mb-4">Datos compostera</h3>
-                      <p><strong>Institución:</strong> <%=results[0].	nombre_institucion%></p>
-                      <p><strong>Fecha instalación:</strong>  <%=results[0].fecha_inicial%></p>
-                      <p><strong>Código beneficiario:</strong> <%=results[0].codBenefic%></p>
-                      <p><strong>Coordenadas:</strong>  <%=results[0].coordenas%></p>
-                      <p><strong>Dirección:</strong> <%=results[0].Direccion_compostera%></p>
-                      <p><strong>Quien entrego:</strong>  <%=results[0].nombre_quientrega%></p>
-                      <p><strong>Capacidad:</strong>  <%=results[0].Capacidad_compostera%></p>
+                      <p><strong>Institución:</strong>
+                        <%=results[0]. nombre_institucion%>
+                      </p>
+                      <p><strong>Fecha instalación:</strong>
+                        <%=results[0].fecha_inicial%>
+                      </p>
+                      <p><strong>Código beneficiario:</strong>
+                        <%=results[0].codBenefic%>
+                      </p>
+                      <p><strong>Coordenadas:</strong>
+                        <%=results[0].coordenas%>
+                      </p>
+                      <p><strong>Dirección:</strong>
+                        <%=results[0].Direccion_compostera%>
+                      </p>
+                      <p><strong>Quien entrego:</strong>
+                        <%=results[0].nombre_quientrega%>
+                      </p>
+                      <p><strong>Capacidad:</strong>
+                        <%=results[0].Capacidad_compostera%>
+                      </p>
 
+                      <div class="mb-4">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                          data-bs-target="#coordModal">
+                          Actualizar ubicación <i class='bx bxs-map-pin'></i>
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="coordModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                          aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <form action="/actualizarcoordscompost" method="post">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Selecciona Coordenadas</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  
+                                    <input class="form-control" type="text" name="coordenadas" id="coordInput"
+                                      value="<%=results[0].coordenas%>" type="text" required>
+                                    <input hidden class="form-control" type="text" name="lat" id="coordlatInput"
+                                      value="<%=results[0].lat%>" type="text">
+                                    <input  hidden class="form-control" type="text" name="log" id="coordlogInput"
+                                      value="<%=results[0].log%>" type="text">
+                                      <input type="text" value="<%= results[0].id %>" name="id_compostera" hidden>
+                                    <div id="map"></div>
+                                  
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div>
                         <iframe class="card-img-top"
-                        src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=<%= results[0].coordenas %> &amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                        width="100%" height="300px" style="border:0;" allowfullscreen=""
-                        loading="lazy"></iframe>
+                          src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=<%= results[0].coordenas %> &amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+                          width="100%" height="300px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                       </div>
                       <!-- Puedes añadir más información aquí -->
                     </div>
                   </div>
                 </div>
-                
+
               </div>
             </div>
-            
+
 
 
 
@@ -143,22 +214,25 @@
             <div class="row mt-3">
               <ol class="list-group list-group-numbered">
                 <% resTotalRegistros.forEach((resTotalRegistrosdata)=> {%>
-                  <% if(resTotalRegistrosdata.id_compostera == results[0].id ){ %>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold"><%= resTotalRegistrosdata.TipoRegistro %></div>
-                    <%= resTotalRegistrosdata.fecha_registro %>
-                  </div>
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Cantidad compost</div>
-                    <span class="badge bg-primary rounded-pill"><%= resTotalRegistrosdata.cantidadCompost %></span>
-                  </div>
-                  <img class="shadow"
-                    style="border-radius: 22px 22px 22px 22px; width: 50px;  object-fit: cover; "
-                    src="/uploads/<%=resTotalRegistrosdata.FotoEstadoActual%>">
-                </li>
-                <%} %>
-                  <% }) %>
+                  <% if(resTotalRegistrosdata.id_compostera==results[0].id ){ %>
+                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">
+                          <%= resTotalRegistrosdata.TipoRegistro %>
+                        </div>
+                        <%= resTotalRegistrosdata.fecha_registro %>
+                      </div>
+                      <div class="ms-2 me-auto">
+                        <div class="fw-bold">Cantidad compost</div>
+                        <span class="badge bg-primary rounded-pill">
+                          <%= resTotalRegistrosdata.cantidadCompost %>
+                        </span>
+                      </div>
+                      <img class="shadow" style="border-radius: 22px 22px 22px 22px; width: 50px;  object-fit: cover; "
+                        src="/uploads/<%=resTotalRegistrosdata.FotoEstadoActual%>">
+                    </li>
+                    <%} %>
+                      <% }) %>
               </ol>
             </div>
           </div>
@@ -201,48 +275,54 @@
           </div>
           <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">
             <div class="row">
-              <div class="col-2">
-                <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem;">
-                  <img src="/img/pala.png" class="card-img-top" width="50px" alt="...">
-                  <div class="card-body">
-                   
-                    <a style="width: 100%;" class=" btn btn-sm btn-secondary mt-1" id="customLink"
-                    href="/formVisitaSeguimiento/<%= results[0].id %>">Reporte visita de seguimiento</a> <br>
+              <% if(role=='admin' || role=='supervisor' ){ %>
+                <div class="col-xs-12 col-md-6 col-xl-2">
+                  <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem;">
+                    <div class="card-body">
+                      <a style="width: 100%;" class=" btn btn-sm btn-warning mt-1 " id="customLink"
+                        href="/formVisitaSeguimiento/<%= results[0].id %>"> <strong>Reporte visita de
+                          seguimiento</strong> </a> <br>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-2">
-                <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem; ">
-                  <img src="/img/pala.png"  class="card-img-top">
-                  <div class="card-body">
-                    <a style="width: 100%;" class=" btn btn-sm btn-secondary mt-1" id="customLink"
-                    href="/formCargeBiomasa/<%= results[0].id %>">Cargue de Biomasa</a> <br>
-                  </div>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem;">
-                  <img src="/img/pala.png"  class="card-img-top">
-                  <div class="card-body">
-                    <a style="width: 100%;" class=" btn btn-sm btn-secondary mt-1" id="customLink"
-                    href="/formDescargeCompost/<%= results[0].id %>">Descargue de compost</a> <br>
-                  </div>
-                </div>
-              </div>
-              <div class="col-2">
-                <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem; ">
-                  <img src="/img/pala.png"  class="card-img-top">
-                  <div class="card-body">
-                    <a style="width: 100%;" class=" btn btn-sm btn-secondary mt-1" id="customLink"
-                    href="/formCompostMadurado/<%= results[0].id %>">Compost madurado</a> <br>
-                  </div>
-                </div>
-              </div>
+                <% } %>
+                  <% if(role=='admin' || role=='user1' ){ %>
+
+                    <div class="col-xs-12 col-md-6 col-xl-2">
+                      <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem; ">
+
+                        <div class="card-body">
+                          <a style="width: 100%;" class=" btn btn-sm btn-success mt-1" id="customLink"
+                            href="/formCargeBiomasa/<%= results[0].id %>"><strong>Cargue de Biomasa</strong></a> <br>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 col-xl-2">
+                      <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem;">
+
+                        <div class="card-body">
+                          <a style="width: 100%;" class=" btn btn-sm btn-secondary mt-1" id="customLink"
+                            href="/formDescargeCompost/<%= results[0].id %>"><strong>Descargue de compost</strong></a>
+                          <br>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 col-xl-2">
+                      <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem; ">
+
+                        <div class="card-body">
+                          <a style="width: 100%;" class=" btn btn-sm btn-dark mt-1" id="customLink"
+                            href="/formCompostMadurado/<%= results[0].id %>"><strong>Compost madurado</strong></a>
+                          <br>
+                        </div>
+                      </div>
+                    </div>
+                    <% } %>
             </div>
 
-            
-           
-        
+
+
+
           </div>
         </div>
       </div>
@@ -266,7 +346,49 @@
   <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Crear el mapa y centrarlo en la ubicación actual del usuario
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          var userLat = position.coords.latitude;
+          var userLng = position.coords.longitude;
 
+          var map = L.map('map').setView([userLat, userLng], 15);
+
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+          }).addTo(map);
+
+          var customIcon = L.icon({
+            iconUrl: '../img/marcador-de-posicion.png',
+            iconSize: [40, 40], iconAnchor: [16, 32], popupAnchor: [0, -32]
+          });
+
+          var marker = L.marker([userLat, userLng], { icon: customIcon, draggable: false }).addTo(map);
+
+          map.on('move', function () {
+            var center = map.getCenter();
+            marker.setLatLng(center);
+            $('#coordInput').val(center.lat + ',' + center.lng);
+            $('#coordlatInput').val(center.lat);
+            $('#coordlogInput').val(center.lng);
+          });
+
+          // Asegurar que el mapa se actualice después de abrir el modal
+          $('#coordModal').on('shown.bs.modal', function () {
+            map.invalidateSize();
+            var center = map.getCenter();
+            marker.setLatLng(center);
+            $('#coordInput').val(center.lat +','+center.lng);
+            $('#coordlatInput').val(center.lat);
+            $('#coordlogInput').val(center.lng);
+          });
+        });
+      }
+    });
+  </script>
   <script>
     // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
     if ('<%- chartData %>') {
@@ -307,29 +429,60 @@
 
   </script>
 
-<script>
-  // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-  if ('<%- chartData1 %>') {
-    const datos1 = JSON.parse('<%- chartData1 %>');
+  <script>
+    // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
+    if ('<%- chartData1 %>') {
+      const datos1 = JSON.parse('<%- chartData1 %>');
 
-    const meses = datos1.map(dato => 'Mes ' + dato.mes);
-    const data1 = datos1.map(dato => dato.total_kilos);
+      const meses = datos1.map(dato => 'Mes ' + dato.mes);
+      const data1 = datos1.map(dato => dato.total_kilos);
 
-    // Obtén una referencia al elemento canvas
-    const canvas = document.getElementById('barChart1');
+      // Obtén una referencia al elemento canvas
+      const canvas = document.getElementById('barChart1');
 
-    // Configura el gráfico utilizando los datos
-    const ctx1 = canvas.getContext('2d');
-    const chart = new Chart(ctx1, {
-      type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+      // Configura el gráfico utilizando los datos
+      const ctx1 = canvas.getContext('2d');
+      const chart = new Chart(ctx1, {
+        type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+        data: {
+          labels: meses, // Etiquetas para el eje X (vendedores)
+          datasets: [{
+            label: 'Cantidad Compost descargado por mes (kg)',
+            data: data1, // Datos para el eje Y (cantidad de clientes)
+            backgroundColor: 'rgba(44, 191, 174, 0.2)', // Color de fondo de las barras
+            borderColor: 'rgba(44, 191, 174, 1)', // Color del borde de las barras
+            borderWidth: 2 // Ancho del borde de las barras
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true // Comienza el eje Y en cero
+            }
+          }
+        }
+      });
+    }
+
+  </script>
+  <script>
+    const datos2 = JSON.parse('<%- chartData2 %>');
+    const ctx2 = document.getElementById('barChart2').getContext('2d');
+
+    const fechas = datos2.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
+    const temperaturas = datos2.map(d => d.temperatura);
+
+    new Chart(ctx2, {
+      type: 'line',
       data: {
-        labels: meses, // Etiquetas para el eje X (vendedores)
+        labels: fechas,
         datasets: [{
-          label: 'Cantidad Compost descargado por mes (kg)',
-          data: data1, // Datos para el eje Y (cantidad de clientes)
-          backgroundColor: 'rgba(44, 191, 174, 0.2)', // Color de fondo de las barras
-          borderColor: 'rgba(44, 191, 174, 1)', // Color del borde de las barras
-          borderWidth: 2 // Ancho del borde de las barras
+          label: 'Variación ambiente de Temperatura total',
+          data: temperaturas,
+          borderColor: 'blue',
+          fill: false
         }]
       },
       options: {
@@ -342,67 +495,36 @@
         }
       }
     });
-  }
+  </script>
+  <script>
+    const datos3 = JSON.parse('<%- chartData3 %>');
+    const ctx3 = document.getElementById('barChart3').getContext('2d');
 
-</script>
-<script>
-  const datos2 = JSON.parse('<%- chartData2 %>');
-  const ctx2 = document.getElementById('barChart2').getContext('2d');
+    const fechas3 = datos3.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
+    const humedad = datos3.map(d => d.humedad);
 
-  const fechas = datos2.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
-  const temperaturas = datos2.map(d => d.temperatura);
-
-  new Chart(ctx2, {
-    type: 'line',
-    data: {
-      labels: fechas,
-      datasets: [{
-        label: 'Variación ambiente de Temperatura total',
-        data: temperaturas,
-        borderColor: 'blue',
-        fill: false
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true // Comienza el eje Y en cero
+    new Chart(ctx3, {
+      type: 'line',
+      data: {
+        labels: fechas3,
+        datasets: [{
+          label: 'Variación ambiente de Humedad total',
+          data: humedad,
+          borderColor: 'rgb(239, 82, 97)',
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true // Comienza el eje Y en cero
+          }
         }
       }
-    }
-  });
-</script>
-<script>
-  const datos3 = JSON.parse('<%- chartData3 %>');
-  const ctx3 = document.getElementById('barChart3').getContext('2d');
-
-  const fechas3 = datos3.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
-  const humedad = datos3.map(d => d.humedad);
-
-  new Chart(ctx3, {
-    type: 'line',
-    data: {
-      labels: fechas3,
-      datasets: [{
-        label: 'Variación ambiente de Humedad total',
-        data: humedad,
-        borderColor: 'rgb(239, 82, 97)',
-        fill: false
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true // Comienza el eje Y en cero
-        }
-      }
-    }
-  });
-</script>
+    });
+  </script>
   <script>
     $(document).ready(function () {
       $('#dataTable').DataTable();
@@ -415,7 +537,7 @@
       new $.fn.dataTable.FixedHeader(table);
     });
   </script>
- 
+
 
 
 

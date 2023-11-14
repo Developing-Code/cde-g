@@ -39,12 +39,12 @@
           </div>
           <div class="offcanvas-body">
             <ul>
-              <% if ( role=='admin' || role=='user1' ) {%>
+              <% if ( role=='admin' || role=='user1'  || role=='supervisor' ) {%>
                 <li class="text-dark p-2 m-2" style="background-color: #f4f4f4; border-radius: 15px;">
                   <a href="/home" class="nav-link text-dark"> <i class='bx  bx-home-alt-2'></i> Home</a>
                 </li>
                 <% } %>
-                  <% if ( role=='admin' ) {%>
+                  <% if ( role=='admin') {%>
                     <li class="text-dark p-2 m-2" style="background-color: #f4f4f4; border-radius: 15px;">
                       <a href="/register" class="nav-link text-dark"> <i class='bx  bx-male'></i> Panel usuarios</a>
                     </li>

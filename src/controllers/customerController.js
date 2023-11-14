@@ -133,7 +133,7 @@ controller.welcome = (req, res) => {
 controller.home = (req, res) => {
   if (req.session.loggedin) {
     id_usuario = req.session.ID
-    if (req.session.role === "admin") {
+    if (req.session.role === "admin"  || req.session.role=='supervisor') {
       req.getConnection((error, conn) => {
         conn.query("SELECT  YEAR(fecha_registro) AS ano,  MONTH(fecha_registro) AS mes, SUM(CantidadMO) AS total_kilos  FROM registrodiarioestadooperacion GROUP BY  ano, mes  ORDER BY ano, mes;", (error, chartData) => {
           if (error) {
@@ -982,7 +982,7 @@ controller.cronogramaBuscarTel = (req, res) => {
   if (req.session.loggedin) {
     const BuscarTel = req.body.BuscarTel;
 
-    if (req.session.role == "user1" || req.session.role == "admin" || req.session.role == "servicioCliente" || req.session.role == "Despachador") {
+    if (req.session.role == "user1" || req.session.role == "admin" || req.session.role == "supervisor" || req.session.role == "Despachador") {
       req.getConnection((error, conn) => {
         conn.query(
           "SELECT * FROM cronogramas  WHERE celular = ?  ORDER BY cronogramas.fecha DESC", [BuscarTel], (error, results) => {
@@ -1055,7 +1055,7 @@ controller.totalcomposterashoy = (req, res) => {
       });
     } else if (
       req.session.role == "admin" ||
-      req.session.role == "servicioCliente" ||
+      req.session.role == "supervisor" ||
       req.session.role == "Despachador"
     ) {
       req.getConnection((error, conn) => {
@@ -2159,16 +2159,15 @@ controller.editCompostera = (req, res) => {
     let id = req.params.id;
     req.getConnection((error, conn) => {
       conn.query(
-        "SELECT * FROM usuarios ",
-        (error, resultsUser) => {
+        "SELECT * FROM composteras WHERE id = ? ",
+        [id],
+        (error, results) => {
           if (error) {
             console.log(error);
           } else {
+            id_usuario = results[0].id_usuario;
             req.getConnection((error, conn) => {
-              conn.query(
-                "SELECT * FROM composteras WHERE id = ? ",
-                [id],
-                (error, results) => {
+              conn.query( "SELECT * FROM usuarios  WHERE id = ?",[id_usuario],(error, resultsUser) => {
                   if (error) {
                     console.log(error);
                   } else {
@@ -2180,14 +2179,17 @@ controller.editCompostera = (req, res) => {
                       name: req.session.name,
                       role: req.session.role,
                     });
+                    
                   }
                 }
               );
             });
+            
           }
         }
       );
     });
+    
   } else {
     res.redirect("/login");
   }
@@ -2677,6 +2679,38 @@ controller.editarComposterasSend = (req, res) => {
                 }
               );
             });
+          }
+        }
+      );
+    });
+  } else {
+    res.redirect("/login")
+  }
+};
+controller.actualizarcoordscompost = (req, res) => {
+  if (req.session.loggedin) {
+    const lastUrl = req.header('Referer') || '/totalcomposteras';
+    const id_compostera = req.body.id_compostera;
+    const coordenadas = req.body.coordenadas;
+    const lat = req.body.lat;
+    const log = req.body.log;
+
+    req.getConnection((error, conn) => {
+      conn.query(
+        "UPDATE composteras SET ? WHERE id = ? ",
+        [
+          {
+            coordenas: coordenadas,
+            lat: lat,
+            log: log
+          },
+          id_compostera,
+        ],
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            res.redirect(lastUrl);
           }
         }
       );

@@ -114,6 +114,11 @@ router.get('/cronogramaReprogramar', customerController.cronogramaReprogramados)
 router.get('/delatecompostera/:id', customerController.delatecompostera)
 router.get('/editCompostera/:id', customerController.editCompostera)
 router.post('/editarComposterasSend',uploadEF, customerController.editarComposterasSend)
+router.post('/actualizarcoordscompost', customerController.actualizarcoordscompost)
+
+
+
+
 router.get('/cronogramaReprogramar/:id', customerController.cronogramaSolidReprogramar)
 router.post('/cronogramaReprogramarSend', customerController.cronogramaSolidReprogramarSend)
 router.get('/cornogramaReprogramacionRespuesta/:id', customerController.cronogramaReportReprogramar)
