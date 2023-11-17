@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Equipo</title>
+    <!-- Agregar enlaces al CSS de Bootstrap y a tu propio archivo de estilos -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="tu_estilo.css">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h2>Detalles del Equipo</h2>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Sección de Información -->
+                        <div class="mb-4">
+                            <h3>Información</h3>
+                            <p>Nombre del Equipo: <span id="nombreEquipo">Nombre del Equipo</span></p>
+                            <p>Descripción: <span id="descripcionEquipo">Descripción del Equipo</span></p>
+                            <!-- Puedes agregar más detalles según sea necesario -->
+                        </div>
+
+                        <!-- Sección de Galería de Imágenes -->
+                        <div class="mb-4">
+                            <h3>Galería de Imágenes</h3>
+                            <div id="galeria" class="row">
+                                <!-- Las imágenes se cargarán dinámicamente aquí -->
+                            </div>
+                        </div>
+
+                        <!-- Sección de Estadísticas -->
+                        <div class="mb-4">
+                            <h3>Estadísticas</h3>
+                            <p>Estadística 1: <span id="estadistica1">Valor 1</span></p>
+                            <p>Estadística 2: <span id="estadistica2">Valor 2</span></p>
+                            <!-- Puedes agregar más estadísticas según sea necesario -->
+                        </div>
+
+                        <!-- Botón para Generar Informe -->
+                        <button onclick="generarInforme()" class="btn btn-primary">Generar Informe</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Agregar el enlace a los scripts de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="tu_script.js"></script>
+</body>
+</html>

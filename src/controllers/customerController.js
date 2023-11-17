@@ -133,7 +133,7 @@ controller.welcome = (req, res) => {
 controller.home = (req, res) => {
   if (req.session.loggedin) {
     id_usuario = req.session.ID
-    if (req.session.role === "admin"  || req.session.role=='supervisor') {
+    if (req.session.role === "admin" || req.session.role == 'supervisor') {
       req.getConnection((error, conn) => {
         conn.query("SELECT  YEAR(fecha_registro) AS ano,  MONTH(fecha_registro) AS mes, SUM(CantidadMO) AS total_kilos  FROM registrodiarioestadooperacion GROUP BY  ano, mes  ORDER BY ano, mes;", (error, chartData) => {
           if (error) {
@@ -1696,14 +1696,21 @@ controller.formVisitaSeguimientoSend = (req, res) => {
               timer: 3000,
             });
           } else {
-            res.render("notification", {
-              alert: true,
-              alertTitle: "Notificacion",
-              alertMessage: "Se ha cargado exitosamente",
-              alertIcon: "success",
-              showConfirmButton: false,
-              ruta: "totalcomposteraslist",
-              timer: 3000,
+            req.getConnection((error, conn) => {
+              conn.query("SELECT * FROM registrodiarioestadooperacion ORDER BY id DESC LIMIT 1;", (error, result) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  res.render("seguimientofoto1", {
+                    login: true,
+                    ID: req.session.ID,
+                    name: req.session.name,
+                    role: req.session.role,
+                    result: result
+                  });
+                }
+              }
+              );
             });
           }
         }
@@ -1714,6 +1721,83 @@ controller.formVisitaSeguimientoSend = (req, res) => {
     res.redirect("/login");
   }
 };
+
+controller.seguimientofoto1 = (req, res) => {
+  if (req.session.loggedin) {
+    var idCompost = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM usuarios ",
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query("SELECT * FROM composteras WHERE id = ?", [idCompost], (error, resultscompost) => {
+                if (error) {
+                  console.log(error);
+                } else {
+
+                  res.render("formVisitaSeguimiento", {
+                    results: results,
+                    resultscompost: resultscompost,
+                    login: true,
+                    ID: req.session.ID,
+                    name: req.session.name,
+                    role: req.session.role,
+                    idCompost: idCompost
+                  });
+                }
+              }
+              );
+            });
+          }
+        }
+      );
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+
+
+controller.subirFoto = (req, res) => {
+  if (req.session.loggedin) {
+
+    const foto = req.file;
+    const fotoname = req.file.filename;
+    const id = req.body.id;
+
+    if (foto && id) {
+      req.getConnection((error, conn) => {
+        conn.query(
+          "INSERT INTO archivos_usuarios SET ?",
+          {
+            id_registro: id,
+            nombre: fotoname,
+            archivo: fotoname
+          },
+          (error) => {
+            if (error) {
+              res.status(400).json({ error: 'Error al almacenar en la base de datos.' });
+            } else {
+              const url = `/uploads/${fotoname}`;
+              res.json({ url: url });
+            }
+          }
+        );
+      });
+    } else {
+      res.status(400).json({ error: 'Por favor, proporciona una foto y un ID.' });
+    }
+    
+  } else {
+    res.redirect("/login");
+  }
+};
+
+
+
 controller.agregarBiomasaSend = (req, res) => {
   if (req.session.loggedin) {
     let foto;
@@ -2126,29 +2210,29 @@ controller.editCompostera = (req, res) => {
           } else {
             id_usuario = results[0].id_usuario;
             req.getConnection((error, conn) => {
-              conn.query( "SELECT * FROM usuarios  WHERE id = ?",[id_usuario],(error, resultsUser) => {
-                  if (error) {
-                    console.log(error);
-                  } else {
-                    res.render("editCompostera", {
-                      data: results[0],
-                      results: resultsUser,
-                      login: true,
-                      ID: req.session.ID,
-                      name: req.session.name,
-                      role: req.session.role,
-                    });
-                    
-                  }
+              conn.query("SELECT * FROM usuarios  WHERE id = ?", [id_usuario], (error, resultsUser) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  res.render("editCompostera", {
+                    data: results[0],
+                    results: resultsUser,
+                    login: true,
+                    ID: req.session.ID,
+                    name: req.session.name,
+                    role: req.session.role,
+                  });
+
                 }
+              }
               );
             });
-            
+
           }
         }
       );
     });
-    
+
   } else {
     res.redirect("/login");
   }
