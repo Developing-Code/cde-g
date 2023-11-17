@@ -1639,6 +1639,13 @@ controller.composterasNewSend = async (req, res) => {
 
 controller.formVisitaSeguimientoSend = (req, res) => {
   if (req.session.loggedin) {
+    let foto;
+    if (req.file) {
+      foto = req.file.filename;
+    } else {
+      foto = null;
+    }
+    const firma = req.body.saveFirmaText;
     const uploadImages = req.body.uploadImages;
     const fecha_registro = req.body.fecha_registro;
     const hora_registro = req.body.hora_registro;
@@ -1651,6 +1658,9 @@ controller.formVisitaSeguimientoSend = (req, res) => {
     const id_quienRegistra = req.body.id_quienRegistra;
     const nombre_quienRegistra = req.body.nombre_quienRegistra;
     const idCompost = req.body.idCompost;
+    const hallazgoFVS = req.body.hallazgoFVS;
+    const causaFVS = req.body.causaFVS;
+    const recomendacionesFVS = req.body.recomendacionesFVS;
     req.getConnection((error, conn) => {
       conn.query(
         "INSERT INTO registrodiarioestadooperacion SET ?",
@@ -1666,66 +1676,12 @@ controller.formVisitaSeguimientoSend = (req, res) => {
           Polor: ausenciaolores,
           prelixiviados: prelixiviados,
           TipoRegistro: 'VISITASEGUIMIENTO',
-          id_quienRegistra: id_quienRegistra
-        },
-        (error) => {
-          if (error) {
-            console.log(error);
-            res.render("notification", {
-              alert: true,
-              alertTitle: "Notificacion",
-              alertMessage: error,
-              alertIcon: "danger",
-              showConfirmButton: false,
-              ruta: "totalcomposteras",
-              timer: 3000,
-            });
-          } else {
-            if (uploadImages == 'on') {
-              res.render("cargarImagen1",{
-                idCompost: idCompost,
-                login: true,
-                ID: req.session.ID,
-                name: req.session.name,
-                role: req.session.role,
-              });
-            } else {
-              res.render("notification", {
-                alert: true,
-                alertTitle: "Notificacion",
-                alertMessage: "Se ha cargado exitosamente",
-                alertIcon: "success",
-                showConfirmButton: false,
-                ruta: "totalcomposteras",
-                timer: 3000,
-              });
-            }
-          }
-        }
-      );
-    });
-    
-
-
-
-
-
-    req.getConnection((error, conn) => {
-      conn.query(
-        "INSERT INTO registrodiarioestadooperacion SET ?",
-        {
-          id_compostera: idCompost,
-          fecha_registro: fecha_registro,
-          hora_registro: hora_registro,
-          clima: estClima,
-          temperatura: temperatura_compost,
-          humedad: humedad_compost,
-          Pinsectos: prevectores,
-          Proedores: prevectores,
-          Polor: ausenciaolores,
-          prelixiviados: prelixiviados,
-          TipoRegistro: 'VISITASEGUIMIENTO',
-          id_quienRegistra: id_quienRegistra
+          FotoEstadoActual: foto,
+          id_quienRegistra: id_quienRegistra,
+          hallazgoFVS: hallazgoFVS,
+          causaFVS: causaFVS,
+          recomendacionesFVS: recomendacionesFVS,
+          firma: firma,
         },
         (error) => {
           if (error) {
@@ -1746,15 +1702,13 @@ controller.formVisitaSeguimientoSend = (req, res) => {
               alertMessage: "Se ha cargado exitosamente",
               alertIcon: "success",
               showConfirmButton: false,
-              ruta: "totalcomposteras",
+              ruta: "totalcomposteraslist",
               timer: 3000,
             });
-
           }
         }
       );
     });
-
 
   } else {
     res.redirect("/login");
@@ -1762,7 +1716,12 @@ controller.formVisitaSeguimientoSend = (req, res) => {
 };
 controller.agregarBiomasaSend = (req, res) => {
   if (req.session.loggedin) {
-    let foto = req.file.filename;
+    let foto;
+    if (req.file) {
+      foto = req.file.filename;
+    } else {
+      foto = null;
+    }
     let firma = 'firma';
     let serialCompostera = '0000000000';
     const fecha_registro = req.body.fecha_registro;
@@ -1773,13 +1732,13 @@ controller.agregarBiomasaSend = (req, res) => {
     var totalctnmestructurante = ctnmaterialestructurante * 0.25 * 0.4 * 0.6 * 1000 * 0.55;
     const prevectores = req.body.prevectores;
     const ausenciaolores = req.body.ausenciaolores;
-    const descrPreolores = req.body.descrPreolores;
     const estClima = req.body.estClima;
     const temperatura = req.body.temperatura;
     const humedad = req.body.humedad;
     const id_quienRegistra = req.body.id_quienRegistra;
     const nombre_quienRegistra = req.body.nombre_quienRegistra;
     const idCompost = req.body.idCompost;
+    const hallazgoFVS = req.body.hallazgoFVS;
 
 
     if (prevectores == 'ratas') {
@@ -1802,7 +1761,6 @@ controller.agregarBiomasaSend = (req, res) => {
           humedad: humedad,
           Pinsectos: Pinsectos,
           Proedores: Proedores,
-          descrPreolores: descrPreolores,
           Polor: ausenciaolores,
           MaterialEstructurante: 'NA',
           CantidadME: totalctnmestructurante,
@@ -1810,7 +1768,8 @@ controller.agregarBiomasaSend = (req, res) => {
           CantidadMO: totalctnbiomasa,
           FotoEstadoActual: foto,
           TipoRegistro: 'CARGABIOMASA',
-          id_quienRegistra: id_quienRegistra
+          id_quienRegistra: id_quienRegistra,
+          hallazgoFVS: hallazgoFVS
         },
         (error) => {
           if (error) {
@@ -1831,7 +1790,7 @@ controller.agregarBiomasaSend = (req, res) => {
               alertMessage: "Se ha cargado exitosamente",
               alertIcon: "success",
               showConfirmButton: false,
-              ruta: "totalcomposteras",
+              ruta: "totalcomposteraslist",
               timer: 3000,
             });
 
@@ -1889,7 +1848,7 @@ controller.descargeCompostSend = (req, res) => {
               alertMessage: error,
               alertIcon: "danger",
               showConfirmButton: false,
-              ruta: "totalcomposteras",
+              ruta: "totalcomposteraslist",
               timer: 3000,
             });
           } else {
@@ -1899,7 +1858,7 @@ controller.descargeCompostSend = (req, res) => {
               alertMessage: "Se ha cargado exitosamente",
               alertIcon: "success",
               showConfirmButton: false,
-              ruta: "totalcomposteras",
+              ruta: "totalcomposteraslist",
               timer: 3000,
             });
           }
@@ -1955,7 +1914,7 @@ controller.compostMaduradoSend = (req, res) => {
               alertMessage: error,
               alertIcon: "danger",
               showConfirmButton: false,
-              ruta: "totalcomposteras",
+              ruta: "totalcomposteraslist",
               timer: 3000,
             });
           } else {
@@ -1965,7 +1924,7 @@ controller.compostMaduradoSend = (req, res) => {
               alertMessage: "Se ha cargado exitosamente",
               alertIcon: "success",
               showConfirmButton: false,
-              ruta: "totalcomposteras",
+              ruta: "totalcomposteraslist",
               timer: 3000,
             });
           }

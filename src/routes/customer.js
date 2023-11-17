@@ -96,7 +96,7 @@ router.get('/formCompostMadurado/:id', customerController.formCompostMadurado)
 
 
 router.post('/agregarNuevocomposterasSend',uploadEF , customerController.composterasNewSend)
-router.post('/formVisitaSeguimientoSend', customerController.formVisitaSeguimientoSend)
+router.post('/formVisitaSeguimientoSend',uploadEF, customerController.formVisitaSeguimientoSend)
 router.post('/agregarBiomasaSend',uploadEF , customerController.agregarBiomasaSend)
 router.post('/descargeCompostSend',uploadEF , customerController.descargeCompostSend)
 router.post('/compostMaduradoSend',uploadEF , customerController.compostMaduradoSend)

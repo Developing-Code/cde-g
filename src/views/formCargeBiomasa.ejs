@@ -59,30 +59,31 @@
                         <h6 for="usuario">Cantidad de biomasa residual</h6>
                         <div class="input-group">
                           <span style="font-size: 12px;" class="input-group-text" id="basic-addon1">Canastilla</span>
-                          
-                            <select style="font-size: 12px;" name="ctnbiomasa" class="form-control" id="ctnbiomasa">
-                              <option value="2">2</option>
-                              <option value="1.66">1-2/3</option>
-                              <option value="1.33">1-1/3</option>
-                              <option value="1">1</option>
-                              <option value="0.66">2/3</option>
-                              <option value="0.33">1/3</option>
-                            </select>
+
+                          <select style="font-size: 12px;" name="ctnbiomasa" class="form-control" id="ctnbiomasa">
+                            <option value="2">2</option>
+                            <option value="1.66">1-2/3</option>
+                            <option value="1.33">1-1/3</option>
+                            <option value="1">1</option>
+                            <option value="0.66">2/3</option>
+                            <option value="0.33">1/3</option>
+                          </select>
                         </div>
 
                       </div>
                       <div class="mb-3">
                         <h6 for="usuario">Cantidad de material estructurante</h6>
                         <div class="input-group">
-                          <span style="font-size: 12px;" class="input-group-text" id="basic-addon2">Canastilla</span>                         
-                            <select style="font-size: 12px;" name="ctnmaterialestructurante" class="form-control" id="ctnmaterialestructurante">
-                              <option value="2">2</option>
-                              <option value="1.66">1-2/3</option>
-                              <option value="1.33">1-1/3</option>
-                              <option value="1">1</option>
-                              <option value="0.66">2/3</option>
-                              <option value="0.33">1/3</option>
-                            </select>
+                          <span style="font-size: 12px;" class="input-group-text" id="basic-addon2">Canastilla</span>
+                          <select style="font-size: 12px;" name="ctnmaterialestructurante" class="form-control"
+                            id="ctnmaterialestructurante">
+                            <option value="2">2</option>
+                            <option value="1.66">1-2/3</option>
+                            <option value="1.33">1-1/3</option>
+                            <option value="1">1</option>
+                            <option value="0.66">2/3</option>
+                            <option value="0.33">1/3</option>
+                          </select>
                         </div>
 
                       </div>
@@ -96,11 +97,14 @@
                           <option value="ninguno">Ninguno</option>
                           <option value="otro">Otro</option>
                         </select>
-                        
+
                       </div>
                       <div class="mb-3">
-                        <input type="text" id="inputOtro" placeholder="cual otro?" name="prevectores" class="form-control" style="display:none;">
+                        <h6 for="hallazgoFVS">Nota</h6>
+                        <textarea class="form-control" name="hallazgoFVS" id="hallazgoFVS" cols="30"
+                          rows="2"></textarea>
                       </div>
+                      
 
                     </div>
                     <div class="col-lg-6 col-sm-12">
@@ -111,8 +115,7 @@
                           <option value="si">si</option>
                           <option selected value="no">no</option>
                         </select>
-                        <input style="font-size: 12px;" type="text" class="form-control mt-3" name="descrPreolores"
-                          placeholder="describa el olor" required>
+                        
 
 
                       </div>
@@ -127,12 +130,12 @@
                       </div>
                       <div class="mb-3">
                         <h6 for="usuario">Coordenadas de la ubicación</h6>
-                        <input style="font-size: 12px;" value="<%= resultscompost[0].coordenas %>"  type="text" id="latloguser" class="form-control"
-                          name="coordenadas" required>
-                        <input style="font-size: 12px;" value="<%= resultscompost[0].lat %>"  type="text" id="lat" class="form-control" name="lat" required
-                          hidden>
-                        <input style="font-size: 12px;" value="<%= resultscompost[0].log %>"  type="text" id="log" class="form-control" name="log" required
-                          hidden>
+                        <input style="font-size: 12px;" value="<%= resultscompost[0].coordenas %>" type="text"
+                          id="latloguser" class="form-control" name="coordenadas">
+                        <input style="font-size: 12px;" value="<%= resultscompost[0].lat %>" type="text" id="lat"
+                          class="form-control" name="lat" hidden>
+                        <input style="font-size: 12px;" value="<%= resultscompost[0].log %>" type="text" id="log"
+                          class="form-control" name="log" hidden>
                         <br>
                         <div class="marker-position" hidden>Abrir mapa</div>
                         <div hidden id="map"></div>
@@ -150,9 +153,9 @@
                           </div>
                         </div>
                         <input style="font-size: 12px;" type="text" id="temperatura" class="form-control"
-                          name="temperatura" required hidden>
+                          name="temperatura" hidden>
                         <input style="font-size: 12px;" type="text" id="humedad" class="form-control" name="humedad"
-                          required hidden>
+                          hidden>
                         <input hidden type="text" value="<%= ID%>" class="form-control" style="font-size: 12px;"
                           name="id_quienRegistra" required>
                         <input hidden type="text" value="<%= name%>" class="form-control" style="font-size: 12px;"
@@ -167,10 +170,12 @@
 
                   </div>
                   <div class="row">
-                    <input type="text" value="" name="id" hidden>
+                   
+
                     <div class="mb-3">
-                      <h6 for="usuario">Foto Compostera</h6>
-                      <input type="file" class="form-control" name="evidencia_foto" required>
+                      <input class="form-check-input" type="checkbox" id="uploadSwitch" onchange="toggleUpload()">
+                      <label for="uploadSwitch">Subir imagen de la compostera</label>
+                      <input type="file" id="fileInput" class="form-control" name="evidencia_foto" disabled>
                     </div>
 
                   </div>
@@ -225,28 +230,7 @@
 
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script>
-          function seleccionado() {
-            var opt = $('#opcion').val();
 
-            // alert(opt);
-            if (opt == "U") {
-              $('#categoria').show();
-              $('#subcategoria').hide();
-              $('#producto').hide();
-            } else {
-              if (opt == "M") {
-                $('#categoria').hide();
-                $('#subcategoria').show();
-                $('#producto').hide();
-              } else {
-                $('#categoria').hide();
-                $('#subcategoria').hide();
-                $('#producto').show();
-              }
-            }
-          }
-        </script>
 
 
         <script>
@@ -306,6 +290,10 @@
             var today = now.getFullYear() + "-" + (month) + "-" + (day);
             $("#fecha").val(today);
             $("#hora").val(hour);
+
+
+          
+
           });
         </script>
 
@@ -331,6 +319,15 @@
             }
           });
           PageTransitionEvent
+        </script>
+
+
+        <script>
+            function toggleUpload() {
+              const fileInput = document.getElementById('fileInput');
+              const uploadSwitch = document.getElementById('uploadSwitch');
+              fileInput.disabled = !uploadSwitch.checked;
+            }
         </script>
         <%- include('./partials/footer.ejs') %>
 </body>
