@@ -72,6 +72,6 @@ app.get('*', function(req, res){
   }); 
 //START ///////////////////////sin ssl//////////////////////////
 server.listen(app.get('port'), ()=>{
-    console.log("server on port 4000"+app.get('port'))
+    console.log("server on port"+app.get('port'))
 });
 ///////////////////////////////////////////////////////////////

@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    background-color: #ffffff;
+  }
+  
+  .Navbar-home{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem 4rem;
+    align-items: center;
+    z-index: 99;
+    position: sticky;
+    top: 0;
+    background-color: #ffffff60;
+    backdrop-filter: blur(9.550000190734863px);
+  }
+  .menu{
+    display: flex;
+    gap: 1rem;
+    list-style-type: none;
+}
+.menu-item {
+  text-decoration: none;
+}
+.menu-item a{
+  text-decoration: none;
+  transition: all 0.5s ease-out;
+  color: var(--neutral-700, #6A6A71);
+}
+
+.menu-item a:hover{
+  text-decoration: none;
+  border-bottom: 2px solid #EE7A1A;
+  transition: all 0.5s ease-out;
+  color: var(--neutral-900, #262629);
+
+}
+#circle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+
+  pointer-events: none;
+ 
+  background-color: #000000; /* Orange color */
+
+  /* Make the things behind the circle black and white */
+  filter: grayscale(0);
+
+  /* Use the multiply blend mode to make the circle more visible */
+  mix-blend-mode:multiply;
+}
+
+@media screen and (max-width: 1024px) {
+  #circle {
+    display: none;
+ }
+}
+
+
+
+
+/*----------------------------------------------*/
+
+
+.hero{
+  width: 100%;
+  height: 100vh;
+  background: url('../img/NEW/hero.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+
+  display: flex;
+  flex-direction: column;
+  padding: 60px 100px;
+}
+
+
+.hero .hero-title{
+  font-family: Montserrat;
+font-size: 4.5rem;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+
+background: linear-gradient(94deg, #EE4D1A 1.89%, #F7A01D 48.26%, #FF8B20 96.17%);
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+.hero .hero-subtitle{
+  color: var(--neutral-700, #6A6A71);
+/* Main/25px: Regular */
+font-family: Montserrat;
+font-size: 1.5625rem;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+/*----------------------------------------------------------------*/
+
+.video-section{
+  background: linear-gradient(102deg, #FFF -1.19%, #FFF5ED 98.69%);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+.video-section > .youtube-video{
+  margin-top: -80px;
+}
