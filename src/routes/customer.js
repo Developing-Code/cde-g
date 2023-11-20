@@ -86,6 +86,7 @@ router.get('/composteraRegistroupdate/:id', customerController.composteraRegistr
 
 //registros de operacion
 router.get('/registrosdeoperacion', customerController.registrosOperacion)
+router.get('/detallesRegitroOperacion/:id', customerController.detallesRegitroOperacion)
 
 router.get('/agregarNuevaCompostera', customerController.composteraNew)
 router.get('/checkcodBenefic', customerController.checkcodBenefic)

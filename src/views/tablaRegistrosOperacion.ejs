@@ -409,11 +409,11 @@
                           <%= data1.TipoRegistro %>
                         </td>
                         <td>
-                          <a href="/perfilCompost/<%= data1.id_compostera %>" class="btn btn-sm btn-morado1" type="button"><i
+                          <a href="/detallesRegitroOperacion/<%= data1.id %>" class="btn btn-sm btn-morado1" type="button"><i
                               class='bx bx-dots-vertical-rounded'></i></a>
                          
                           <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
-                          <a onclick="alertDelate('<%= data1.id_compostera %>')" class="btn btn-sm btn-danger" type="button"><i
+                          <a onclick="alertDelate('<%= data1.id %>')" class="btn btn-sm btn-danger" type="button"><i
                               class='bx bxs-trash'></i></a>
                         </td>
                       </tr>
@@ -442,7 +442,8 @@
     <script>
       $(document).ready(function () {
         var table = $('#users').DataTable({
-          responsive: true
+          responsive: true,
+          order: [[0, 'desc']]
         });
 
         new $.fn.dataTable.FixedHeader(table);
