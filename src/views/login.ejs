@@ -92,25 +92,9 @@
 
   <style>
     body {
-      margin: 0;
-      /* Elimina el margen predeterminado del cuerpo */
-      padding: 0;
-      /* Elimina el relleno predeterminado del cuerpo */
-      height: 100vh;
-      /* Establece la altura del cuerpo al 100% de la altura de la ventana */
-      background-image: url('https://img.freepik.com/fotos-premium/crecimiento-soja-granja-fondo-cielo-azul-concepto-paso-creciente-siembra-plantas-agricolas_34152-1899.jpg?w=2000');
-      /* Ruta a tu imagen de fondo */
-      background-size: cover;
-      /* Ajusta la imagen para cubrir toda la pantalla */
-      background-position: center;
-      /* Centra la imagen en la pantalla */
-      background-repeat: no-repeat;
-      /* Evita la repetición de la imagen de fondo */
-      font-family: 'Arial', sans-serif;
-      /* Cambia la fuente si es necesario */
-      overflow: hidden;
-    }
-
+     display: grid;
+     place-items: center;
+}
     .shadow-login {
       filter: drop-shadow(-61.8273px 44.1971px 125px rgba(0, 0, 0, 0.04)) drop-shadow(-40.0732px 28.6463px 73.206px rgba(0, 0, 0, 0.0303704)) drop-shadow(-23.815px 17.0241px 39.8148px rgba(0, 0, 0, 0.0242963)) drop-shadow(-12.3655px 8.83943px 20.3125px rgba(0, 0, 0, 0.02)) drop-shadow(-5.03778px 3.60125px 10.1852px rgba(0, 0, 0, 0.0157037)) drop-shadow(-1.14495px 0.818466px 4.91898px rgba(0, 0, 0, 0.00962963));
     }
@@ -178,18 +162,35 @@
 
 
     }
+
+    .video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  background-size: cover;
+  object-fit: cover;
+  z-index: -1; /* Place the video behind other elements */
+}
+.bg-transparent{
+  background-color : red;
+  backdrop-filter: blur(0.5);
+}
   </style>
 </head>
 
 <body class="login">
-
+  <video class="video-bg" autoplay muted loop  src="video/Seed.webm" type="video/webm"></video>
   <div style="margin-top:100px" class="container py-5">
     <div class="row d-flex justify-content-center align-items-center">
-      <div class="col-xl-4">
-        <div class="card border-0 shadow rounded-10 text-black">
+      <div class="col-xl-5">
+        <div class="card border-0 shadow rounded-10 text-dark " style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.5) 100%); backdrop-filter: blur(20px); ">
           <div class="row">
             <div class="col-lg-12">
-              <div class="card-body div-login ">
+              <div class=" card-body">
                 <div class="row">
 
                   <div class="col-xl-12 col-md-12 col-xs-12 p-5">
@@ -239,6 +240,9 @@
 
                   </div>
 
+
+                  <!-- <video autoplay muted loop src="video/Seed.webm" type="video/webm"></video> -->
+                  
 
 
                 </div>
