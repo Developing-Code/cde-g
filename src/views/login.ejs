@@ -1,71 +1,3 @@
-<!-- <!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="/img/favicon.png">
-    <title>login</title>
-    <link rel="icon" href="imgs/logo-white.ico">
-    <link rel="stylesheet" href="css/styleLogin.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-</head>
-<body class="login" >
-
-<div class="container" style="margin-top:  10%;">
-    <div class="row justify-content-center mt-5 ">
-        <div class="col-lg-4 col-md-8 col-sm-8">
-            <div class="card shadow">
-                <div class="card-title text-center border-bottom">
-                    <h2 class="p-3"><img src="img/login.png" style="width: 40%; " alt=""></h2>
-                </div>
-                <div class="card-body">
-                    <form action="loginAuth" method="POST">
-                        <div class="mb-4">
-                            <label for="usuario">Usuario</label>
-                            <input type="text" class="form-control" name="user" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="password">Contraseña</label>
-                            <input type="password" class="form-control" name="pass" required>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Iniciar sesión</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<% if(typeof alert != "undefined") { %> 
-    <script>
-        Swal.fire({
-            title: '<%=alertTitle %>',
-            text: '<%= alertMessage%>',
-            icon: '<%=alertIcon %>',
-            showConfirmButton: '<%= showConfirmButton %>' ,
-            timer: '<%= timer %>'
-        }).then(()=>{
-            window.location='/<%= ruta %>'
-        })
-    </script>
-    <% } %> 
-<script>
-    var inputs = $("input[type=text]");
-  for(var i = 0; i < inputs.length; i++){
-    var aux = $(inputs[i]).val().trim();
-    $(inputs[i]).val(aux);
-  }
-  </script>
-</body>
-
-
-</html>
- -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,9 +24,24 @@
 
   <style>
     body {
-     display: grid;
-     place-items: center;
-}
+      margin: 0;
+      /* Elimina el margen predeterminado del cuerpo */
+      padding: 0;
+      /* Elimina el relleno predeterminado del cuerpo */
+      height: 100vh;
+      background-color: rgb(240, 240, 240);
+      /* Ruta a tu imagen de fondo */
+      background-size: cover;
+      /* Ajusta la imagen para cubrir toda la pantalla */
+      background-position: center;
+      /* Centra la imagen en la pantalla */
+      background-repeat: no-repeat;
+      /* Evita la repetición de la imagen de fondo */
+      font-family: 'Arial', sans-serif;
+      /* Cambia la fuente si es necesario */
+      overflow: hidden;
+    }
+
     .shadow-login {
       filter: drop-shadow(-61.8273px 44.1971px 125px rgba(0, 0, 0, 0.04)) drop-shadow(-40.0732px 28.6463px 73.206px rgba(0, 0, 0, 0.0303704)) drop-shadow(-23.815px 17.0241px 39.8148px rgba(0, 0, 0, 0.0242963)) drop-shadow(-12.3655px 8.83943px 20.3125px rgba(0, 0, 0, 0.02)) drop-shadow(-5.03778px 3.60125px 10.1852px rgba(0, 0, 0, 0.0157037)) drop-shadow(-1.14495px 0.818466px 4.91898px rgba(0, 0, 0, 0.00962963));
     }
@@ -160,7 +107,43 @@
         overflow: hidden;
       }
 
+      .img-div-hero {
+        display: none;
+      }
 
+      .img-div-hero img {
+        display: none;
+
+      }
+
+    }
+
+    .img-div-hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .img-div-cover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(66, 44, 15, 0.6);
+    }
+
+
+
+    .img-div-hero img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
+
+
+    .form-group a {
+      color: gray;
+      text-decoration: none !important;
     }
 
     .video-bg {
@@ -182,68 +165,80 @@
   </style>
 </head>
 
-<body class="login">
-  <video class="video-bg" autoplay muted loop  src="video/Seed.webm" type="video/webm"></video>
-  <div style="margin-top:100px" class="container py-5">
-    <div class="row d-flex justify-content-center align-items-center">
-      <div class="col-xl-5">
-        <div class="card border-0 shadow rounded-10 text-dark " style="background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.5) 100%); backdrop-filter: blur(20px); ">
+<body >
           <div class="row">
             <div class="col-lg-12">
               <div class=" card-body">
                 <div class="row">
 
-                  <div class="col-xl-12 col-md-12 col-xs-12 p-5">
+                  <div class="col-xl-6 col-md-6 col-xs-6 p-5">
                     <div class="text-center">
                       <img src="img/logop.png" style="width: auto; height:70px" alt="logo" />
-                      <h4 class="mt-5 mb-5 pb-1">Inicio de sesión</h4>
                     </div>
+                    <div class="mt-5">
+                      <form method="post" action="/loginAuth">
 
-                    <form method="post" action="/loginAuth">
+                        <div class="form-outline mb-4">
 
-                      <div class="form-outline mb-4">
-
-                        <input type="text" id="form2Example11" name='user' class="form-control" placeholder="Usuario"
-                          required />
-                      </div>
-
-                      <div class="form-outline mb-4">
-                        <div class="input-group mb-3">
-                          <input type="password" class="form-control" id="newPassword" name="pass"
-                            aria-label="Recipient's username" aria-describedby="button-addon2" required
-                            placeholder="Contraseña">
-                          <button class="btn btn-outline-secondary" onclick="mostrarPassword()" type="button"
-                            id="viewPass"><i class='bx bx-low-vision'></i></button>
+                          <input type="text" id="form2Example11" name='user' class="form-control" placeholder="Usuario"
+                            required />
                         </div>
 
-                      </div>
+                        <div class="form-outline mb-4">
+                          <div class="input-group mb-3">
+                            <input type="password" class="form-control" id="newPassword" name="pass"
+                              aria-label="Recipient's username" aria-describedby="button-addon2" required
+                              placeholder="Contraseña">
+                            <button class="btn btn-outline-secondary" onclick="mostrarPassword()" type="button"
+                              id="viewPass"><i class='bx bx-low-vision'></i></button>
+                          </div>
 
-                      <script>
-                        function mostrarPassword() {
-                          var viewNewPass = document.getElementById("newPassword");
-                          if (viewNewPass.type == "password") {
-                            viewNewPass.type = "text";
-                          } else {
-                            viewNewPass.type = "password";
-                          }
-                        } 
-                      </script>
-                      <button class="btn btn-warning btn-block fa-lg columna-login mb-3" type="submit"
-                        style="width:100% ;background-color:#E8700C; color:white"> <strong>Iniciar sesión</strong>
-                      </button><br>
+                        </div>
 
-                    </form>
+                        <script>
+                          function mostrarPassword() {
+                            var viewNewPass = document.getElementById("newPassword");
+                            if (viewNewPass.type == "password") {
+                              viewNewPass.type = "text";
+                            } else {
+                              viewNewPass.type = "password";
+                            }
+                          } 
+                        </script>
+                        <button class="btn btn-warning btn-block fa-lg columna-login mb-3" type="submit"
+                          style="width:100% ;background-color:#E8700C; color:white"> <strong>Iniciar sesión</strong>
+                        </button><br>
+                        <div class="form-group d-md-flex">
+                          <div class="w-50 text-start">
+                            <label class="checkbox-wrap checkbox-primary mb-0">Recordarme
+                              <input type="checkbox">
+                              <span class="checkmark"></span>
+                            </label>
+                          </div>
+                          <div class="w-50 text-md-end">
+                            <a class="" href="#">Olvide contraseña</a>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+
+
                     <button hidden class="btn btn-warning btn-block fa-lg columna-login mb-3" type="button"
                       style="width:100% ;background-color:#E8700C; color:white">
                       Registro
                     </button>
 
                   </div>
+                  <div class="img-div-hero col-xl- col-md-6 col-xs-6 p-0">
+                    <div class="img-div-cover"></div>
+                    <img src="img/service-6.jpg" alt="">
+                  </div>
 
 
                   <!-- <video autoplay muted loop src="video/Seed.webm" type="video/webm"></video> -->
                   
 
+                  
 
                 </div>
 
