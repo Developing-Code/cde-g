@@ -27,8 +27,12 @@
   <header class="headerNav">
     <nav class="navbar navbar-light bg-light fixed-top ">
       <div class="container-fluid">
-        <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
-          aria-controls="offcanvasScrolling"><i class='bx bx-menu bx-md'></i></button>
+        <div>
+
+          <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+            aria-controls="offcanvasScrolling"><i class='bx bx-menu bx-md'></i></button>
+            <a href="/home" class="navLogo"><img src="../img/logop.png" alt="" width="150px"></a>
+        </div>
 
 
         <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
@@ -62,6 +66,16 @@
                       </li>
 
 
+                      <li class="text-dark p-2 m-2" style="background-color: #f4f4f4; border-radius: 15px;">
+                        <a href="/agregarNuevaCompostera" class="nav-link text-dark"> <i class='bx bx-package'></i> Agregar nueva compostera</a>
+                      </li>
+
+
+                      <li class="text-dark p-2 m-2" style="background-color: #f4f4f4; border-radius: 15px;">
+                        <a href="/totalcomposteraslist"" class="nav-link text-dark"> <i class='bx bx-package'></i>Lista de cntComposteras</a>
+                      </li>
+
+
 
 
                       <li class="text-dark p-2 m-2">
@@ -72,9 +86,51 @@
             </ul>
           </div>
         </div>
-        <a href="/home" class="navLogo"><img src="../img/logop.png" alt="" width="150px"></a>
+        
+        
+        <style>
+          @media screen and (max-width: 1024px) {
+                    .topbar-desk{
+                      display: none !important;
+                  }
+              }
+        </style>
+        <ul style="display: flex;" class="topbar-desk" >
+          <% if ( role=='admin' || role=='user1'  || role=='supervisor' ) {%>
+            <li class="text-dark p-2 m-2" style="background-color: #f4f4f4; border-radius: 15px;">
+              <a href="/home" class="nav-link text-dark"> <i class='bx  bx-home-alt-2'></i> Home</a>
+            </li>
+            <% } %>
+              <% if ( role=='admin') {%>
+                <li class="text-dark p-2 m-2" style="background-color: #f4f4f4; border-radius: 15px;">
+                  <a href="/register" class="nav-link text-dark"> <i class='bx  bx-male'></i> Panel usuarios</a>
+                </li>
+
+
+
+
+                <% } %>
+                  <li hidden class="text-dark p-2 m-2" style="background-color: #f4f4f4; border-radius: 15px;">
+                    <a href="/myperfil" class="nav-link text-dark"> <i class='bx bx-user'></i> Mi perfil</a>
+                  </li>
+
+                  <li class="text-dark p-2 m-2" style="background-color: #f4f4f4; border-radius: 15px;">
+                    <a href="/panelinventarios" class="nav-link text-dark"> <i class='bx bx-package'></i> Manual</a>
+                  </li>
+
+                  <li class="text-dark p-2 m-2" style="background-color: #f4f4f4; border-radius: 15px;">
+                    <a href="/agregarNuevaCompostera" class="nav-link text-dark"> <i class='bx bx-package'></i> Agregar nueva compostera</a>
+                  </li>
+
+                  <li class="text-dark p-2 m-2" style="background-color: #f4f4f4; border-radius: 15px;">
+                    <a href="/totalcomposteraslist"" class="nav-link text-dark"> <i class='bx bx-package'></i>Lista de cntComposteras</a>
+                  </li>
+
+
+
+        </ul>
         <div class="d-flex">
-          <a style="margin-right: 10px;" href="/home" class="btn btn-dark" type="submit">Home <i class='bx bx-home-alt-2'></i></a>
+          
           <a href="/loginAut" class="btn btn-outline-danger" type="submit">Salir <i
               class='bx bx-log-out-circle'></i></a>
 

@@ -40,15 +40,15 @@
   <body>
 
     <% if (role=='user1' || role=='admin' || role=='supervisor' ) {%>
-      <div class="container" style="margin-top: 150px;">
-        <div class="container">
+      <div class="" style="margin-top: 150px;">
+        <div class="" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex-wrap: wrap; ">
           <% if ( role=='admin'  || role=='supervisor' ) {%>
-            <div class="row">
-              <div class="btn-group" role="group" aria-label="Basic example">
-                <a type="button" class="btn btn-success" style="margin-bottom: 2px;" href="/agregarNuevaCompostera">Crear nueva composteras <i class='bx bx-add-to-queue'></i></a>
-                <a type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/totalcomposteraslist">Lista composteras <i class='bx bxs-book-content'></i></a>
-                <a  type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/registrosdeoperacion">Registros Operación <i class='bx bxs-book-content'></i></a>
-                <a hidden type="button" class="btn btn-secondary" style="margin-bottom: 2px;" href="/vistamapacomposteras">Informes <i class='bx bxs-detail' ></i></a>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: center;" >
+              <div  style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: center;">
+                <a type="button" class="btn btn-outline-success btn-lg" style="margin-bottom: 2px;" href="/agregarNuevaCompostera">Crear nueva composteras <i class='bx bx-add-to-queue'></i></a>
+                <a type="button" class="btn btn-outline-dark btn-lg" style="margin-bottom: 2px;" href="/totalcomposteraslist">Lista composteras <i class='bx bxs-book-content'></i></a>
+                <a  type="button" class="btn btn-outline-dark btn-lg" style="margin-bottom: 2px;" href="/registrosdeoperacion">Registros Operación <i class='bx bxs-book-content'></i></a>
+                <a hidden type="button" class="btn btn-outline-secondary" style="margin-bottom: 2px;" href="/vistamapacomposteras">Informes <i class='bx bxs-detail' ></i></a>
                 <a hidden type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/vistamapacomposteras">Alertas <i class='bx bxs-error-circle'></i></a>
       
               </div>
