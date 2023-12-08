@@ -41,728 +41,503 @@
 
     <% if (role=='user1' || role=='admin' || role=='supervisor' ) {%>
       <div class="container" style="margin-top: 150px;">
-        <div class="container" style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex-wrap: wrap; ">
-          <% if ( role=='admin'  || role=='supervisor' ) {%>
-            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: center;" >
-              <div  style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: center;">
-                <a type="button" class="btn btn-outline-success btn-lg" style="margin-bottom: 2px;" href="/agregarNuevaCompostera">Crear nueva composteras <i class='bx bx-add-to-queue'></i></a>
-                <a type="button" class="btn btn-outline-dark btn-lg" style="margin-bottom: 2px;" href="/totalcomposteraslist">Lista composteras <i class='bx bxs-book-content'></i></a>
-                <a  type="button" class="btn btn-outline-dark btn-lg" style="margin-bottom: 2px;" href="/registrosdeoperacion">Registros Operación <i class='bx bxs-book-content'></i></a>
-                <a hidden type="button" class="btn btn-outline-secondary" style="margin-bottom: 2px;" href="/vistamapacomposteras">Informes <i class='bx bxs-detail' ></i></a>
-                <a hidden type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/vistamapacomposteras">Alertas <i class='bx bxs-error-circle'></i></a>
-      
-              </div>
+        <div class=""
+          style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex-wrap: wrap; ">
+          <% if ( role=='admin' || role=='supervisor' ) {%>
+
+
+
+
+
+            <div class="btn-group flex-wrap justify-content-center mb-5">
+              <a href="/agregarNuevaCompostera" class="btn btn-outline-success btn-lg mb-2">
+                Crear nueva compostera <i class="bx bx-add-to-queue"></i>
+              </a>
+              <a href="/totalcomposteraslist" class="btn btn-outline-dark btn-lg mb-2">
+                Lista composteras <i class="bx bxs-book-content"></i>
+              </a>
+              <a href="/registrosdeoperacion" class="btn btn-outline-dark btn-lg mb-2">
+                Registros Operación <i class="bx bxs-book-content"></i>
+              </a>
+              <a href="/vistamapacomposteras" class="btn btn-outline-secondary btn-lg mb-2 d-none">
+                Informes <i class="bx bxs-detail"></i>
+              </a>
+              <a href="/vistamapacomposteras" class="btn btn-dark btn-lg mb-2 d-none">
+                Alertas <i class="bx bxs-error-circle"></i>
+              </a>
             </div>
-            <div class="row align-items-center text-center pb-5 pt-5">
 
-              <!-- Earnings (Monthly) Card Example -->
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
+            <div class="row mb-5">
+              <div class="col-md-3">
+                <div class="card text-center">
+                  <div class="card-header">
+                    <h5 class="card-title">Entregadas</h5>
+                  </div>
                   <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        
-                          <a href="/totalcomposteraslist" class="btn" style="background-color: rgba(255, 255, 255, 0); border: 0px solid #a09d9d00; width: auto; height: auto">
-                            <div class=" mb-2">
-                              <h6 style="color: #686868;">Entregada</h6>
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                              <h4><%= cntComposteras[0].total_composteras %></h4>
-
-                            </div>
-                          </a>
-                        
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
+                    <h4 class="card-text"><%= cntComposteras[0].total_composteras %></h4>
                   </div>
                 </div>
               </div>
-
-              <!-- Earnings (Monthly) Card Example -->
-              <div class="col-xl-3 col-md-6 mb-4">
-
-                <div class="card border-left-warning shadow h-100 py-2">
-                  <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <form action="/buscarClienteCamejia" method="post">
-                          <button
-                            style="background-color: rgba(255, 255, 255, 0); border: 0px solid #ffffff00; width: auto; height: auto">
-                            <div class=" mb-2">
-                              <h6 style="color: #686868;">Operando</h6>
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                              <h4><%= cntComposEnoperacion[0].composteras_en_operacion %></h4>
-
-                            </div>
-                          </button>
-                        </form>
-
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
+              <div class="col-md-3">
+                <div class="card text-center">
+                  <div class="card-header">
+                    <h5 class="card-title">Operando</h5>
                   </div>
-                </div>
-
-
-
-              </div>
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
                   <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <form action="/buscarClienteCamejia" method="post">
-                          <button
-                            style="background-color: rgba(255, 255, 255, 0); border: 0px solid #ffffff00; width: auto; height: auto">
-                            <div class="mb-2">
-                              <h6 style="color: #686868;">Biomasa cargada</h6>
-                            </div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">
-                              <h4><%= BiomasaCargada[0].sumaTotal %> kg</h4>
-
-                            </div>
-                          </button>
-                        </form>
-
-                      </div>
-                      <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                      </div>
-                    </div>
+                    <h4 class="card-text"><%= cntComposEnoperacion[0].composteras_en_operacion %></h4>
                   </div>
                 </div>
               </div>
-
-              <!-- Earnings (Monthly) Card Example -->
-
-
-              <!-- Pending Requests Card Example -->
-              <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
+              <div class="col-md-3">
+                <div class="card text-center">
+                  <div class="card-header">
+                    <h5 class="card-title">Biomasa cargada</h5>
+                  </div>
                   <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                        <form action="/buscarClienteCamejia" method="post">
-                          <button
-                            style="background-color: rgba(255, 255, 255, 0); border: 0px solid #ffffff00; width: auto; height: auto">
-                            <div class="mb-2">
-                              <h6 style="color: #686868;">Compost descargado</h6>
-                            </div>
-                            <h4><%= compostDescargado[0].sumaTotal %>  kg</h4>
-                      </div>
-                      </button>
-                      </form>
-
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-gray-300"></i>
-                    </div>
+                    <h4 class="card-text"><%= BiomasaCargada[0].sumaTotal %> kg</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card text-center">
+                  <div class="card-header">
+                    <h5 class="card-title">Compost descargado</h5>
+                  </div>
+                  <div class="card-body">
+                    <h4 class="card-text"><%= compostDescargado[0].sumaTotal %> kg</h4>
                   </div>
                 </div>
               </div>
             </div>
-        </div>
+            
+            <style>
+              .row {
+                flex-basis: 100%;
+              }
+            
+              .card {
+                height: 100%;
+              }
+            </style>
 
-        <div class="col-md-12 col-sm-12 my-2">
-          <div class="card shadow border-0">
-            <div class="card-header border-0 text-center  text-light"
-              style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
-              <strong>
-                Mapa
-              </strong>
-            </div>
-            <div class="card-body">
 
-              <div id="map" style="width: 100%; height: 500px;"></div>
+        
 
-            </div>
+      <div class="col-md-12 col-sm-12 my-2">
+  <div class="card shadow border-0">
+    <div class="card-header border-0 text-center text-light" style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
+      <strong>
+        Mapa
+      </strong>
+    </div>
+    <div class="card-body">
+
+      <div id="map" style="width: 100%; height: 500px;"></div>
+
+    </div>
+  </div>
+</div>
+
+
+      <div class="col-md-12 col-sm-12 my-2">
+        <div class="card shadow border-0">
+          <div class="card-header border-0 text-center  text-light"
+            style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
+            <strong>
+              Estadisticas totales
+            </strong>
+          </div>
+          <div class="card-body">
+
+            <canvas id="barChart"></canvas>
+
           </div>
         </div>
-        <% } %>
-
-
-
-          <% if ( role=='admin' || role=='supervisor' ) {%>
-            <div class="row  text-center">
-              
-
-              <% if ( role=='admin' ) {%>
-
-                
-                <div hidden class="col-md-12 col-sm-12 my-2">
-                  <div class="card shadow border-0">
-                    <div class="card-header border-0 text-center  text-light"
-                      style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
-                      <strong>
-                        Ultimos registros
-                      </strong>
-
-                    </div>
-                    <div class="card-body">
-                      <div class="row scrollable-content">
-                        <div style="height:90%">
-                          <ul class="list-group">
-                            <% if (ultimosRegistros.length !=0) { %>
-                              <% ultimosRegistros.forEach((resultado)=> { %>
-
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                  <h6 style="font-size:12px">
-                                    <%= resultado.fecha_registro %>
-                                  </h6>
-                                  <h6 style="font-size:12px">
-                                    <%= resultado.fecha_registro %>
-                                  </h6>
-                                  <h6 style="font-size:12px">
-                                    <%= resultado.TipoRegistro %>
-                                  </h6>
-
-
-                                  <a href="/detalleRegistro/<%= resultado.id %>" type="button" data-bs-toggle="tooltip"
-                                    data-bs-placement="top" title="Detalles" class="btn btn-sm btn-warning"><i
-                                      class='bx bx-log-in-circle'></i></a>
-                                </li>
-
-                                <% }) %>
-                                  <% } else { %>
-                                    <h5>No hay registros</h5>
-                                    <% } %>
-
-
-                          </ul>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12 col-sm-12 my-2">
-                  <div class="card shadow border-0">
-                    <div class="card-header border-0 text-center  text-light"
-                      style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
-                      <strong>
-                        Estadisticas totales
-                      </strong>
-                    </div>
-                    <div class="card-body">
-
-                      <canvas id="barChart"></canvas>
-
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12 col-sm-12 my-2">
-                  <div class="card shadow border-0">
-
-                    <div class="card-body">
-
-                      <canvas id="barChart1"></canvas>
-
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-sm-6 my-2">
-                  <div class="card shadow border-0">
-
-                    <div class="card-body">
-
-                      <canvas id="pieChart1"></canvas>
-
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 col-sm-6 my-2">
-                  <div class="card shadow border-0">
-
-                    <div class="card-body">
-
-                      <canvas id="pieChart2"></canvas>
-
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12 col-sm-12 my-2">
-                  <div class="card shadow border-0">
-
-                    <div class="card-body">
-
-                      <canvas id="barChart2"></canvas>
-
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-12 col-sm-12 my-2">
-                  <div class="card shadow border-0">
-
-                    <div class="card-body">
-
-                      <canvas id="barChart3"></canvas>
-
-                    </div>
-                  </div>
-                </div>
-
-                <% } %>
-            </div>
-            <% } %>
-              <% if ( role=='user1' ) {%>
-                <div class="row pt-5">
-                  <div class="col-md-4 col-sm-12 my-2">
-                    <div class="card shadow border-0 " style="border-radius: 22px ;">
-                      <div class="card-header border-0 text-center  text-light"
-                        style="border-radius: 22px 22px 0px 0px;background-color:#FC7B3B">
-                        <strong>
-                          Institución:
-                        </strong>
-                        <%= results[0].nombre_institucion %>
-                      </div>
-                      <div class="card-body border-0">
-                        <div class="row">
-                          <div class="col-6">
-                            <img class="shadow"
-                              style="border-radius: 22px 22px 22px 22px; width: 100%; height: 300px; object-fit: cover; "
-                              src="/uploads/<%=results[0].foto1_compostera%>">
-                          </div>
-                          <div class="col">
-                            <label for="Nombre-txt"><strong>Nombre Responsable:</strong></label>
-                            <p id="Nombre-txt">
-                              <%= results[0].nombre_responsable %>
-                            </p>
-                            <p class="card-text">
-
-                            </p>
-                            <p class="card-text"><strong>Nota:</strong>
-                              <%= results[0].Nota %>
-                            </p>
-                            <p class="card-text"><strong>Entregado por: </strong>
-                              <%= results[0].nombre_quientrega %>
-                            </p>
-
-                          </div>
-                        </div>
-                        <div class="row mt-3">
-                          <div class="col">
-                            <div class="btn-group d-flex justify-content-center" role="group"
-                              aria-label="Basic outlined example">
-
-                              <a href="/perfilCompost/<%= results[0].id %>" type="button" data-bs-toggle="tooltip"
-                                data-bs-placement="top" title="Perfil" class="btn btn-outline-dark"><i
-                                  class='bx bxs-notepad'></i> Perfil</a>
-                              <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal"
-                                data-bs-target="#modalMapa<%= results[0].id %>">
-                                <i class='bx bx-map'></i>Detalles
-                              </button>
-                              <div class="modal fade" id="modalMapa<%= results[0].id %>" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLabel">Detalles</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <ul class="nav nav-tabs" id="modalTabContent">
-                                        <li class="nav-item">
-                                          <a class="nav-link active" data-toggle="tab"
-                                            href="#contenidoTab1<%= results[0].id %>">Información</a>
-                                        </li>
-                                        <li class="nav-item">
-                                          <a class="nav-link" data-toggle="tab"
-                                            href="#contenidoTab2<%= results[0].id %>">Mapa</a>
-                                        </li>
-                                        <li class="nav-item">
-                                          <a class="nav-link text-warning" data-toggle="tab"
-                                            href="#contenidoTab4<%= results[0].id %>">Acciones</a>
-                                        </li>
-                                      </ul>
-
-                                      <div class="tab-content mt-3">
-                                        <div id="contenidoTab1<%= results[0].id %>" class="tab-pane fade show active">
-                                          <p class="card-text"><strong>Numero de celular:</strong>
-                                            <%= results[0].celular_responsable %> <a
-                                                href="http://wa.me/57<%= results[0].celular_responsable  %>"
-                                                class="btn btn-outline-dark"><i class='bx bxl-whatsapp'></i></a>
-                                          </p>
-                                          <p class="card-text"><strong>Capacidad:</strong>
-                                            <%= results[0].Capacidad_compostera %>
-                                          </p>
-                                          <p class="card-text"><strong>Serial:</strong>
-                                            <%= results[0].serial_compostera %>
-                                          </p>
-                                          <p class="card-text"><strong>Fecha instalacion:</strong>
-                                            <%= results[0].fecha_inicial %>
-                                          </p>
-                                        </div>
-                                        <div id="contenidoTab2<%= results[0].id %>" class="tab-pane fade">
-                                          <iframe class="card-img-top"
-                                            src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=<%= results[0].coordenas %> &amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                                            width="100%" height="300px" style="border:0;" allowfullscreen=""
-                                            loading="lazy"></iframe>
-                                        </div>
-
-                                        <div id="contenidoTab4<%= results[0].id %>" class="tab-pane fade">
-                                          <h5>Control de parámetros</h5>
-
-                                          <a class=" btn btn-dark mt-3" id="customLink"
-                                            href="/formCargeBiomasa/<%= results[0].id %>">Cargue de Biomasa
-                                            residual</a> <br>
-                                          <a class="btn btn-dark mt-3" id="customLink"
-                                            href="/formDescargeCompost/<%= results[0].id %>">Descargue de compost en
-                                            proceso</a> <br>
-                                          <a class="btn btn-dark mt-3" id="customLink"
-                                            href="/formCompostMadurado/<%= results[0].id %>">Compost madurado</a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-danger"
-                                        data-bs-dismiss="modal">Cerrar</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                            </div>
-
-                          </div>
-                        </div>
-
-
-
-
-                      </div>
-                    </div>
-
-                  </div>
-                  
-
-
-                </div>
-
-                <% } %>
       </div>
-
-      </div>
-
-
-
-
-
-
-
       <% } %>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="/toastr/toastr.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
-        <script>
-          var selectedMarker = null;
-          var selectedMarkerCoords = null;
-          
-          // Crear un mapa y establecer su vista inicial
-          const map = L.map('map').setView([6.253350, -75.426938], 13);
-
-          // Agregar una capa base de OpenStreetMap
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-          }).addTo(map);
-
-          let markerIcon = null
-
-            <% coordenadas.forEach((place) => { %>
-
-              markerIcon = L.icon({
-                iconUrl: 'img/marcador2.png', iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32]
-              });
-
-              var marker = L.marker([<%= place.lat %>, <%= place.log %>], { icon: markerIcon, title: '<%= place.numeroCasa %>', dataId: '<%= place.id %>' }).addTo(map);
-
-              marker.bindPopup('<h4><%= place.nombre_institucion %>.</h4><p><%= place.nombre_responsable %>.</p><p><%= place.celular_responsable %>.</p><a href="/perfilCompost/<%= place.id %>">Ver más</a>')
-              marker.on('click', function (e) {
-                // Guardar las coordenadas del marcador seleccionado
-                selectedMarker = e;
-                selectedMarkerCoords = e.latlng;
-                map.setView(e.latlng, 17);
-              })
-                <% }); %>// Tu código JavaScript para crear el mapa va aquí
-        </script>
-
-        <script>
-          // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-          if ('<%- chartData %>') {
-            const datos = JSON.parse('<%- chartData %>');
-
-            const meses = datos.map(dato => 'Mes ' + dato.mes);
-            const data1 = datos.map(dato => dato.total_kilos);
-
-            // Obtén una referencia al elemento canvas
-            const canvas = document.getElementById('barChart');
-
-            // Configura el gráfico utilizando los datos
-            const ctx = canvas.getContext('2d');
-            const chart = new Chart(ctx, {
-              type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
-              data: {
-                labels: meses, // Etiquetas para el eje X (vendedores)
-                datasets: [{
-                  label: 'Cantidad Biomasa cargada por mes (kg)',
-                  data: data1, // Datos para el eje Y (cantidad de clientes)
-                  backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
-                  borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
-                  borderWidth: 2 // Ancho del borde de las barras
-                }]
-              },
-              options: {
-                responsive: true,
-
-                maintainAspectRatio: false,
-                scales: {
-                  y: {
-                    beginAtZero: true // Comienza el eje Y en cero
-                  }
-                }
-              }
-            });
-          }
-
-        </script>
-        <script>
-          // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-          if ('<%- ctnporlocalidad %>') {
-
-            function getRandomColors(numColors) {
-              const colors = [];
-              for (let i = 0; i < numColors; i++) {
-                const r = Math.floor(Math.random() * 256);
-                const g = Math.floor(Math.random() * 256);
-                const b = Math.floor(Math.random() * 256);
-                const a = 0.8;
-                colors.push(`rgba(${r}, ${g}, ${b}, ${a}`);
-              }
-              return colors;
-            }
-            const datos = JSON.parse('<%- ctnporlocalidad %>');
-
-            const localidades = datos.map(dato => dato.localidad_compostera);
-            const data1 = datos.map(dato => dato.cantidad_de_registros);
-            const numCategories = datos.length;
-            const randomColors = getRandomColors(numCategories);
-            console.log(numCategories)
-            // Obtén una referencia al elemento canvas
-            const canvas = document.getElementById('pieChart1');
-
-            // Configura el gráfico utilizando los datos
-            const ctx = canvas.getContext('2d');
-            const chart = new Chart(ctx, {
-              type: 'doughnut', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
-              data: {
-                labels: localidades, // Etiquetas para el eje X (vendedores)
-                datasets: [{
-                  data: data1, // Datos para el eje Y (cantidad de clientes)
-                  backgroundColor: randomColors, // Color de fondo de las barras
-                  borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
-                  borderWidth: 2 // Ancho del borde de las barras
-                }]
-              },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                  y: {
-                    beginAtZero: true // Comienza el eje Y en cero
-                  }
-                }
-              }
-            });
-          }
-
-        </script>
-        <script>
-          // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-          if ('<%- chartData %>') {
-            const datos = JSON.parse('<%- chartData %>');
-
-            const meses = datos.map(dato => 'Mes ' + dato.mes);
-            const data1 = datos.map(dato => dato.total_kilos);
-
-            // Obtén una referencia al elemento canvas
-            const canvas = document.getElementById('pieChart2');
-
-            // Configura el gráfico utilizando los datos
-            const ctx = canvas.getContext('2d');
-            const chart = new Chart(ctx, {
-              type: 'doughnut', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
-              data: {
-                labels: meses, // Etiquetas para el eje X (vendedores)
-                datasets: [{
-                  label: 'Cantidad Biomasa cargada por mes (kg)',
-                  data: data1, // Datos para el eje Y (cantidad de clientes)
-                  backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
-                  borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
-                  borderWidth: 2 // Ancho del borde de las barras
-                }]
-              },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                  y: {
-                    beginAtZero: true // Comienza el eje Y en cero
-                  }
-                }
-              }
-            });
-          }
-
-        </script>
-        <script>
-          // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-          if ('<%- chartData1 %>') {
-            const datos1 = JSON.parse('<%- chartData1 %>');
-
-            const meses = datos1.map(dato => 'Mes ' + dato.mes);
-            const data1 = datos1.map(dato => dato.total_kilos);
-
-            // Obtén una referencia al elemento canvas
-            const canvas = document.getElementById('barChart1');
-
-            // Configura el gráfico utilizando los datos
-            const ctx1 = canvas.getContext('2d');
-            const chart = new Chart(ctx1, {
-              type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
-              data: {
-                labels: meses, // Etiquetas para el eje X (vendedores)
-                datasets: [{
-                  label: 'Cantidad Compost descargado por mes (kg)',
-                  data: data1, // Datos para el eje Y (cantidad de clientes)
-                  backgroundColor: 'rgba(44, 191, 174, 0.2)', // Color de fondo de las barras
-                  borderColor: 'rgba(44, 191, 174, 1)', // Color del borde de las barras
-                  borderWidth: 2 // Ancho del borde de las barras
-                }]
-              },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                  y: {
-                    beginAtZero: true // Comienza el eje Y en cero
-                  }
-                }
-              }
-            });
-          }
-
-        </script>
-        <script>
-          const datos2 = JSON.parse('<%- chartData2 %>');
-          const ctx2 = document.getElementById('barChart2').getContext('2d');
-
-          const fechas = datos2.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
-          const temperaturas = datos2.map(d => d.temperatura);
-
-          new Chart(ctx2, {
-            type: 'line',
-            data: {
-              labels: fechas,
-              datasets: [{
-                label: 'Variación ambiente de Temperatura total',
-                data: temperaturas,
-                borderColor: 'blue',
-                fill: false
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: {
-                y: {
-                  beginAtZero: true // Comienza el eje Y en cero
-                }
-              }
-            }
-          });
-        </script>
-        <script>
-          const datos3 = JSON.parse('<%- chartData3 %>');
-          const ctx3 = document.getElementById('barChart3').getContext('2d');
-
-          const fechas3 = datos3.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
-          const humedad = datos3.map(d => d.humedad);
-
-          new Chart(ctx3, {
-            type: 'line',
-            data: {
-              labels: fechas3,
-              datasets: [{
-                label: 'Variación ambiente de Humedad total',
-                data: humedad,
-                borderColor: 'rgb(239, 82, 97)',
-                fill: false
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: {
-                y: {
-                  beginAtZero: true // Comienza el eje Y en cero
-                }
-              }
-            }
-          });
-        </script>
 
 
+        <% if ( role=='admin' || role=='supervisor' ) {%>
+          <div class="row  text-center">
 
-        <% if(typeof alert !="undefined" ) { %>
-          <script>
-            Swal.fire({
-              title: '<%=alertTitle %>',
-              text: '<%= alertMessage%>',
-              icon: '<%=alertIcon %>',
-              showConfirmButton: '<%= showConfirmButton %>',
-              timer: '<%= timer %>'
-            }).then(() => {
-              window.location = '<%= ruta %>'
-            })
-          </script>
+
+            <% if ( role=='admin' ) {%>
+
+
+             
+              <div class="col-md-12 col-sm-12 my-2">
+                <div class="card shadow border-0">
+
+                  <div class="card-body">
+
+                    <canvas id="barChart1"></canvas>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 my-2">
+                <div class="card shadow border-0">
+
+                  <div class="card-body">
+
+                    <canvas id="pieChart1"></canvas>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-sm-6 my-2">
+                <div class="card shadow border-0">
+
+                  <div class="card-body">
+
+                    <canvas id="pieChart2"></canvas>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12 my-2">
+                <div class="card shadow border-0">
+
+                  <div class="card-body">
+
+                    <canvas id="barChart2"></canvas>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-12 my-2">
+                <div class="card shadow border-0">
+
+                  <div class="card-body">
+
+                    <canvas id="barChart3"></canvas>
+
+                  </div>
+                </div>
+              </div>
+
+              <% } %>
+          </div>
           <% } %>
+            
+                </div>
 
-
-
-            <script>
-              var x = document.getElementById("myAudio");
-
-
-
-              const socket = io()
-
-              socket.on('cromfinalizado', (msg) => {
-                toastr.options.positionClass = "toast-bottom-right"
-                toastr.success('Nuevo servicio finalizado' + msg)
-                x.play();
-
-              })
-
-            </script>
+                </div>
 
 
 
 
-            <%- include('./partials/footer.ejs') %>
+
+
+
+                <% } %>
+
+                  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+                  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+                  <script src="/socket.io/socket.io.js"></script>
+                  <script src="/toastr/toastr.js"></script>
+                  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+                  <script>
+                    var selectedMarker = null;
+                    var selectedMarkerCoords = null;
+
+                    // Crear un mapa y establecer su vista inicial
+                    const map = L.map('map').setView([6.253350, -75.426938], 13);
+
+                    // Agregar una capa base de OpenStreetMap
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                      maxZoom: 19,
+                    }).addTo(map);
+
+                    let markerIcon = null
+
+                      <% coordenadas.forEach((place) => { %>
+
+                        markerIcon = L.icon({
+                          iconUrl: 'img/marcador2.png', iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32]
+                        });
+
+                        var marker = L.marker([<%= place.lat %>, <%= place.log %>], { icon: markerIcon, title: '<%= place.numeroCasa %>', dataId: '<%= place.id %>' }).addTo(map);
+
+                        marker.bindPopup('<h4><%= place.nombre_institucion %>.</h4><p><%= place.nombre_responsable %>.</p><p><%= place.celular_responsable %>.</p><a href="/perfilCompost/<%= place.id %>">Ver más</a>')
+                        marker.on('click', function (e) {
+                          // Guardar las coordenadas del marcador seleccionado
+                          selectedMarker = e;
+                          selectedMarkerCoords = e.latlng;
+                          map.setView(e.latlng, 17);
+                        })
+                          <% }); %>// Tu código JavaScript para crear el mapa va aquí
+                  </script>
+
+                  <script>
+          // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
+          if ('<%- chartData %>') {
+                      const datos = JSON.parse('<%- chartData %>');
+
+                      const meses = datos.map(dato => 'Mes ' + dato.mes);
+                      const data1 = datos.map(dato => dato.total_kilos);
+
+                      // Obtén una referencia al elemento canvas
+                      const canvas = document.getElementById('barChart');
+
+                      // Configura el gráfico utilizando los datos
+                      const ctx = canvas.getContext('2d');
+                      const chart = new Chart(ctx, {
+                        type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+                        data: {
+                          labels: meses, // Etiquetas para el eje X (vendedores)
+                          datasets: [{
+                            label: 'Cantidad Biomasa cargada por mes (kg)',
+                            data: data1, // Datos para el eje Y (cantidad de clientes)
+                            backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
+                            borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
+                            borderWidth: 2 // Ancho del borde de las barras
+                          }]
+                        },
+                        options: {
+                          responsive: true,
+
+                          maintainAspectRatio: false,
+                          scales: {
+                            y: {
+                              beginAtZero: true // Comienza el eje Y en cero
+                            }
+                          }
+                        }
+                      });
+                    }
+
+                  </script>
+                  <script>
+                    // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
+                    if ('<%- ctnporlocalidad %>') {
+
+                      function getRandomColors(numColors) {
+                        const colors = [];
+                        for (let i = 0; i < numColors; i++) {
+                          const r = Math.floor(Math.random() * 256);
+                          const g = Math.floor(Math.random() * 256);
+                          const b = Math.floor(Math.random() * 256);
+                          const a = 0.8;
+                          colors.push(`rgba(${r}, ${g}, ${b}, ${a}`);
+                        }
+                        return colors;
+                      }
+                      const datos = JSON.parse('<%- ctnporlocalidad %>');
+
+                      const localidades = datos.map(dato => dato.localidad_compostera);
+                      const data1 = datos.map(dato => dato.cantidad_de_registros);
+                      const numCategories = datos.length;
+                      const randomColors = getRandomColors(numCategories);
+                      console.log(numCategories)
+                      // Obtén una referencia al elemento canvas
+                      const canvas = document.getElementById('pieChart1');
+
+                      // Configura el gráfico utilizando los datos
+                      const ctx = canvas.getContext('2d');
+                      const chart = new Chart(ctx, {
+                        type: 'doughnut', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+                        data: {
+                          labels: localidades, // Etiquetas para el eje X (vendedores)
+                          datasets: [{
+                            data: data1, // Datos para el eje Y (cantidad de clientes)
+                            backgroundColor: randomColors, // Color de fondo de las barras
+                            borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
+                            borderWidth: 2 // Ancho del borde de las barras
+                          }]
+                        },
+                        options: {
+                          responsive: true,
+                          maintainAspectRatio: false,
+                          scales: {
+                            y: {
+                              beginAtZero: true // Comienza el eje Y en cero
+                            }
+                          }
+                        }
+                      });
+                    }
+
+                  </script>
+                  <script>
+                    // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
+                    if ('<%- chartData %>') {
+                      const datos = JSON.parse('<%- chartData %>');
+
+                      const meses = datos.map(dato => 'Mes ' + dato.mes);
+                      const data1 = datos.map(dato => dato.total_kilos);
+
+                      // Obtén una referencia al elemento canvas
+                      const canvas = document.getElementById('pieChart2');
+
+                      // Configura el gráfico utilizando los datos
+                      const ctx = canvas.getContext('2d');
+                      const chart = new Chart(ctx, {
+                        type: 'doughnut', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+                        data: {
+                          labels: meses, // Etiquetas para el eje X (vendedores)
+                          datasets: [{
+                            label: 'Cantidad Biomasa cargada por mes (kg)',
+                            data: data1, // Datos para el eje Y (cantidad de clientes)
+                            backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
+                            borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
+                            borderWidth: 2 // Ancho del borde de las barras
+                          }]
+                        },
+                        options: {
+                          responsive: true,
+                          maintainAspectRatio: false,
+                          scales: {
+                            y: {
+                              beginAtZero: true // Comienza el eje Y en cero
+                            }
+                          }
+                        }
+                      });
+                    }
+
+                  </script>
+                  <script>
+                    // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
+                    if ('<%- chartData1 %>') {
+                      const datos1 = JSON.parse('<%- chartData1 %>');
+
+                      const meses = datos1.map(dato => 'Mes ' + dato.mes);
+                      const data1 = datos1.map(dato => dato.total_kilos);
+
+                      // Obtén una referencia al elemento canvas
+                      const canvas = document.getElementById('barChart1');
+
+                      // Configura el gráfico utilizando los datos
+                      const ctx1 = canvas.getContext('2d');
+                      const chart = new Chart(ctx1, {
+                        type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+                        data: {
+                          labels: meses, // Etiquetas para el eje X (vendedores)
+                          datasets: [{
+                            label: 'Cantidad Compost descargado por mes (kg)',
+                            data: data1, // Datos para el eje Y (cantidad de clientes)
+                            backgroundColor: 'rgba(44, 191, 174, 0.2)', // Color de fondo de las barras
+                            borderColor: 'rgba(44, 191, 174, 1)', // Color del borde de las barras
+                            borderWidth: 2 // Ancho del borde de las barras
+                          }]
+                        },
+                        options: {
+                          responsive: true,
+                          maintainAspectRatio: false,
+                          scales: {
+                            y: {
+                              beginAtZero: true // Comienza el eje Y en cero
+                            }
+                          }
+                        }
+                      });
+                    }
+
+                  </script>
+                  <script>
+                    const datos2 = JSON.parse('<%- chartData2 %>');
+                    const ctx2 = document.getElementById('barChart2').getContext('2d');
+
+                    const fechas = datos2.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
+                    const temperaturas = datos2.map(d => d.temperatura);
+
+                    new Chart(ctx2, {
+                      type: 'line',
+                      data: {
+                        labels: fechas,
+                        datasets: [{
+                          label: 'Variación ambiente de Temperatura total',
+                          data: temperaturas,
+                          borderColor: 'blue',
+                          fill: false
+                        }]
+                      },
+                      options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                          y: {
+                            beginAtZero: true // Comienza el eje Y en cero
+                          }
+                        }
+                      }
+                    });
+                  </script>
+                  <script>
+                    const datos3 = JSON.parse('<%- chartData3 %>');
+                    const ctx3 = document.getElementById('barChart3').getContext('2d');
+
+                    const fechas3 = datos3.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
+                    const humedad = datos3.map(d => d.humedad);
+
+                    new Chart(ctx3, {
+                      type: 'line',
+                      data: {
+                        labels: fechas3,
+                        datasets: [{
+                          label: 'Variación ambiente de Humedad total',
+                          data: humedad,
+                          borderColor: 'rgb(239, 82, 97)',
+                          fill: false
+                        }]
+                      },
+                      options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                          y: {
+                            beginAtZero: true // Comienza el eje Y en cero
+                          }
+                        }
+                      }
+                    });
+                  </script>
+
+
+
+                  <% if(typeof alert !="undefined" ) { %>
+                    <script>
+                      Swal.fire({
+                        title: '<%=alertTitle %>',
+                        text: '<%= alertMessage%>',
+                        icon: '<%=alertIcon %>',
+                        showConfirmButton: '<%= showConfirmButton %>',
+                        timer: '<%= timer %>'
+                      }).then(() => {
+                        window.location = '<%= ruta %>'
+                      })
+                    </script>
+                    <% } %>
+
+
+
+                      <script>
+                        var x = document.getElementById("myAudio");
+
+
+
+                        const socket = io()
+
+                        socket.on('cromfinalizado', (msg) => {
+                          toastr.options.positionClass = "toast-bottom-right"
+                          toastr.success('Nuevo servicio finalizado' + msg)
+                          x.play();
+
+                        })
+
+                      </script>
+
+
+
+
+                      <%- include('./partials/footer.ejs') %>
   </body>
 
   </html>
