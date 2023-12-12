@@ -1,0 +1,165 @@
+<%- include('./partials/nav.ejs') %>
+
+  <body>
+
+    <h1>Informe Reporte de visitas de seguimiento y control de soluciones In situ</h1>
+
+    <p><strong>Ciudad:</strong>  <%=resultsCompost[0].Direccion_compostera%></p>
+    <p><strong>Fecha:</strong>   <%=resultsRegistros[0].fecha_registro%></p>
+
+    <p><strong>Beneficiario No (código):</strong> <%= beneficiarioCodigo %></p>
+    <p><strong>Responsable de la solución In Situ:</strong> <%= responsableSolucion %></p>
+    <p><strong>Ubicación (dirección):</strong> <%= ubicacion %></p>
+    <p><strong>Compostera tipo:</strong> <%= composteraTipo %></p>
+
+    <h2>Situación encontrada In Situ</h2>
+    <p><%= descripcionSituacion %></p>
+    <p><strong>Nota del supervisor:</strong> <%= notaSupervisor %></p>
+
+    <h2>Recomendaciones del supervisor</h2>
+    <p><%= recomendacionesSupervisor %></p>
+
+    <h2>Evidencia fotográfica</h2>
+
+    <div class="container" style="margin-top: 120px; ">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-header text-center">
+              <h2>Detalles del registro</h2>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-6">
+                  <h3>Información</h3>
+                  <p><strong>Fecha registro:</strong> <span id="nombreEquipo">
+                      <%=resultsRegistros[0].fecha_registro%>
+                    </span></p>
+                  <p><strong>Hora registro:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].hora_registro%>
+                    </span></p>
+                  <p><strong>Tipo:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].TipoRegistro%>
+                    </span></p>
+                  <p><strong>Clima:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].clima%>
+                    </span></p>
+                  <p><strong>Cnt M estructurante:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].CantidadME%>
+                    </span></p>
+                  <p><strong>Cnt M organico:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].CantidadMO%>
+                    </span></p>
+                  <p><strong>Cnt compost:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].cantidadCompost%>
+                    </span></p>
+                </div>
+                <div class="col-6">
+                  <p><strong>Temperatura:</strong> <span id="nombreEquipo">
+                      <%=resultsRegistros[0].temperatura%>
+                    </span></p>
+                  <p><strong>Humedad:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].humedad%>
+                    </span></p>
+                  <p><strong>Insectos:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].Pinsectos%>
+                    </span></p>
+                  <p><strong>Roedores:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].Proedores%>
+                    </span></p>
+                  <p><strong>Presencia lixiviados:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].prelixiviados%>
+                    </span></p>
+                  <p><strong>Presencia olor:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].Polor%>
+                    </span></p>
+                </div>
+                <hr>
+                <div class="col-12">
+                  <p><strong>Hallazgo:</strong> <span id="nombreEquipo">
+                      <%=resultsRegistros[0].hallazgoFVS%>
+                    </span></p>
+                  <p><strong>Posible causa del hallazgo:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].causaFVS%>
+                    </span></p>
+                  <p><strong>Recomendaciones:</strong> <span id="descripcionEquipo">
+                      <%=resultsRegistros[0].recomendacionesFVS %>
+                    </span></p>
+                </div>
+              </div>
+
+              <!-- Sección de Información -->
+
+
+              <!-- Sección de Galería de Imágenes -->
+              <div class="mb-4">
+                <h3>Galería de Imágenes</h3>
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+                  <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                      class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                      aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                      aria-label="Slide 3"></button>
+                  </div>
+                  <div class="carousel-inner">
+                    <% resultsArchivos.forEach((resultsArchivos)=> {%>
+                      <div class="carousel-item active">
+
+                        <img class="d-block w-100" src="/uploads/<%=resultsArchivos.archivo%>">
+                      </div>
+
+                      <% }) %>
+
+
+                  </div>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+                <div id="galeria" class="row">
+                  <% if (resultsRegistros[0].FotoEstadoActual !=null) {%>
+                    <img class="shadow" style="border-radius: 22px 22px 22px 22px; max-width: 33%;  "
+                      src="/uploads/<%=resultsRegistros[0].FotoEstadoActual%>">
+                    <% }%>
+                </div>
+              </div>
+
+              <!-- Sección de Estadísticas -->
+              <div hidden class="mb-4">
+                <h3>Estadísticas</h3>
+                
+              </div>
+              <% if (resultsRegistros[0].firma !=null) {%>
+              <div class="mb-4">
+                <div class="mx-auto" style="background: #FFFFFF; padding: 10px; text-align: center; height: 300px;">
+                  <img class="mx-auto" border="px" width="800px" height="300px" src="<%= resultsRegistros[0].firma %>"
+                    alt="">
+                  <hr>
+                  
+                </div>
+                <!-- Puedes agregar más estadísticas según sea necesario -->
+              </div>
+              <% }%>
+
+              <!-- Botón para Generar Informe -->
+              <button hidden onclick="generarInforme()" class="btn btn-primary">Generar Informe</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('./partials/footer.ejs') %>
+  </body>
+
+  </html>

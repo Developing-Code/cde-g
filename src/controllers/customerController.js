@@ -2641,6 +2641,59 @@ controller.detallesRegitroOperacion = (req, res) => {
     res.redirect("/login");
   }
 };
+controller.imprimirRegitroOperacion = (req, res) => {
+  if (req.session.loggedin) {
+    var fecha = new Date(); //Fecha actual
+    var mes = fecha.getMonth() + 1; //obteniendo mes
+    var dia = fecha.getDate();
+    var ano = fecha.getFullYear(); //obteniendo aÃ±o
+    if (dia < 10) dia = "0" + dia; //agrega cero si el menor de 10
+    if (mes < 10) mes = "0" + mes; //agrega cero si el menor de 10
+    var value = ano + "-" + mes + "-" + dia;
+    var fechaACTUAL = String(value);
+    console.log(fechaACTUAL);
+    var idregistro = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM registrodiarioestadooperacion WHERE id=?", [idregistro], (error, resultsRegistros) => {
+        if (error) {
+          console.log(error);
+        } else {
+          req.getConnection((error, conn) => {
+            conn.query("SELECT * FROM archivos_usuarios WHERE id_registro=?", [idregistro], (error, resultsArchivos) => {
+              if (error) {
+                console.log(error);
+              } else {
+                let idcompostera = resultsRegistros[0].id_compostera;
+                req.getConnection((error, conn) => {
+                  conn.query("SELECT * FROM composteras WHERE id=?", [idregistro], (error, resultsCompost) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      res.render("imprimirreportepdf", {
+                        total: false,
+                        resultsRegistros: resultsRegistros,
+                        resultsArchivos: resultsArchivos,
+                        fechaACTUAL: fechaACTUAL,
+                        resultsCompost:resultsCompost,
+                        login: true,
+                        name: req.session.name,
+                        role: req.session.role,
+                        id_user: req.session.ID,
+                      });
+                    }
+                  })
+                })
+              }
+            })
+          })
+
+        }
+      });
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
 
 
 
