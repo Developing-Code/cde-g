@@ -2712,7 +2712,7 @@
                 _this._handlePopperPlacementChange(data);
               }
             },
-            onUpdate: function onUpdate(data) {
+            on: function onUpdate(data) {
               _this._handlePopperPlacementChange(data);
             }
           });

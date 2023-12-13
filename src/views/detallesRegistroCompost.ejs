@@ -75,40 +75,14 @@
               <!-- Sección de Galería de Imágenes -->
               <div class="mb-4">
                 <h3>Galería de Imágenes</h3>
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-                  <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                      class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                      aria-label="Slide 2"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                      aria-label="Slide 3"></button>
+                <div class="row">
+                  <% resultsArchivos.forEach((resultsArchivos)=> {%>
+                  <div class="col-4">
+                    <img width="200px" src="/uploads/<%=resultsArchivos.archivo%>">
                   </div>
-                  <div class="carousel-inner">
-                    <% resultsArchivos.forEach((resultsArchivos)=> {%>
-                      <div class="carousel-item active">
-
-                        <img class="d-block w-100" src="/uploads/<%=resultsArchivos.archivo%>">
-                      </div>
-
-                      <% }) %>
-
-
-                  </div>
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                  </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                  </button>
-                </div>
-                <div id="galeria" class="row">
+                  <% }) %>
                   <% if (resultsRegistros[0].FotoEstadoActual !=null) {%>
-                    <img class="shadow" style="border-radius: 22px 22px 22px 22px; max-width: 33%;  "
+                    <img style="border-radius: 22px 22px 22px 22px; width: 200px;  "
                       src="/uploads/<%=resultsRegistros[0].FotoEstadoActual%>">
                     <% }%>
                 </div>
@@ -119,17 +93,28 @@
                 <h3>Estadísticas</h3>
                 
               </div>
-              <% if (resultsRegistros[0].firma !=null) {%>
-              <div class="mb-4">
-                <div class="mx-auto" style="background: #FFFFFF; padding: 10px; text-align: center; height: 300px;">
-                  <img class="mx-auto" border="px" width="800px" height="300px" src="<%= resultsRegistros[0].firma %>"
-                    alt="">
-                  <hr>
+
+              <div class="row mt-5">
+                <div class="col-6">
+                  <% if (resultsRegistros[0].firma !=null) {%>
+            
+                    <img class="mx-auto" width="300px"  height="90px" src="<%= resultsRegistros[0].firma %>" alt="">
+                    <p style="margin-bottom: 0px;">-----------------------------</p>
+                   
+                    
+                    
+            
+                    <% }%>
                   
                 </div>
-                <!-- Puedes agregar más estadísticas según sea necesario -->
-              </div>
-              <% }%>
+                <div class="col-6">
+            
+                </div>
+                <div class="col-6">
+            
+                </div>
+              </div> 
+            
 
               <!-- Botón para Generar Informe -->
               <button hidden onclick="generarInforme()" class="btn btn-primary">Generar Informe</button>

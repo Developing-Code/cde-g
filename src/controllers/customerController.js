@@ -1701,12 +1701,21 @@ controller.formVisitaSeguimientoSend = (req, res) => {
                 if (error) {
                   console.log(error);
                 } else {
-                  res.render("seguimientofoto1", {
-                    login: true,
-                    ID: req.session.ID,
-                    name: req.session.name,
-                    role: req.session.role,
-                    result: result
+                  req.getConnection((error, conn) => {
+                    conn.query("UPDATE composteras SET ? WHERE id=?",[{estado:'COMPLETADO'},idCompost], (error) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        res.render("seguimientofoto1", {
+                          login: true,
+                          ID: req.session.ID,
+                          name: req.session.name,
+                          role: req.session.role,
+                          result: result
+                        });
+                      }
+                    }
+                    );
                   });
                 }
               }
@@ -2664,22 +2673,32 @@ controller.imprimirRegitroOperacion = (req, res) => {
                 console.log(error);
               } else {
                 let idcompostera = resultsRegistros[0].id_compostera;
+                let idSupervisor = resultsRegistros[0].id_quienRegistra;
                 req.getConnection((error, conn) => {
-                  conn.query("SELECT * FROM composteras WHERE id=?", [idregistro], (error, resultsCompost) => {
+                  conn.query("SELECT * FROM composteras WHERE id=?", [idcompostera], (error, resultsCompost) => {
                     if (error) {
                       console.log(error);
                     } else {
-                      res.render("imprimirreportepdf", {
-                        total: false,
-                        resultsRegistros: resultsRegistros,
-                        resultsArchivos: resultsArchivos,
-                        fechaACTUAL: fechaACTUAL,
-                        resultsCompost:resultsCompost,
-                        login: true,
-                        name: req.session.name,
-                        role: req.session.role,
-                        id_user: req.session.ID,
-                      });
+                      req.getConnection((error, conn) => {
+                        conn.query("SELECT * FROM usuarios WHERE id=?", [idSupervisor], (error, resultsUsers) => {
+                          if (error) {
+                            console.log(error);
+                          } else {
+                            res.render("imprimirreportepdf", {
+                              total: false,
+                              resultsRegistros: resultsRegistros,
+                              resultsArchivos: resultsArchivos,
+                              fechaACTUAL: fechaACTUAL,
+                              resultsCompost:resultsCompost,
+                              resultsUsers: resultsUsers,
+                              login: true,
+                              name: req.session.name,
+                              role: req.session.role,
+                              id_user: req.session.ID,
+                            });
+                          }
+                        })
+                      })
                     }
                   })
                 })
