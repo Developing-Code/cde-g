@@ -35,6 +35,12 @@
       border-left: 3px solid #36e91e;
       /* Cambia "red" al color que desees */
     }
+
+    #acordion-div {
+            max-height: 300px; /* Establece el tamaño máximo del div */
+            overflow-y: auto;  /* Agrega una barra de desplazamiento vertical si es necesario */
+            border: 1px solid #ccc; /* Añade un borde para mayor claridad */
+        }
   </style>
 
   <body>
@@ -218,40 +224,43 @@
                     </strong>
                   </div>
                   <div class="card-body border-0">
-                    <div class="accordion" id="accordionExample">
-                      <% roperacionresults.forEach((dataroperacionresults)=> {%>
-                      <div class="accordion-item">
-                        <h2 class="accordion-header" id="heading<%= dataroperacionresults.id %>">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= dataroperacionresults.id %>" aria-expanded="false" aria-controls="collapse<%= dataroperacionresults.id %>">
-                            <%= dataroperacionresults.TipoRegistro %> #<%= dataroperacionresults.id %>
-                          </button>
-                        </h2>
-                        <div id="collapse<%= dataroperacionresults.id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= dataroperacionresults.id %>" data-bs-parent="#accordionExample">
-                          <div class="accordion-body">
-                            <strong>Hallazgos:</strong> <%= dataroperacionresults.hallazgoFVS %><strong>Causas:</strong> <%= dataroperacionresults.causaFVS %>        <strong>Recomendaciones:</strong> <%= dataroperacionresults.recomendacionesFVS %> 
-                            <div class="row mt-2">
-                              <div class="col">
-                                <strong>Presencia Vectores:</strong> <%= dataroperacionresults.Pinsectos %>
+                    <div id="acordion-div">
+                      <div class="accordion" id="accordionExample">
+                        <% roperacionresults.forEach((dataroperacionresults)=> {%>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="heading<%= dataroperacionresults.id %>">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= dataroperacionresults.id %>" aria-expanded="false" aria-controls="collapse<%= dataroperacionresults.id %>">
+                              <%= dataroperacionresults.TipoRegistro %> #<%= dataroperacionresults.id %><strong> ---- Fecha: </strong> <%= dataroperacionresults.fecha_registro %>
+                            </button>
+                          </h2>
+                          <div id="collapse<%= dataroperacionresults.id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= dataroperacionresults.id %>" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                              <strong>Hallazgos:</strong> <%= dataroperacionresults.hallazgoFVS %><strong>Causas:</strong> <%= dataroperacionresults.causaFVS %>        <strong>Recomendaciones:</strong> <%= dataroperacionresults.recomendacionesFVS %> 
+                              <div class="row mt-2">
+                                <div class="col">
+                                  <strong>Presencia Vectores:</strong> <%= dataroperacionresults.Pinsectos %>
+                                </div>
+                                <div class="col">
+                                  <strong>Presencia Lixiviados:</strong> <%= dataroperacionresults.prelixiviados %>
+                                </div>
+                                <div class="col">
+                                  <strong>Presencia Olores:</strong> <%= dataroperacionresults.Polor %>
+                                </div>
                               </div>
-                              <div class="col">
-                                <strong>Presencia Lixiviados:</strong> <%= dataroperacionresults.prelixiviados %>
-                              </div>
-                              <div class="col">
-                                <strong>Presencia Olores:</strong> <%= dataroperacionresults.Polor %>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col mt-4">
-                               <a href="/imprimirRegitroOperacion/<%= dataroperacionresults.id %>" title="Imprimir reporte"
-                              class="btn btn-sm btn-dark" type="button"><i class='bx bxs-printer'></i> <strong>Imprimir reporte</strong> </a>
+                              <div class="row">
+                                <div class="col mt-4">
+                                 <a href="/imprimirRegitroOperacion/<%= dataroperacionresults.id %>" title="Imprimir reporte"
+                                class="btn btn-sm btn-dark" type="button"><i class='bx bxs-printer'></i> <strong>Imprimir reporte</strong> </a>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
+                        <% }) %>
+                        
                       </div>
-                      <% }) %>
-                      
                     </div>
+                    
                     
 
                   
