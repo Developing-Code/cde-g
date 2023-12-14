@@ -30,7 +30,7 @@
 
 
 
-    <div class="container" style="margin-top: 80px; color: rgb(128, 128, 128); "> ">
+    <div class="container" style="margin-top: 150px; color: rgb(128, 128, 128); "> 
       <div class="row justify-content-center mt-5 ">
         <div class=" col-lg-9 col-md-12 col-sm-12">
           <div class="card">
@@ -45,128 +45,132 @@
 
 
 
-                   <div class="col-lg-12 col-sm-12">
-  <div class="form-group mb-3">
-    <label for="fecha_entrega">Fecha Entrega</label>
-    <input type="date" class="form-control" id="fecha_entrega" name="fecha_entrega" required>
-  </div>
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="form-group mb-3">
+                        <label for="fecha_entrega">Fecha Entrega</label>
+                        <input type="date" class="form-control" id="fecha_entrega" name="fecha_entrega" required>
+                      </div>
 
-  <input type="hidden" value="<%= ID%>" name="id_quienEntrega" required>
-  <input type="hidden" value="<%= name%>" name="nombre_quienEntrega" required>
+                      <input type="hidden" value="<%= ID%>" name="id_quienEntrega" required>
+                      <input type="hidden" value="<%= name%>" name="nombre_quienEntrega" required>
 
-  <div class="form-group mb-3">
-    <label for="codBenefic">Código Beneficiario</label>
-    <input type="text" class="form-control" id="codBenefic" name="codBenefic" required oninput="checkcodBenefic()">
-    <div id="validation-message"></div>
-  </div>
+                      <div class="form-group mb-3">
+                        <label for="codBenefic">Código Beneficiario</label>
+                        <input type="text" class="form-control" id="codBenefic" name="codBenefic" required
+                          oninput="checkcodBenefic()">
+                        <div id="validation-message"></div>
+                      </div>
 
-  <div class="form-group mb-3">
-    <label for="nombreInstitucion">Nombre Institución</label>
-    <input type="text" class="form-control" id="nombreInstitucion" name="nombreInstitucion">
-  </div>
+                      <div class="form-group mb-3">
+                        <label for="nombreInstitucion">Nombre Institución</label>
+                        <input type="text" class="form-control" id="nombreInstitucion" name="nombreInstitucion">
+                      </div>
 
-  <div class="form-group mb-3">
-    <label for="nombreResponsable">Nombre Responsable</label>
-    <input type="text" class="form-control" id="nombreResponsable" name="nombreResponsable">
-  </div>
+                      <div class="form-group mb-3">
+                        <label for="nombreResponsable">Nombre Responsable</label>
+                        <input type="text" class="form-control" id="nombreResponsable" name="nombreResponsable">
+                      </div>
 
-  <div class="form-group mb-3">
-    <label for="celularResponsable">Celular/Contacto</label>
-    <input type="tel" class="form-control" id="celularInput" name="celularResponsable">
-  </div>
+                      <div class="form-group mb-3">
+                        <label for="celularResponsable">Celular/Contacto</label>
+                        <input type="tel" class="form-control" id="celularInput" name="celularResponsable">
+                      </div>
 
-  <div class="form-group mb-3">
-    <label for="identificacionResponsable">Identificación</label>
-    <div class="row">
-      <div class="col-3">
-        <select class="form-control" id="tipoIdentifi" name="tipoIdentifi">
-          <option value="CC" selected>Cédula de Ciudadanía (CC)</option>
-          <option value="NIT">Número de Identificación Tributaria (NIT)</option>
-          <option value="TI">Tarjeta de Identidad (TI)</option>
-        </select>
-      </div>
-      <div class="col-9">
-        <input type="number" class="form-control" id="identificacionResponsable" name="identificacionResponsable" required>
-      </div>
-    </div>
-  </div>
+                      <div class="form-group mb-3">
+                        <label for="identificacionResponsable">Identificación</label>
+                        <div class="row">
+                          <div class="col-3">
+                            <select class="form-control" id="tipoIdentifi" name="tipoIdentifi">
+                              <option value="CC" selected>Cédula de Ciudadanía (CC)</option>
+                              <option value="NIT">Número de Identificación Tributaria (NIT)</option>
+                              <option value="TI">Tarjeta de Identidad (TI)</option>
+                            </select>
+                          </div>
+                          <div class="col-9">
+                            <input type="number" class="form-control" id="identificacionResponsable"
+                              name="identificacionResponsable" required>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="form-group mb-3">
+                        <label for="email">Correo electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email">
+                      </div>
 
-  <div class="form-group mb-3">
-    <label for="capacidadCompostera">Capacidad Compostera</label>
-    <select class="form-control" id="capacidadCompostera" name="capacidadCompostera">
-      <option value="20" selected>20 kg/día</option>
-      <option value="40">40 kg/día</option>
-      <option value="60">60 kg/día</option>
-    </select>
-  </div>
-</div>
+                      <div class="form-group mb-3">
+                        <label for="usuario">Tipo beneficiario</label>
+                        <select class="form-control" id="notaCompostera" name="notaCompostera">
+                          <option value="Colegio" selected>Colegio</option>
+                          <option value="Huerta">Huerta</option>
+                          <option value="Universidad">Universidad</option>
+                          <option value="Propiedad Horizontal">Propiedad Horizontal</option>
+                          <option value="Institucional">Institucional</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group mb-3">
+                        <label for="capacidadCompostera">Capacidad Compostera</label>
+                        <select class="form-control" id="capacidadCompostera" name="capacidadCompostera">
+                          <option value="20" selected>20 kg/día</option>
+                          <option value="40">40 kg/día</option>
+                          <option value="60">60 kg/día</option>
+                        </select>
+                      </div>
+                    </div>
 
 
 
 
-<div class="col-lg-12 col-sm-12">
-  <div class="form-group mb-3">
-    <label for="direccionInstitucion">Dirección</label>
-    <div class="row mb-3">
-      <div class="col-md-4">
-        <select class="form-control" id="Ciudad" name="Ciudad">
-          <option value="Bogotá" selected>Bogotá</option>
-          <option value="Medellín">Medellín</option>
-          <option value="Cali">Cali</option>
-          <option value="Barranquilla">Barranquilla</option>
-          <option value="Cartagena">Cartagena</option>
-        </select>
-      </div>
-      <div class="col-md-4">
-        <select class="form-control" id="Localidad" name="Localidad">
-          <option value="Localidad" selected>Localidad</option>
-          <option value="Usaquén">Usaquén</option>
-          <option value="Chapinero">Chapinero</option>
-          </select>
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" id="Barrio" name="Barrio" placeholder="Barrio">
-      </div>
-    </div>
-    <input class="form-control" id="address" name="direccionInstitucion" placeholder="Ingresa una dirección" oninput="debouncedLocate()">
-    <div id="suggestions"></div>
-  </div>
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="form-group mb-3">
+                        <label for="direccionInstitucion">Dirección</label>
+                        <div class="row mb-3">
+                          <div class="col-md-4 mt-3">
+                            <select class="form-control" id="Ciudad" name="Ciudad">
+                              <option value="Bogotá" selected>Bogotá</option>
+                              <option value="Medellín">Medellín</option>
+                              <option value="Cali">Cali</option>
+                              <option value="Barranquilla">Barranquilla</option>
+                              <option value="Cartagena">Cartagena</option>
+                            </select>
+                          </div>
+                          <div class="col-md-4 mt-3">
+                            <select class="form-control" id="Localidad" name="Localidad">
+                              <option value="Localidad" selected>Localidad</option>
+                              <option value="Usaquén">Usaquén</option>
+                              <option value="Chapinero">Chapinero</option>
+                            </select>
+                          </div>
+                          <div class="col-md-4 mt-3">
+                            <input type="text" class="form-control" id="Barrio" name="Barrio" placeholder="Barrio">
+                          </div>
+                        </div>
+                        <input class="form-control" id="address" name="direccionInstitucion"
+                          placeholder="Ingresa una dirección" oninput="debouncedLocate()">
+                        <div id="suggestions"></div>
+                      </div>
 
-  <div class="form-group mb-3">
-    <label for="coordenadas">Coordenadas de la ubicación</label>
-    <div class="row mb-3">
-      <div class="col-md-4">
-        <input type="text" class="form-control" id="latloguser" name="coordenadas" value="0">
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" id="lat" name="lat" value="0">
-      </div>
-      <div class="col-md-4">
-        <input type="text" class="form-control" id="log" name="log" value="0">
-      </div>
-    </div>
-    <br>
-    <div id="map"></div>
-  </div>
+                      <div class="form-group mb-3">
+                        <label for="coordenadas">Coordenadas de la ubicación</label>
+                        <div class="row mb-3">
+                          <div class="col-md-4">
+                            <input type="text" class="form-control" id="latloguser" name="coordenadas" value="0">
+                          </div>
+                          <div class="col-md-4">
+                            <input type="text" class="form-control" id="lat" name="lat" value="0" hidden>
+                          </div>
+                          <div class="col-md-4">
+                            <input type="text" class="form-control" id="log" name="log" value="0" hidden>
+                          </div>
+                        </div>
+                        <br>
+                        <div id="map"></div>
+                      </div>
 
-  <input type="text" class="form-control" name="estado" value="INCOMPLETO" hidden>
+                      <input type="text" class="form-control" name="estado" value="INCOMPLETO" hidden>
 
-  <div class="form-group mb-3">
-    <label for="email">Correo electrónico</label>
-    <input type="email" class="form-control" id="email" name="email">
-  </div>
-
-  <div class="form-group mb-3">
-    <label for="usuario">Tipo beneficiario</label>
-    <select class="form-control" id="notaCompostera" name="notaCompostera">
-      <option value="Colegio" selected>Colegio</option>
-      <option value="Huerta">Huerta</option>
-      <option value="Universidad">Universidad</option>
-      <option value="Propiedad Horizontal">Propiedad Horizontal</option>
-      <option value="Institucional">Institucional</option>
-    </select>
-  </div>
-</div>
+                    </div>
 
                   </div>
                   <div class="row">
@@ -227,7 +231,7 @@
 
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-       
+
 
 
         <script>

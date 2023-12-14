@@ -44,14 +44,16 @@
         <div class="container">
           <div class="row mb-4">
             <div class="col">
-             <h5> <strong>Bienvenido</strong>  <%= name %></h5>
+              <h5> <strong>Bienvenido</strong>
+                <%= name %>
+              </h5>
             </div>
             <div class="col">
             </div>
             <div class="col">
-             <h5> </h5>
+              <h5> </h5>
             </div>
-           </div>
+          </div>
           <div class="row">
             <div class="btn-group" role="group" aria-label="Basic example">
               <a type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/registrosdeoperacion">Registros
@@ -62,7 +64,7 @@
                 <i class='bx bxs-error-circle'></i></a>
             </div>
           </div>
-          
+
         </div>
 
 
@@ -80,7 +82,7 @@
                 </div>
                 <div class="card-body border-0">
                   <div class="row">
-                    <% if (data.foto1_compostera != ''  ) {%>
+                    <% if (data.foto1_compostera !=null ) {%>
                       <div class="col-6">
                         <img class="shadow"
                           style="border-radius: 22px 22px 22px 22px; width: 100%; height: 300px; object-fit: cover; "
@@ -92,7 +94,7 @@
                           <p id="Nombre-txt">
                             <%= data.nombre_responsable %>
                           </p>
-                          
+
                           <p class="card-text"><strong>Nota:</strong>
                             <%= data.Nota %>
                           </p>
@@ -139,8 +141,7 @@
                                       href="#contenidoTab1<%= data.id %>">Información</a>
                                   </li>
                                   <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab"
-                                      href="#contenidoTab2<%= data.id %>">Mapa</a>
+                                    <a class="nav-link" data-toggle="tab" href="#contenidoTab2<%= data.id %>">Mapa</a>
                                   </li>
                                   <li class="nav-item">
                                     <a class="nav-link text-warning" data-toggle="tab"
@@ -207,10 +208,66 @@
             </div>
 
             <% }) %>
-              
 
+              <div class="col">
+                <div class="card shadow border-0 " style="border-radius: 22px ;">
+                  <div class="card-header border-0 text-center  text-light"
+                    style="border-radius: 22px 22px 0px 0px;background-color:#FC7B3B">
+                    <strong>
+                      Alertas
+                    </strong>
+                  </div>
+                  <div class="card-body border-0">
+                    <div class="accordion" id="accordionExample">
+                      <% roperacionresults.forEach((dataroperacionresults)=> {%>
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading<%= dataroperacionresults.id %>">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<%= dataroperacionresults.id %>" aria-expanded="false" aria-controls="collapse<%= dataroperacionresults.id %>">
+                            <%= dataroperacionresults.TipoRegistro %> #<%= dataroperacionresults.id %>
+                          </button>
+                        </h2>
+                        <div id="collapse<%= dataroperacionresults.id %>" class="accordion-collapse collapse" aria-labelledby="heading<%= dataroperacionresults.id %>" data-bs-parent="#accordionExample">
+                          <div class="accordion-body">
+                            <strong>Hallazgos:</strong> <%= dataroperacionresults.hallazgoFVS %><strong>Causas:</strong> <%= dataroperacionresults.causaFVS %>        <strong>Recomendaciones:</strong> <%= dataroperacionresults.recomendacionesFVS %> 
+                            <div class="row mt-2">
+                              <div class="col">
+                                <strong>Presencia Vectores:</strong> <%= dataroperacionresults.Pinsectos %>
+                              </div>
+                              <div class="col">
+                                <strong>Presencia Lixiviados:</strong> <%= dataroperacionresults.prelixiviados %>
+                              </div>
+                              <div class="col">
+                                <strong>Presencia Olores:</strong> <%= dataroperacionresults.Polor %>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col mt-4">
+                               <a href="/imprimirRegitroOperacion/<%= dataroperacionresults.id %>" title="Imprimir reporte"
+                              class="btn btn-sm btn-dark" type="button"><i class='bx bxs-printer'></i> <strong>Imprimir reporte</strong> </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <% }) %>
+                      
+                    </div>
+                    
+
+                  
+
+                      
+
+                  </div>
+                </div>
+
+              </div>
 
         </div>
+
+
+
+
 
         <% } %>
       </div>
@@ -237,12 +294,12 @@
 
 
 
-     
 
-     
-     
-     
-     
+
+
+
+
+
 
 
 
@@ -262,7 +319,7 @@
 
 
 
-         
+
 
 
 
