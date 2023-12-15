@@ -255,19 +255,28 @@ controller.home = (req, res) => {
 
     } else if (req.session.role === "user1") {
       req.getConnection((error, conn) => {
-        conn.query("SELECT * FROM composteras WHERE id_usuario=?", [id_usuario], (error, results) => {
+        conn.query("SELECT * FROM composteras WHERE id_usuario = ?;", [id_usuario], (error, results) => {
           if (error) {
             console.log(error);
           } else {
-            var idCompost = results[0].id
-            const datacasa = false;
-            res.render("userhome", {
-              results: results,
-              login: true,
-              name: req.session.name,
-              role: req.session.role,
-              id: req.session.ID,
-            });
+            console.log(results);
+            req.getConnection((error, conn) => {
+              conn.query("SELECT * FROM registrodiarioestadooperacion WHERE id_compostera IN (SELECT id FROM composteras WHERE id_usuario = ?) AND Pinsectos != 'no' AND Polor != 'no' AND prelixiviados != 'no'", [id_usuario], (error, roperacionresults) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                 
+                  res.render("userhome", {
+                    results: results,
+                    roperacionresults:roperacionresults,
+                    login: true,
+                    name: req.session.name,
+                    role: req.session.role,
+                    id: req.session.ID,
+                  });
+                }
+              })
+            })
           }
         })
       })
@@ -1702,7 +1711,7 @@ controller.formVisitaSeguimientoSend = (req, res) => {
                   console.log(error);
                 } else {
                   req.getConnection((error, conn) => {
-                    conn.query("UPDATE composteras SET ? WHERE id=?",[{estado:'COMPLETADO'},idCompost], (error) => {
+                    conn.query("UPDATE composteras SET ? WHERE id=?", [{ estado: 'COMPLETADO' }, idCompost], (error) => {
                       if (error) {
                         console.log(error);
                       } else {
@@ -2689,7 +2698,7 @@ controller.imprimirRegitroOperacion = (req, res) => {
                               resultsRegistros: resultsRegistros,
                               resultsArchivos: resultsArchivos,
                               fechaACTUAL: fechaACTUAL,
-                              resultsCompost:resultsCompost,
+                              resultsCompost: resultsCompost,
                               resultsUsers: resultsUsers,
                               login: true,
                               name: req.session.name,
