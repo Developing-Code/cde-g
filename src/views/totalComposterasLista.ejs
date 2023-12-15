@@ -37,10 +37,11 @@
         <div class="btn-group" role="group" aria-label="Basic example">
 
 
-       
-          <a type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/vistamapacomposteras">Vista Mapa <i
+          <a type="button" class="btn btn-outline-success" style="margin-bottom: 2px;" href="/agregarNuevaCompostera">Crear
+            nueva compostera <i class='bx bx-add-to-queue'></i></a>
+          <a type="button" class="btn btn-outline-dark" style="margin-bottom: 2px;" href="/vistamapacomposteras">Vista Mapa <i
               class='bx bxs-map'></i></a>
-          <a type="button" class="btn btn-primary" style="margin-bottom: 2px;" href="/totalcomposteras"><i
+          <a type="button" class="btn flex-column btn-outline-primary" style="margin-bottom: 2px;" href="/totalcomposteras"><i
               class='bx bxs-notepad'></i> Tarjeta</a>
           
 
@@ -73,7 +74,7 @@
 
 
           <% if ( role=='admin' || role=='supervisor' ) {%>
-            <div class="container-fluid" style="margin-top:50px">
+            <div class="container-fluid" style="margin-top:100px">
               <div class="row">
                 <table id="users" class="table table-light table-striped table-hover table-bordered text-center  "
                   style="font-size: 14px;">
