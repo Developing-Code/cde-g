@@ -265,10 +265,10 @@ controller.home = (req, res) => {
                 if (error) {
                   console.log(error);
                 } else {
-                 
+
                   res.render("userhome", {
                     results: results,
-                    roperacionresults:roperacionresults,
+                    roperacionresults: roperacionresults,
                     login: true,
                     name: req.session.name,
                     role: req.session.role,
@@ -3019,52 +3019,137 @@ controller.cronogramaOrganizarFecha = (req, res) => {
 
 
 //estadisticas
+
 controller.pestadisticas = (req, res) => {
-  req.getConnection((error, conn) => {
-    conn.query(
-      "SELECT u.nombre_completo, COUNT(c.id) AS cantidad_clientes FROM clientes c JOIN usuarios u ON c.id_vendedor = u.id GROUP BY u.nombre_completo", (error, resultcliVendedor) => {
-        if (error) {
-          console.log(error)
-        } else {
-          console.log(resultcliVendedor)
-          req.getConnection((error, conn) => {
-            conn.query(
-              "SELECT YEAR(fecha_creacion) AS anio,  MONTH(fecha_creacion) AS mes,   COUNT(*) AS cantidad_clientes,  SUM(CASE WHEN roleEstado = 'Aprobado' THEN 1 ELSE 0 END) AS clientes_aprobados, SUM(CASE WHEN roleEstado <> 'Aprobado' THEN 1 ELSE 0 END) AS clientes_no_aprobados FROM clientes GROUP BY YEAR(fecha_creacion), MONTH(fecha_creacion)", (error, resultclano) => {
+  if (req.session.loggedin) {
+    id_usuario = req.session.ID
+    if (req.session.role === "admin" || req.session.role == 'supervisor') {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT  YEAR(fecha_registro) AS ano,  MONTH(fecha_registro) AS mes, SUM(CantidadMO) AS total_kilos  FROM registrodiarioestadooperacion GROUP BY  ano, mes  ORDER BY ano, mes;", (error, chartData) => {
+          if (error) {
+            console.log(error)
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query("SELECT  YEAR(fecha_registro) AS ano,  MONTH(fecha_registro) AS mes, SUM(cantidadCompost) AS total_kilos  FROM registrodiarioestadooperacion GROUP BY  ano, mes  ORDER BY ano, mes;", (error, chartData1) => {
                 if (error) {
                   console.log(error)
                 } else {
                   req.getConnection((error, conn) => {
-                    conn.query(
-                      "SELECT * FROM clientes", (error, result) => {
+                    conn.query("SELECT YEAR(fecha_registro) as ano, MONTH(fecha_registro) as mes, temperatura FROM registrodiarioestadooperacion WHERE temperatura IS NOT NULL ORDER BY YEAR(fecha_registro) ASC, MONTH(fecha_registro) ASC;", (error, chartData2) => {
+                      if (error) {
+                        console.log(error)
+                      } else {
+                        req.getConnection((error, conn) => {
+                          conn.query("SELECT YEAR(fecha_registro) as ano, MONTH(fecha_registro) as mes, humedad FROM registrodiarioestadooperacion   WHERE humedad IS NOT NULL ORDER BY YEAR(fecha_registro) ASC, MONTH(fecha_registro) ASC;", (error, chartData3) => {
+                            if (error) {
+                              console.log(error)
+                            } else {
+                              req.getConnection((error, conn) => {
+                                conn.query("SELECT * FROM `registrodiarioestadooperacion` ORDER BY `registrodiarioestadooperacion`.`id` DESC LIMIT 5", (error, ultimosRegistros) => {
+                                  if (error) {
+                                    console.log(error)
+                                  } else {
+                                    req.getConnection((error, conn) => {
+                                      conn.query("SELECT localidad_compostera, COUNT(*) AS cantidad_de_registros FROM composteras GROUP BY localidad_compostera;", (error, ctnporlocalidad) => {
+                                        if (error) {
+                                          console.log(error)
+                                        } else {
+                                          req.getConnection((error, conn) => {
+                                            conn.query("SELECT * FROM composteras", (error, results) => {
+                                              if (error) {
+                                                console.log(error);
+                                              } else {
+                                                req.getConnection((error, conn) => {
+                                                  conn.query("SELECT COUNT(*) AS total_composteras FROM composteras;", (error, cntComposteras) => {
+                                                    if (error) {
+                                                      console.log(error);
+                                                    } else {
+                                                      req.getConnection((error, conn) => {
+                                                        conn.query("SELECT COUNT(*) AS composteras_en_operacion FROM composteras WHERE estado = 'COMPLETADO';", (error, cntComposEnoperacion) => {
+                                                          if (error) {
+                                                            console.log(error);
+                                                          } else {
+                                                            req.getConnection((error, conn) => {
+                                                              conn.query("SELECT  SUM(CantidadME) + SUM(CantidadMO) AS sumaTotal FROM registrodiarioestadooperacion", (error, BiomasaCargada) => {
+                                                                if (error) {
+                                                                  console.log(error);
+                                                                } else {
+                                                                  req.getConnection((error, conn) => {
+                                                                    conn.query("SELECT  SUM(cantidadCompost) AS sumaTotal FROM registrodiarioestadooperacion WHERE TipoRegistro = 'COMPOSTMADURADO';", (error, compostDescargado) => {
+                                                                      if (error) {
+                                                                        console.log(error);
+                                                                      } else {
+                                                                        const datacasa = false;
+                                                                        res.render("estadisticas", {
+                                                                          chartData: JSON.stringify(chartData),
+                                                                          chartData1: JSON.stringify(chartData1),
+                                                                          chartData2: JSON.stringify(chartData2),
+                                                                          chartData3: JSON.stringify(chartData3),
+                                                                          ctnporlocalidad: JSON.stringify(ctnporlocalidad),
+                                                                          dischartData2: chartData2,
+                                                                          ultimosRegistros: ultimosRegistros,
+                                                                          coordenadas: results,
+                                                                          cntComposteras: cntComposteras,
+                                                                          cntComposEnoperacion: cntComposEnoperacion,
+                                                                          BiomasaCargada: BiomasaCargada,
+                                                                          compostDescargado: compostDescargado,
+                                                                          login: true,
+                                                                          name: req.session.name,
+                                                                          role: req.session.role,
+                                                                          id: req.session.ID,
+                                                                        });
+                                                                      }
+                                                                    })
+                                                                  })
+                                                                }
+                                                              })
+                                                            })
+                                                          }
+                                                        })
+                                                      })
+                                                    }
+                                                  })
+                                                })
+                                              }
+                                            })
+                                          })
+                                        }
+                                      })
 
-                        if (error) {
-                          console.log(error)
-                        } else {
-                          res.render('estadisticas', {
-                            resultcliVendedor: JSON.stringify(resultcliVendedor),
-                            resultclano: JSON.stringify(resultclano),
-                            IDuser: req.session.ID,
-                            role: req.session.role,
-                            login: true,
-                            nameUser: req.session.name,
-                          }
-                          )
-                        }
-                      })
+                                    })
+
+                                  }
+                                })
+
+                              })
+
+                            }
+                          })
+
+                        })
+
+                      }
+                    })
 
                   })
+
                 }
               })
 
-          })
+            })
 
+          }
+        })
 
-        }
       })
 
-  })
-
-}
+    }
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
 
 
 controller.graficoCompost = (req, res) => {

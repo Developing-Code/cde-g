@@ -59,11 +59,11 @@
               <a href="/registrosdeoperacion" class="btn btn-outline-dark btn-lg mb-2">
                 Registros Operación <i class="bx bxs-book-content"></i>
               </a>
-              <a href="/vistamapacomposteras" class="btn btn-outline-secondary btn-lg mb-2 d-none">
+              <a href="/vistamapacomposteras" class="btn btn-outline-secondary btn-lg mb-2">
                 Informes <i class="bx bxs-detail"></i>
               </a>
-              <a href="/vistamapacomposteras" class="btn btn-dark btn-lg mb-2 d-none">
-                Alertas <i class="bx bxs-error-circle"></i>
+              <a href="/pestadisticas" class="btn btn-dark btn-lg mb-2">
+                Estadisticas <i class="bx bxs-error-circle"></i>
               </a>
             </div>
 
@@ -74,7 +74,9 @@
                     <h5 class="card-title">Entregadas</h5>
                   </div>
                   <div class="card-body">
-                    <h4 class="card-text"><%= cntComposteras[0].total_composteras %></h4>
+                    <h4 class="card-text">
+                      <%= cntComposteras[0].total_composteras %>
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -84,7 +86,9 @@
                     <h5 class="card-title">Operando</h5>
                   </div>
                   <div class="card-body">
-                    <h4 class="card-text"><%= cntComposEnoperacion[0].composteras_en_operacion %></h4>
+                    <h4 class="card-text">
+                      <%= cntComposEnoperacion[0].composteras_en_operacion %>
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -94,7 +98,9 @@
                     <h5 class="card-title">Biomasa cargada</h5>
                   </div>
                   <div class="card-body">
-                    <h4 class="card-text"><%= BiomasaCargada[0].sumaTotal %> kg</h4>
+                    <h4 class="card-text">
+                      <%= BiomasaCargada[0].sumaTotal %> kg
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -104,440 +110,145 @@
                     <h5 class="card-title">Compost descargado</h5>
                   </div>
                   <div class="card-body">
-                    <h4 class="card-text"><%= compostDescargado[0].sumaTotal %> kg</h4>
+                    <h4 class="card-text">
+                      <%= compostDescargado[0].sumaTotal %> kg
+                    </h4>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <style>
               .row {
                 flex-basis: 100%;
               }
-            
+
               .card {
                 height: 100%;
               }
             </style>
 
 
-        
-
-      <div class="col-md-12 col-sm-1 my-2">
-  <div class="card shadow border-0">
-    <div class="card-header border-0 text-center text-light" style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
-      <strong>
-        Mapa
-      </strong>
-    </div>
-    <div class="card-body">
-
-      <div id="map" style="width: 100%; height: 500px;"></div>
-
-    </div>
-  </div>
-</div>
 
 
-      <div class="col-md-12 col-sm-1 my-2">
-        <div class="card shadow border-0">
-          <div class="card-header border-0 text-center  text-light"
-            style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
-            <strong>
-              Estadisticas totales
-            </strong>
-          </div>
-          <div class="card-body">
+            <div class="col-md-12 col-sm-1 my-2">
+              <div class="card shadow border-0">
+                <div class="card-header border-0 text-center text-light"
+                  style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
+                  <strong>
+                    Mapa
+                  </strong>
+                </div>
+                <div class="card-body">
 
-            <canvas id="barChart"></canvas>
+                  <div id="map" style="width: 100%; height: 500px;"></div>
 
-          </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <% } %>
+
+
+
+
+
         </div>
+
       </div>
+
+
+
+
+
+
+
       <% } %>
 
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/toastr/toastr.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+        <script>
+          var selectedMarker = null;
+          var selectedMarkerCoords = null;
+
+          // Crear un mapa y establecer su vista inicial
+          const map = L.map('map').setView([6.253350, -75.426938], 13);
+
+          // Agregar una capa base de OpenStreetMap
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+          }).addTo(map);
+
+          let markerIcon = null
+
+            <% coordenadas.forEach((place) => { %>
+
+              markerIcon = L.icon({
+                iconUrl: 'img/marcador2.png', iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32]
+              });
+
+              var marker = L.marker([<%= place.lat %>, <%= place.log %>], { icon: markerIcon, title: '<%= place.numeroCasa %>', dataId: '<%= place.id %>' }).addTo(map);
+
+              marker.bindPopup('<h4><%= place.nombre_institucion %>.</h4><p><%= place.nombre_responsable %>.</p><p><%= place.celular_responsable %>.</p><a href="/perfilCompost/<%= place.id %>">Ver más</a>')
+              marker.on('click', function (e) {
+                // Guardar las coordenadas del marcador seleccionado
+                selectedMarker = e;
+                selectedMarkerCoords = e.latlng;
+                map.setView(e.latlng, 17);
+              })
+                <% }); %>// Tu código JavaScript para crear el mapa va aquí
+        </script>
 
 
-        <% if ( role=='admin' || role=='supervisor' ) {%>
-          <div class="row  text-center">
 
 
-            <% if ( role=='admin' ) {%>
 
-
-             
-              <div class="col-md-12 col-sm-12 my-2">
-                <div class="card shadow border-0">
-
-                  <div class="card-body">
-
-                    <canvas id="barChart1"></canvas>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-6 my-2">
-                <div class="card shadow border-0">
-
-                  <div class="card-body">
-
-                    <canvas id="pieChart1"></canvas>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-6 my-2">
-                <div class="card shadow border-0">
-
-                  <div class="card-body">
-
-                    <canvas id="pieChart2"></canvas>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 col-sm-12 my-2">
-                <div class="card shadow border-0">
-
-                  <div class="card-body">
-
-                    <canvas id="barChart2"></canvas>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 col-sm-12 my-2">
-                <div class="card shadow border-0">
-
-                  <div class="card-body">
-
-                    <canvas id="barChart3"></canvas>
-
-                  </div>
-                </div>
-              </div>
-
-              <% } %>
-          </div>
+        <% if(typeof alert !="undefined" ) { %>
+          <script>
+              Swal.fire({
+                title: '<%=alertTitle %>',
+                text: '<%= alertMessage%>',
+                icon: '<%=alertIcon %>',
+                showConfirmButton: '<%= showConfirmButton %>',
+                timer: '<%= timer %>'
+              }).then(() => {
+                window.location = '<%= ruta %>'
+              })
+          </script>
           <% } %>
-            
-                </div>
-
-                </div>
 
 
 
+            <script>
+              var x = document.getElementById("myAudio");
 
 
 
+              const socket = io()
 
-                <% } %>
+              socket.on('cromfinalizado', (msg) => {
+                toastr.options.positionClass = "toast-bottom-right"
+                toastr.success('Nuevo servicio finalizado' + msg)
+                x.play();
 
-                  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-                  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+              })
 
-                  <script src="/socket.io/socket.io.js"></script>
-                  <script src="/toastr/toastr.js"></script>
-                  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-
-                  <script>
-                    var selectedMarker = null;
-                    var selectedMarkerCoords = null;
-
-                    // Crear un mapa y establecer su vista inicial
-                    const map = L.map('map').setView([6.253350, -75.426938], 13);
-
-                    // Agregar una capa base de OpenStreetMap
-                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                      maxZoom: 19,
-                    }).addTo(map);
-
-                    let markerIcon = null
-
-                      <% coordenadas.forEach((place) => { %>
-
-                        markerIcon = L.icon({
-                          iconUrl: 'img/marcador2.png', iconSize: [32, 32], iconAnchor: [16, 32], popupAnchor: [0, -32]
-                        });
-
-                        var marker = L.marker([<%= place.lat %>, <%= place.log %>], { icon: markerIcon, title: '<%= place.numeroCasa %>', dataId: '<%= place.id %>' }).addTo(map);
-
-                        marker.bindPopup('<h4><%= place.nombre_institucion %>.</h4><p><%= place.nombre_responsable %>.</p><p><%= place.celular_responsable %>.</p><a href="/perfilCompost/<%= place.id %>">Ver más</a>')
-                        marker.on('click', function (e) {
-                          // Guardar las coordenadas del marcador seleccionado
-                          selectedMarker = e;
-                          selectedMarkerCoords = e.latlng;
-                          map.setView(e.latlng, 17);
-                        })
-                          <% }); %>// Tu código JavaScript para crear el mapa va aquí
-                  </script>
-
-                  <script>
-          // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-          if ('<%- chartData %>') {
-                      const datos = JSON.parse('<%- chartData %>');
-
-                      const meses = datos.map(dato => 'Mes ' + dato.mes);
-                      const data1 = datos.map(dato => dato.total_kilos);
-
-                      // Obtén una referencia al elemento canvas
-                      const canvas = document.getElementById('barChart');
-
-                      // Configura el gráfico utilizando los datos
-                      const ctx = canvas.getContext('2d');
-                      const chart = new Chart(ctx, {
-                        type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
-                        data: {
-                          labels: meses, // Etiquetas para el eje X (vendedores)
-                          datasets: [{
-                            label: 'Cantidad Biomasa cargada por mes (kg)',
-                            data: data1, // Datos para el eje Y (cantidad de clientes)
-                            backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
-                            borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
-                            borderWidth: 2 // Ancho del borde de las barras
-                          }]
-                        },
-                        options: {
-                          responsive: true,
-
-                          maintainAspectRatio: false,
-                          scales: {
-                            y: {
-                              beginAtZero: true // Comienza el eje Y en cero
-                            }
-                          }
-                        }
-                      });
-                    }
-
-                  </script>
-                  <script>
-                    // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-                    if ('<%- ctnporlocalidad %>') {
-
-                      function getRandomColors(numColors) {
-                        const colors = [];
-                        for (let i = 0; i < numColors; i++) {
-                          const r = Math.floor(Math.random() * 256);
-                          const g = Math.floor(Math.random() * 256);
-                          const b = Math.floor(Math.random() * 256);
-                          const a = 0.8;
-                          colors.push(`rgba(${r}, ${g}, ${b}, ${a}`);
-                        }
-                        return colors;
-                      }
-                      const datos = JSON.parse('<%- ctnporlocalidad %>');
-
-                      const localidades = datos.map(dato => dato.localidad_compostera);
-                      const data1 = datos.map(dato => dato.cantidad_de_registros);
-                      const numCategories = datos.length;
-                      const randomColors = getRandomColors(numCategories);
-                      console.log(numCategories)
-                      // Obtén una referencia al elemento canvas
-                      const canvas = document.getElementById('pieChart1');
-
-                      // Configura el gráfico utilizando los datos
-                      const ctx = canvas.getContext('2d');
-                      const chart = new Chart(ctx, {
-                        type: 'doughnut', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
-                        data: {
-                          labels: localidades, // Etiquetas para el eje X (vendedores)
-                          datasets: [{
-                            data: data1, // Datos para el eje Y (cantidad de clientes)
-                            backgroundColor: randomColors, // Color de fondo de las barras
-                            borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
-                            borderWidth: 2 // Ancho del borde de las barras
-                          }]
-                        },
-                        options: {
-                          responsive: true,
-                          maintainAspectRatio: false,
-                          scales: {
-                            y: {
-                              beginAtZero: true // Comienza el eje Y en cero
-                            }
-                          }
-                        }
-                      });
-                    }
-
-                  </script>
-                  <script>
-                    // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-                    if ('<%- chartData %>') {
-                      const datos = JSON.parse('<%- chartData %>');
-
-                      const meses = datos.map(dato => 'Mes ' + dato.mes);
-                      const data1 = datos.map(dato => dato.total_kilos);
-
-                      // Obtén una referencia al elemento canvas
-                      const canvas = document.getElementById('pieChart2');
-
-                      // Configura el gráfico utilizando los datos
-                      const ctx = canvas.getContext('2d');
-                      const chart = new Chart(ctx, {
-                        type: 'doughnut', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
-                        data: {
-                          labels: meses, // Etiquetas para el eje X (vendedores)
-                          datasets: [{
-                            label: 'Cantidad Biomasa cargada por mes (kg)',
-                            data: data1, // Datos para el eje Y (cantidad de clientes)
-                            backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
-                            borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
-                            borderWidth: 2 // Ancho del borde de las barras
-                          }]
-                        },
-                        options: {
-                          responsive: true,
-                          maintainAspectRatio: false,
-                          scales: {
-                            y: {
-                              beginAtZero: true // Comienza el eje Y en cero
-                            }
-                          }
-                        }
-                      });
-                    }
-
-                  </script>
-                  <script>
-                    // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-                    if ('<%- chartData1 %>') {
-                      const datos1 = JSON.parse('<%- chartData1 %>');
-
-                      const meses = datos1.map(dato => 'Mes ' + dato.mes);
-                      const data1 = datos1.map(dato => dato.total_kilos);
-
-                      // Obtén una referencia al elemento canvas
-                      const canvas = document.getElementById('barChart1');
-
-                      // Configura el gráfico utilizando los datos
-                      const ctx1 = canvas.getContext('2d');
-                      const chart = new Chart(ctx1, {
-                        type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
-                        data: {
-                          labels: meses, // Etiquetas para el eje X (vendedores)
-                          datasets: [{
-                            label: 'Cantidad Compost descargado por mes (kg)',
-                            data: data1, // Datos para el eje Y (cantidad de clientes)
-                            backgroundColor: 'rgba(44, 191, 174, 0.2)', // Color de fondo de las barras
-                            borderColor: 'rgba(44, 191, 174, 1)', // Color del borde de las barras
-                            borderWidth: 2 // Ancho del borde de las barras
-                          }]
-                        },
-                        options: {
-                          responsive: true,
-                          maintainAspectRatio: false,
-                          scales: {
-                            y: {
-                              beginAtZero: true // Comienza el eje Y en cero
-                            }
-                          }
-                        }
-                      });
-                    }
-
-                  </script>
-                  <script>
-                    const datos2 = JSON.parse('<%- chartData2 %>');
-                    const ctx2 = document.getElementById('barChart2').getContext('2d');
-
-                    const fechas = datos2.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
-                    const temperaturas = datos2.map(d => d.temperatura);
-
-                    new Chart(ctx2, {
-                      type: 'line',
-                      data: {
-                        labels: fechas,
-                        datasets: [{
-                          label: 'Variación ambiente de Temperatura total',
-                          data: temperaturas,
-                          borderColor: 'blue',
-                          fill: false
-                        }]
-                      },
-                      options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                          y: {
-                            beginAtZero: true // Comienza el eje Y en cero
-                          }
-                        }
-                      }
-                    });
-                  </script>
-                  <script>
-                    const datos3 = JSON.parse('<%- chartData3 %>');
-                    const ctx3 = document.getElementById('barChart3').getContext('2d');
-
-                    const fechas3 = datos3.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
-                    const humedad = datos3.map(d => d.humedad);
-
-                    new Chart(ctx3, {
-                      type: 'line',
-                      data: {
-                        labels: fechas3,
-                        datasets: [{
-                          label: 'Variación ambiente de Humedad total',
-                          data: humedad,
-                          borderColor: 'rgb(239, 82, 97)',
-                          fill: false
-                        }]
-                      },
-                      options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                          y: {
-                            beginAtZero: true // Comienza el eje Y en cero
-                          }
-                        }
-                      }
-                    });
-                  </script>
-
-
-
-                  <% if(typeof alert !="undefined" ) { %>
-                    <script>
-                      Swal.fire({
-                        title: '<%=alertTitle %>',
-                        text: '<%= alertMessage%>',
-                        icon: '<%=alertIcon %>',
-                        showConfirmButton: '<%= showConfirmButton %>',
-                        timer: '<%= timer %>'
-                      }).then(() => {
-                        window.location = '<%= ruta %>'
-                      })
-                    </script>
-                    <% } %>
-
-
-
-                      <script>
-                        var x = document.getElementById("myAudio");
-
-
-
-                        const socket = io()
-
-                        socket.on('cromfinalizado', (msg) => {
-                          toastr.options.positionClass = "toast-bottom-right"
-                          toastr.success('Nuevo servicio finalizado' + msg)
-                          x.play();
-
-                        })
-
-                      </script>
+            </script>
 
 
 
 
-                      <%- include('./partials/footer.ejs') %>
+            <%- include('./partials/footer.ejs') %>
   </body>
 
   </html>
