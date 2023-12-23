@@ -1,153 +1,276 @@
 <%- include('./partials/nav.ejs') %>
 
-    <div class="container">
-        <div class=" mb-4 mt-4 bannerbg ">
-            <div class="justify-content-center m-4">
-                <h1 class="text-center fa-rotate-180 ">Estadísticas para el administrador</h1>
-            </div>
-        </div>
-        <div class="row g-2">
-            <div class="col-md-6 col-sm-12 ">
-                <div class="p-3 border bg-light" style="width: auto; height: 380px;">
-                    <h4>Total clientes vs Clientes nuevos</h4>
-                    <canvas id="ClientesPorVendedor" height="50px"></canvas>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-12 ">
-                <div class="p-3 border bg-light">
-                    <h4>Estado de aprobación de los clientes</h4>
-                    <canvas id="estadoClientes"></canvas>
-                </div>
+    <div class="container" style="margin-top:120px;">
+       
+        <div class="row  text-center">
 
-            </div>
-            <div class="col-md-12 col-sm-12 ">
-                <div class="p-3 border bg-light">
-                    <h6>Clientes por vendedor</h6>
-                    <canvas id="grafico"></canvas>
-                </div>
-            </div>
-
-        </div>
-        <div class="row pt-3">
-            <div class="col-md-12 col-sm-12 " style="width: 100%; height: 200px;">
-                <div class="p-3 border bg-light ">
-                    <label for="select-year">Seleccione un año:</label>
-                    <div class="input-group">
-                        <select class="form-select" id="select-year" onchange="cargarDatos()">
-                            <option value="2021">2021</option>
-                            <option value="2022">2022</option>
-                            <option value="2023">2023</option>
-                        </select>
+            <div class="col-md-12 col-sm-1 my-2">
+                <div class="card shadow border-0">
+                    <div class="card-header border-0 text-center  text-light"
+                        style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
+                        <strong>
+                            Estadisticas totales
+                        </strong>
                     </div>
-                    <canvas id="grafico2"></canvas>
+                    <div class="card-body">
 
+                        <canvas id="barChart"></canvas>
+
+                    </div>
                 </div>
             </div>
+
+            <% if ( role=='admin' ) {%>
+
+
+
+                <div class="col-md-12 col-sm-12 my-2">
+                    <div class="card shadow border-0">
+
+                        <div class="card-body">
+
+                            <canvas id="barChart1"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 my-2">
+                    <div class="card shadow border-0">
+
+                        <div class="card-body">
+
+                            <canvas id="pieChart1"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 my-2">
+                    <div class="card shadow border-0">
+
+                        <div class="card-body">
+
+                            <canvas id="pieChart2"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 my-2">
+                    <div class="card shadow border-0">
+
+                        <div class="card-body">
+
+                            <canvas id="barChart2"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 my-2">
+                    <div class="card shadow border-0">
+
+                        <div class="card-body">
+
+                            <canvas id="barChart3"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+
+                <% } %>
         </div>
     </div>
+
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        const varClientesPorVendedor = document.getElementById('ClientesPorVendedor').getContext('2d');
-        const ClientesPorVendedor = new Chart(varClientesPorVendedor, {
-            type: 'pie',
-            data: {
-                labels: ['Numero de clientes total', 'Clientes nuevos'],
-                datasets: [{
-                    label: 'Clientes',
-                    data: ['<%= Clientes.length %>', '<%= estadoPass %>'],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                aspectRatio: 2,
-
-            }
-        });
-    </script>
-    <script>
-        const varClientesNuevosMes = document.getElementById('estadoClientes').getContext('2d');
-        const clientesNuevosMes = new Chart(varClientesNuevosMes, {
-            type: 'bar',
-            data: {
-                labels: ['Clientes aprobados', 'Clientes PreAprobados', 'Clientes SinPreaprovar', 'Clientes Negados'],
-                datasets: [{
-                    label: 'Clientes',
-                    data: [ <%= estadoFormularioaprovado %>, <%= estadoFormularioPre %>,  <%= estadoFormularioSinPre %>, <%= estadoFormularioNegado %>],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
 
 
     <script>
         // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-        const datos = JSON.parse('<%- resultcliVendedor %>');
+        if ('<%- chartData %>') {
+            const datos = JSON.parse('<%- chartData %>');
 
-        // Obtén una referencia al elemento canvas
-        const canvas = document.getElementById('grafico');
+            const meses = datos.map(dato => 'Mes ' + dato.mes);
+            const data1 = datos.map(dato => dato.total_kilos);
 
-        // Configura el gráfico utilizando los datos
-        const ctx = canvas.getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+            // Obtén una referencia al elemento canvas
+            const canvas = document.getElementById('barChart');
+
+            // Configura el gráfico utilizando los datos
+            const ctx = canvas.getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+                data: {
+                    labels: meses, // Etiquetas para el eje X (vendedores)
+                    datasets: [{
+                        label: 'Cantidad Biomasa cargada por mes (kg)',
+                        data: data1, // Datos para el eje Y (cantidad de clientes)
+                        backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
+                        borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
+                        borderWidth: 2 // Ancho del borde de las barras
+                    }]
+                },
+                options: {
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true // Comienza el eje Y en cero
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+    <script>
+        // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
+        if ('<%- ctnporlocalidad %>') {
+
+            function getRandomColors(numColors) {
+                const colors = [];
+                for (let i = 0; i < numColors; i++) {
+                    const r = Math.floor(Math.random() * 256);
+                    const g = Math.floor(Math.random() * 256);
+                    const b = Math.floor(Math.random() * 256);
+                    const a = 0.8;
+                    colors.push(`rgba(${r}, ${g}, ${b}, ${a}`);
+                }
+                return colors;
+            }
+            const datos = JSON.parse('<%- ctnporlocalidad %>');
+
+            const localidades = datos.map(dato => dato.localidad_compostera);
+            const data1 = datos.map(dato => dato.cantidad_de_registros);
+            const numCategories = datos.length;
+            const randomColors = getRandomColors(numCategories);
+            console.log(numCategories)
+            // Obtén una referencia al elemento canvas
+            const canvas = document.getElementById('pieChart1');
+
+            // Configura el gráfico utilizando los datos
+            const ctx = canvas.getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'doughnut', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+                data: {
+                    labels: localidades, // Etiquetas para el eje X (vendedores)
+                    datasets: [{
+                        data: data1, // Datos para el eje Y (cantidad de clientes)
+                        backgroundColor: randomColors, // Color de fondo de las barras
+                        borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
+                        borderWidth: 2 // Ancho del borde de las barras
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true // Comienza el eje Y en cero
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+    <script>
+        // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
+        if ('<%- chartData %>') {
+            const datos = JSON.parse('<%- chartData %>');
+
+            const meses = datos.map(dato => 'Mes ' + dato.mes);
+            const data1 = datos.map(dato => dato.total_kilos);
+
+            // Obtén una referencia al elemento canvas
+            const canvas = document.getElementById('pieChart2');
+
+            // Configura el gráfico utilizando los datos
+            const ctx = canvas.getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'doughnut', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+                data: {
+                    labels: meses, // Etiquetas para el eje X (vendedores)
+                    datasets: [{
+                        label: 'Cantidad Biomasa cargada por mes (kg)',
+                        data: data1, // Datos para el eje Y (cantidad de clientes)
+                        backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
+                        borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
+                        borderWidth: 2 // Ancho del borde de las barras
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true // Comienza el eje Y en cero
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+    <script>
+        // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
+        if ('<%- chartData1 %>') {
+            const datos1 = JSON.parse('<%- chartData1 %>');
+
+            const meses = datos1.map(dato => 'Mes ' + dato.mes);
+            const data1 = datos1.map(dato => dato.total_kilos);
+
+            // Obtén una referencia al elemento canvas
+            const canvas = document.getElementById('barChart1');
+
+            // Configura el gráfico utilizando los datos
+            const ctx1 = canvas.getContext('2d');
+            const chart = new Chart(ctx1, {
+                type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+                data: {
+                    labels: meses, // Etiquetas para el eje X (vendedores)
+                    datasets: [{
+                        label: 'Cantidad Compost descargado por mes (kg)',
+                        data: data1, // Datos para el eje Y (cantidad de clientes)
+                        backgroundColor: 'rgba(44, 191, 174, 0.2)', // Color de fondo de las barras
+                        borderColor: 'rgba(44, 191, 174, 1)', // Color del borde de las barras
+                        borderWidth: 2 // Ancho del borde de las barras
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true // Comienza el eje Y en cero
+                        }
+                    }
+                }
+            });
+        }
+
+    </script>
+    <script>
+        const datos2 = JSON.parse('<%- chartData2 %>');
+        const ctx2 = document.getElementById('barChart2').getContext('2d');
+
+        const fechas = datos2.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
+        const temperaturas = datos2.map(d => d.temperatura);
+
+        new Chart(ctx2, {
+            type: 'line',
             data: {
-                labels: datos.map(dato => dato.nombre_completo), // Etiquetas para el eje X (vendedores)
+                labels: fechas,
                 datasets: [{
-                    label: 'Cantidad de clientes',
-                    data: datos.map(dato => dato.cantidad_clientes), // Datos para el eje Y (cantidad de clientes)
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Color de fondo de las barras
-                    borderColor: 'rgba(75, 192, 192, 1)', // Color del borde de las barras
-                    borderWidth: 1 // Ancho del borde de las barras
+                    label: 'Variación ambiente de Temperatura total',
+                    data: temperaturas,
+                    borderColor: 'blue',
+                    fill: false
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
-                aspectRatio: 5,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true // Comienza el eje Y en cero
@@ -157,102 +280,35 @@
         });
     </script>
     <script>
-        const datos2 = JSON.parse('<%- resultclano %>');
-        console.log(datos2)
+        const datos3 = JSON.parse('<%- chartData3 %>');
+        const ctx3 = document.getElementById('barChart3').getContext('2d');
 
-        // Obtén el año actual
-        const anioActual = new Date().getFullYear().toString();
-        console.log(anioActual)
+        const fechas3 = datos3.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
+        const humedad = datos3.map(d => d.humedad);
 
-        // Filtra los datos iniciales para mostrar el año actual
-        let datosFiltrados = datos2.filter(dato => dato.anio == anioActual);
-        const meses = datosFiltrados.map(dato => dato.mes);
-        const cantidadClientes = datosFiltrados.map(dato => dato.cantidad_clientes);
-        const clientesAprobados = datosFiltrados.map(dato => dato.clientes_aprobados);
-        const clientesNoAprobados = datosFiltrados.map(dato => dato.clientes_no_aprobados);
-
-
-        let chart2;
-
-        // Función para cargar los datos según el año seleccionado
-        function cargarDatos() {
-            const selectYear = document.getElementById('select-year');
-            const selectedYear = selectYear.value;
-
-            datosFiltrados = datos2.filter(dato => dato.anio == selectedYear);
-            const meses = datosFiltrados.map(dato => dato.mes);
-            const cantidadClientes = datosFiltrados.map(dato => dato.cantidad_clientes);
-            const clientesAprobados = datosFiltrados.map(dato => dato.clientes_aprobados);
-            const clientesNoAprobados = datosFiltrados.map(dato => dato.clientes_no_aprobados);
-
-
-            // Destruir el gráfico previo si existe
-            if (chart2) {
-                chart2.destroy();
-                cargarGrafica();
-            }
-        }
-        function cargarGrafica() {
-            // Crear el nuevo gráfico
-            const config = {
-                type: 'line',
-                data: {
-                    labels: meses,
-                    datasets: [
-                        {
-                            label: 'Clientes No Aprobados',
-                            data: clientesNoAprobados,
-                            borderColor: 'red',
-                            backgroundColor: 'rgba(255, 0, 0, 0.1)',
-                            fill: true
-                        },
-                        {
-                            label: 'Clientes Aprobados',
-                            data: clientesAprobados,
-                            borderColor: 'green',
-                            backgroundColor: 'rgba(0, 128, 0, 0.1)',
-                            fill: true
-                        },
-
-                        {
-                            label: 'Total Clientes',
-                            data: cantidadClientes,
-                            borderColor: 'black',
-                            backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                            fill: true
-                        }
-
-
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        x: {
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Meses'
-                            }
-                        },
-                        y: {
-                            display: true,
-                            title: {
-                                display: true,
-                                text: 'Cantidad de Clientes'
-                            }
-                        }
+        new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: fechas3,
+                datasets: [{
+                    label: 'Variación ambiente de Humedad total',
+                    data: humedad,
+                    borderColor: 'rgb(239, 82, 97)',
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true // Comienza el eje Y en cero
                     }
                 }
-            };
-
-            // Crear el gráfico
-            const ctx = document.getElementById('grafico2').getContext('2d');
-            new Chart(ctx, config);
-        }
-        // Cargar los datos y mostrar el gráfico inicial
-        cargarGrafica();
+            }
+        });
     </script>
 
 
-<%- include('./partials/footer.ejs') %>
+
+    <%- include('./partials/footer.ejs') %>
