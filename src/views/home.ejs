@@ -7,6 +7,11 @@
 <%- include('./partials/nav.ejs') %>
 
   <style>
+    *{
+     
+      font-family: 'Poppins', sans-serif;
+
+    }
     .scrollable-content {
       width: 100%;
       /* Tamaño fijo del div, puedes ajustarlo según tus necesidades */
@@ -39,8 +44,106 @@
 
   <body>
 
+    
+    <style>
+      .section1-home{
+        display: flex;
+        justify-content: space-between;
+        align-items: top;
+        width: 100%;
+        padding: 4rem 2rem;
+        margin-top: 50px;
+      }
+      .mapa-container{
+        flex: 3;
+      }
+      .resumen-composteras{
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        flex: 1;
+      }
+
+      .card-resumen{
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        border-left: 3px solid #E76E09;
+        transition: all 0.4s ease-in;
+        color: #6e6e6e;
+      }
+      .card-resumen:hover{
+        transition: all 0.4s ease-in-out;
+        transform: translateX(10px);
+        color: #222222;
+      }
+
+      .graficos-section2{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+       
+        width: 100%;
+        height: 800px;
+      }
+
+      .estadisticas-total-container{
+        height: 400px;
+        width: 100%;
+        padding: 2rem;
+        width: 70%;
+      }
+
+      .graficos-linea{
+        height: 400px;
+        width: 100%;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+      }
+    </style>
+  <div class="section1-home">
+
+    <!-- aqui va el mapa -->
+    <div class="mapa-container">
+      <h2>Mapa de composteras</h2>
+      <br>
+      <div id="map" style="width: 100%; height: 500px;"></div>
+    </div>
+
+    <!-- aqui las targetas -->
+    <div class="resumen-composteras">
+      <h2>Resumen rapido</h2>
+      
+      <!-- card de resument -->
+      <div class="card-resumen">
+        <h5 class="card-title">Entregadas</h5>
+        <h4 class="card-text"><%= cntComposteras[0].total_composteras %></h4>
+      </div>
+      <!-- card de resument -->
+      <div class="card-resumen">
+        <h5 class="card-title">Operando</h5>
+        <h4 class="card-text"><%= cntComposEnoperacion[0].composteras_en_operacion %></h4>
+      </div>
+      <!-- card de resument -->
+      <div class="card-resumen">
+        <h5 class="card-title">Biomasa cargada</h5>
+        <h4 class="card-text"><%= BiomasaCargada[0].sumaTotal %> kg</h4>
+      </div>
+      <!-- card de resument -->
+      <div class="card-resumen">
+        <h5 class="card-title">Compost descargado</h5>
+        <h4 class="card-text"><%= compostDescargado[0].sumaTotal %> kg</h4>
+      </div>
+
+
+    </div>
+  </div>
+
     <% if (role=='user1' || role=='admin' || role=='supervisor' ) {%>
-      <div class="container" style="margin-top: 150px;">
+      <div class="" style="margin-top: 150px;">
         <div class=""
           style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex-wrap: wrap; ">
           <% if ( role=='admin' || role=='supervisor' ) {%>
@@ -48,112 +151,34 @@
 
 
 
-
-            <div class="btn-group flex-wrap justify-content-center mb-5">
-              <a href="/agregarNuevaCompostera" class="btn btn-outline-success btn-lg mb-2">
-                Crear nueva compostera <i class="bx bx-add-to-queue"></i>
-              </a>
-              <a href="/totalcomposteraslist" class="btn btn-outline-dark btn-lg mb-2">
-                Lista composteras <i class="bx bxs-book-content"></i>
-              </a>
-              <a href="/registrosdeoperacion" class="btn btn-outline-dark btn-lg mb-2">
-                Registros Operación <i class="bx bxs-book-content"></i>
-              </a>
-              <a href="/vistamapacomposteras" class="btn btn-outline-secondary btn-lg mb-2 d-none">
-                Informes <i class="bx bxs-detail"></i>
-              </a>
-              <a href="/vistamapacomposteras" class="btn btn-dark btn-lg mb-2 d-none">
-                Alertas <i class="bx bxs-error-circle"></i>
-              </a>
+          <div class="graficos-section2">
+       
+            <div class="estadisticas-total-container">
+              <h3>Estadisticas totales</h3>
+              <canvas id="barChart"></canvas>
+              <canvas id="barChart1"></canvas>
+              
             </div>
 
-            <div class="row mb-5 container">
-              <div class="col-md-6 mb-4">
-                <div class="card text-center">
-                  <div class="card-header">
-                    <h5 class="card-title">Entregadas</h5>
-                  </div>
-                  <div class="card-body">
-                    <h4 class="card-text"><%= cntComposteras[0].total_composteras %></h4>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="card text-center">
-                  <div class="card-header">
-                    <h5 class="card-title">Operando</h5>
-                  </div>
-                  <div class="card-body">
-                    <h4 class="card-text"><%= cntComposEnoperacion[0].composteras_en_operacion %></h4>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="card text-center">
-                  <div class="card-header">
-                    <h5 class="card-title">Biomasa cargada</h5>
-                  </div>
-                  <div class="card-body">
-                    <h4 class="card-text"><%= BiomasaCargada[0].sumaTotal %> kg</h4>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 mb-4">
-                <div class="card text-center">
-                  <div class="card-header">
-                    <h5 class="card-title">Compost descargado</h5>
-                  </div>
-                  <div class="card-body">
-                    <h4 class="card-text"><%= compostDescargado[0].sumaTotal %> kg</h4>
-                  </div>
-                </div>
-              </div>
+            <div class="graficos-linea">
+              <canvas id="barChart2"></canvas>
+
+              <canvas id="barChart3"></canvas>
             </div>
-            
-            <style>
-              .row {
-                flex-basis: 100%;
-              }
-            
-              .card {
-                height: 100%;
-              }
-            </style>
-
-
-        
-
-      <div class="col-md-12 col-sm-1 my-2">
-  <div class="card shadow border-0">
-    <div class="card-header border-0 text-center text-light" style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
-      <strong>
-        Mapa
-      </strong>
-    </div>
-    <div class="card-body">
-
-      <div id="map" style="width: 100%; height: 500px;"></div>
-
-    </div>
-  </div>
-</div>
-
-
-      <div class="col-md-12 col-sm-1 my-2">
-        <div class="card shadow border-0">
-          <div class="card-header border-0 text-center  text-light"
-            style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">
-            <strong>
-              Estadisticas totales
-            </strong>
           </div>
-          <div class="card-body">
 
-            <canvas id="barChart"></canvas>
 
+          <div style="height: 800px; display: flex; flex-direction: column; width: 100%;" >
+
+            <canvas id="pieChart1"></canvas>
+            
+            <canvas id="pieChart2"></canvas>
+            
+            
+            <canvas id="barChart1"></canvas>
           </div>
-        </div>
-      </div>
+
+      
       <% } %>
 
 
@@ -166,56 +191,6 @@
 
 
              
-              <div class="col-md-12 col-sm-12 my-2">
-                <div class="card shadow border-0">
-
-                  <div class="card-body">
-
-                    <canvas id="barChart1"></canvas>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-6 my-2">
-                <div class="card shadow border-0">
-
-                  <div class="card-body">
-
-                    <canvas id="pieChart1"></canvas>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6 col-sm-6 my-2">
-                <div class="card shadow border-0">
-
-                  <div class="card-body">
-
-                    <canvas id="pieChart2"></canvas>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 col-sm-12 my-2">
-                <div class="card shadow border-0">
-
-                  <div class="card-body">
-
-                    <canvas id="barChart2"></canvas>
-
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-12 col-sm-12 my-2">
-                <div class="card shadow border-0">
-
-                  <div class="card-body">
-
-                    <canvas id="barChart3"></canvas>
-
-                  </div>
-                </div>
-              </div>
 
               <% } %>
           </div>
