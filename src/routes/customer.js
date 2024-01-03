@@ -74,6 +74,7 @@ router.post('/QuienMeTieneMailEQ', customerController.sendCorreEQ1)
 router.post('/cronogramaBuscarTel', customerController.cronogramaBuscarTel)
 
 router.get('/cronogramaTodo', customerController.cronogramaTodo)
+router.get('/configuracion', customerController.configuracion)
 
 
 
@@ -86,6 +87,7 @@ router.get('/composteraRegistroupdate/:id', customerController.composteraRegistr
 
 //registros de operacion
 router.get('/registrosdeoperacion', customerController.registrosOperacion)
+router.post('/filtrarregistrosOperacionsend', customerController.filtrarregistrosOperacion)
 router.get('/detallesRegitroOperacion/:id', customerController.detallesRegitroOperacion)
 router.get('/imprimirRegitroOperacion/:id', customerController.imprimirRegitroOperacion)
 

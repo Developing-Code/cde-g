@@ -1,0 +1,737 @@
+<%- include('./partials/navs/nav.ejs') %>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
+
+    <style>
+         .error {
+            border: 2px solid red;
+        }
+    </style>
+
+    <% if(role=='dev' || role=='Administrador' || role=='AuxiliarF' || role=='Vendedor' || role=='asistenteVentas' ){ %>
+
+        <div class="container ">
+            <div class=" mb-4 mt-4 bannerbg ">
+                <div class="justify-content-center m-4">
+                    <h1 class="text-center fa-rotate-180 ">Configuración de Aplicación</h1>
+                </div>
+            </div>
+            <div class="row g-2">
+                <div class="col-md-2 col-sm-12 ">
+                    <a hidden class=" " id="" href="/7110eda4d09e062aa5e4a390b0a572ac0d2c0220/<%=  IDuser %>">btn</a>
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' || role=='Vendedor' ||  role=='asistenteVentas' ){ %>
+                            <a class="list-group-item list-group-item-action active" id="ConfiPerfilUser-list"
+                                data-bs-toggle="list" href="#ConfiPerfilUser" role="tab"
+                                aria-controls="ConfiPerfilUser">Configuración de perfil</a>
+                                <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' || role=='asistenteVentas'){ %>
+                                <a class="list-group-item list-group-item-action " id="AdminUsr-list"
+                                    data-bs-toggle="list" href="#AdminUsr" role="tab"
+                                    aria-controls="AdminUsr">Administración de usuarios</a>
+                                    <% } %>
+                                    <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' ){ %>
+                                <a class="list-group-item list-group-item-action " id="configSerCorreo-list"
+                                    data-bs-toggle="list" href="#configSerCorreo" role="tab"
+                                    aria-controls="configSerSMS">Configuracion servidor de correo</a>
+                                <a class="list-group-item list-group-item-action " id="configSerSMS-list"
+                                    data-bs-toggle="list" href="#configSerSMS" role="tab" aria-controls="configSerSMS">
+                                    SMS</a>
+                                <a class="list-group-item list-group-item-action " id="configSerNotifications-list"
+                                    data-bs-toggle="list" href="#configSerNotifications" role="tab"
+                                    aria-controls="configSerNotifications"> Notificaciones push</a>
+                                <a class="list-group-item list-group-item-action "
+                                    id="identificacionBeneficiarioFinal-list" data-bs-toggle="list"
+                                    href="#identificacionBeneficiarioFinal" role="tab"
+                                    aria-controls="identificacionBeneficiarioFinal">Manual</a>
+
+                                <% } %>
+                                    <% } %>
+
+
+                    </div>
+                </div>
+                <div class="col-md-10 col-sm-12 bg-white ">
+
+                    <div class="tab-content m-3" id="nav-tabContent">
+                        <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' || role=='Vendedor' ||  role=='asistenteVentas' ){ %>
+                            <div class="tab-pane fade active show" id="ConfiPerfilUser" role="tabpanel"
+                                aria-labelledby="ConfiPerfilUser-list">
+                                
+                                <ul class="profile-list">
+                                    <li>
+                                        <strong>Nombre:</strong>
+                                        <%= resultsUsrdata[0].nombre_completo%>
+                                    </li>
+                                    <li>
+                                        <strong>Usuario:</strong>
+                                        <%= resultsUsrdata[0].user%>
+                                    </li>
+                                    <li>
+                                        <strong>Correo:</strong>
+                                        <%= resultsUsrdata[0].correo%>
+                                    </li>
+                                    <li>
+                                        <strong>Celular:</strong>
+                                        <%= resultsUsrdata[0].celular%>
+                                    </li>
+                                    <li>
+                                        <strong>Cédula:</strong>
+                                        <%= resultsUsrdata[0].cedula%>
+                                    </li>
+                                    <li>
+                                        <strong>Pin:</strong>
+                                        <%= resultsUsrdata[0].pinSeguridad%>
+                                    </li>
+                                    <li>
+                                        <strong>Código Vendedor:</strong>
+                                        <%= resultsUsrdata[0].codigoV%>
+                                    </li>
+                                </ul>
+
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#editModal">
+                                    Actualizar datos
+                                </button>
+                                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="editModalLabel">Editar Perfil</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <form action="/updateUserangeByadmin" method="post">
+                                                <div class="modal-body">
+                                                    <input type="text" value="<%= IDuser %>" name="idUser" hidden>
+
+                                                    <div class="form-group">
+                                                        <label for="nombre"><strong>Nombre</strong></label>
+                                                        <input type="text" class="form-control" name="nombre"
+                                                            id="nombre" value="<%= resultsUsrdata[0].nombre_completo%>"
+                                                            placeholder="Ingrese su nombre" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="usuario"> <strong>Cédula</strong> </label>
+                                                        <input type="text" class="form-control" name="cedula"
+                                                            id="cedula" value="<%= resultsUsrdata[0].cedula%>"
+                                                            placeholder="Ingrese su cédula" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="contrasena"><strong>Celular</strong> </label>
+                                                        <input type="text" class="form-control" name="celular"
+                                                            id="celular" value="<%= resultsUsrdata[0].celular%>"
+                                                            placeholder="Ingrese su celular" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="email"> <strong>Email</strong></label>
+                                                        <input type="email" class="form-control" name="email" id="email"
+                                                            value="<%= resultsUsrdata[0].correo%>"
+                                                            placeholder="Ingrese su correo electrónico" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="telefono"><strong>Codigo Vendedor</strong></label>
+                                                        <input type="text" class="form-control" name="codigov"
+                                                            id="codigov" value="<%= resultsUsrdata[0].codigoV%>"
+                                                            placeholder="Ingrese su codigo vendedor">
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-danger">Guardar
+                                                        Cambios</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    Cambiar contraseña de usuario
+                                </button>
+                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Cambio de contraseña
+                                                </h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <section class="">
+                                                    <div class="container">
+                                                        <div
+                                                            class="row d-flex justify-content-center align-items-center">
+                                                            <div class="col-xl-10">
+                                                                <div class="row g-0">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="card-body p-md-5">
+                                                                            <div class="text-center">
+
+                                                                            </div>
+                                                                            <div class="text-center">
+                                                                                <script
+                                                                                    src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+                                                                                <lottie-player
+                                                                                    src="https://assets10.lottiefiles.com/packages/lf20_b8txxdvv.json"
+                                                                                    background="transparent" speed="1"
+                                                                                    style="width: 100px; height: 100px; margin:auto"
+                                                                                    loop autoplay>
+                                                                                </lottie-player>
+                                                                            </div>
+                                                                            <form method="post"
+                                                                                action="/changePassByadmin">
+                                                                                <input type="text" value="<%= IDuser %>"
+                                                                                    name="idUser" hidden>
+                                                                                <input type="text" value="Usuario"
+                                                                                    name="tipoUser" hidden>
+                                                                                <input type="text" value=""
+                                                                                    name="estadoPass" hidden>
+                                                                                <div class="form-outline mb-4">
+                                                                                    <div class="input-group mb-3">
+                                                                                        <input type="password"
+                                                                                            class="form-control"
+                                                                                            id="newPassword" name="pass"
+                                                                                            placeholder="Nueva contraseña"
+                                                                                            aria-label="Recipient's username"
+                                                                                            aria-describedby="button-addon2"
+                                                                                            required>
+                                                                                        <button
+                                                                                            class="btn btn-outline-secondary"
+                                                                                            onclick="mostrarPassword()"
+                                                                                            type="button"
+                                                                                            id="viewPass"><i
+                                                                                                class='bx bx-low-vision'></i></button>
+                                                                                    </div>
+                                                                                    <div class="input-group mb-3">
+                                                                                        <input type="password"
+                                                                                            class="form-control"
+                                                                                            id="confNewPassword"
+                                                                                            name="confNewPassword"
+                                                                                            placeholder="Confirma nueva contraseña"
+                                                                                            aria-label="Recipient's username"
+                                                                                            aria-describedby="button-addon2"
+                                                                                            required>
+                                                                                        <button
+                                                                                            class="btn btn-outline-secondary"
+                                                                                            onclick="mostrarConfPassword()"
+                                                                                            type="button"
+                                                                                            id="viewPass"><i
+                                                                                                class='bx bx-low-vision'></i></button>
+                                                                                    </div>
+                                                                                    <script type="text/javascript">
+                                                                                        function mostrarPassword() {
+                                                                                            var viewNewPass = document.getElementById("newPassword");
+                                                                                            if (viewNewPass.type == "password") {
+                                                                                                viewNewPass.type = "text";
+                                                                                                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+                                                                                            } else {
+                                                                                                viewNewPass.type = "password";
+                                                                                                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+                                                                                            }
+                                                                                        }
+
+                                                                                        function mostrarConfPassword() {
+                                                                                            var viewConfNewPass = document.getElementById("confNewPassword");
+                                                                                            if (viewConfNewPass.type == "password") {
+                                                                                                viewConfNewPass.type = "text";
+                                                                                                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+                                                                                            } else {
+                                                                                                viewConfNewPass.type = "password";
+                                                                                                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+                                                                                            }
+                                                                                        }
+
+                                                                                    </script>
+                                                                                </div>
+
+
+                                                                                <div class="text-center">
+                                                                                    <button disabled type="submit"
+                                                                                        id="enviarBtn"
+                                                                                        class="btn btn-danger btn-block fa-lg columna-login mb-3">
+                                                                                        <i
+                                                                                            class='bx bx-sm bx-check-shield'></i>
+                                                                                        Confirmar cambio de contraseña
+                                                                                    </button>
+                                                                                </div>
+
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+
+
+                            </div>
+                            <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' ||  role=='asistenteVentas'){ %>
+                                <div class="tab-pane fade " id="AdminUsr" role="tabpanel"
+                                    aria-labelledby="AdminUsr-list">
+                                    <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' ){ %>
+                                    <h5 class="text-center fa-rotate-180 ">Listado de usuarios</h5>
+                                    <table id="example" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Usuario</th>
+                                                <th>Pin</th>
+                                                <th>Correo</th>
+                                                <th>Rol</th>
+                                                <th>Acciones</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for(var i=0; i < resultsUsr.length; i++) { %>
+                                                <% if ( resultsUsr[i].role !='Vendedor' && resultsUsr[i].role !='dev' ){
+                                                    %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= resultsUsr[i].nombre_completo%>
+                                                        </td>
+                                                        <td>
+                                                            <%= resultsUsr[i].user%>
+                                                        </td>
+                                                        <td>
+                                                            <%= resultsUsr[i].pinSeguridad%>
+                                                        </td>
+                                                        <td>
+                                                            <%= resultsUsr[i].correo%>
+                                                        </td>
+                                                        <td>
+                                                            <%= resultsUsr[i].role%>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" title="Cambio contrasena"
+                                                                class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal<%= resultsUsr[i].id %>">
+                                                                <i class='bx bxs-pencil'></i>
+                                                            </button>
+                                                            <div class="modal fade"
+                                                                id="exampleModal<%= resultsUsr[i].id %>" tabindex="-1"
+                                                                aria-labelledby="exampleModal<%= resultsUsr[i].id %>Label"
+                                                                aria-hidden="true">
+                                                                <div
+                                                                    class="modal-dialog modal-dialog-centered ">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h1 class="modal-title fs-5"
+                                                                                id="exampleModal<%= resultsUsr[i].id %>Label">
+                                                                                Cambio de contraseña
+                                                                            </h1>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <section class="">
+                                                                                <div class="container">
+                                                                                    <div
+                                                                                        class="row d-flex justify-content-center align-items-center">
+                                                                                        <div class="col-xl-10">
+                                                                                            <div class="row g-0">
+                                                                                                <div class="col-lg-12">
+                                                                                                    <div
+                                                                                                        class="card-body p-md-5">
+                                                                                                        <div
+                                                                                                            class="text-center">
+
+                                                                                                        </div>
+                                                                                                        
+                                                                                                        <form
+                                                                                                            method="post"
+                                                                                                            action="/changePassByadmin">
+                                                                                                            <input
+                                                                                                                type="text"
+                                                                                                                value="<%= resultsUsr[i].id %>"
+                                                                                                                name="idUser"
+                                                                                                                hidden>
+                                                                                                            <input
+                                                                                                                type="text"
+                                                                                                                value="Usuario"
+                                                                                                                name="tipoUser"
+                                                                                                                hidden>
+                                                                                                            <input
+                                                                                                                type="text"
+                                                                                                                value=""
+                                                                                                                name="estadoPass"
+                                                                                                                hidden>
+                                                                                                            <div
+                                                                                                                class="form-outline mb-4">
+                                                                                                                <div
+                                                                                                                    class="input-group mb-3">
+                                                                                                                    <input
+                                                                                                                        type="text"
+                                                                                                                        class="form-control"
+                                                                                                                        name="pass"
+                                                                                                                        placeholder="Nueva contraseña"
+                                                                                                                        aria-label="Recipient's username"
+                                                                                                                        aria-describedby="button-addon2"
+                                                                                                                        required>
+                                                                                                                   
+                                                                                                                </div>
+                                                                                                                <div
+                                                                                                                    class="input-group mb-3">
+                                                                                                                    <input
+                                                                                                                        type="text"
+                                                                                                                        class="form-control"
+                                                                                                                        name="confNewPassword"
+                                                                                                                        placeholder="Confirma contraseña"
+                                                                                                                        aria-label="Recipient's username"
+                                                                                                                        aria-describedby="button-addon2"
+                                                                                                                        required>
+                                                                                                                   
+                                                                                                                </div>
+                                                                                                               
+                                                                                                            </div>
+
+
+                                                                                                            <div
+                                                                                                                class="text-center">
+                                                                                                                <button type="submit"  id="enviarBtn"  class="btn btn-danger btn-block fa-lg columna-login mb-3">
+                                                                                                                    <i   class='bx bx-sm bx-check-shield'></i>
+                                                                                                                    Confirmar
+                                                                                                                    cambio
+                                                                                                                </button>
+                                                                                                            </div>
+
+                                                                                                        </form>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Close</button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                                        <% } %>
+                                        </tbody>
+
+                                    </table>
+                                    <% } %>
+                                    <h5 class="text-center fa-rotate-180 ">Listado de Vendedores</h5>
+                                    <table id="example2" class="display" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Usuario</th>
+                                                <th>Pin</th>
+                                                <th>Correo</th>
+                                                <th>Codigo v</th>
+                                                <th>Acciones</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for(var i=0; i < resultsUsr.length; i++) { %>
+                                                <% if ( resultsUsr[i].role=='Vendedor' ){ %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= resultsUsr[i].nombre_completo%>
+                                                        </td>
+                                                        <td>
+                                                            <%= resultsUsr[i].user%>
+                                                        </td>
+                                                        <td>
+                                                            <%= resultsUsr[i].pinSeguridad%>
+                                                        </td>
+                                                        <td>
+                                                            <%= resultsUsr[i].correo%>
+                                                        </td>
+                                                        <td>
+                                                            <%= resultsUsr[i].codigoV%>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" title="Cambio contrasena"
+                                                                class="btn btn-secondary btn-sm" data-bs-toggle="modal"
+                                                                data-bs-target="#exampleModal<%= resultsUsr[i].id %>">
+                                                                <i class='bx bxs-pencil'></i>
+                                                            </button>
+                                                            <div class="modal fade"
+                                                                id="exampleModal<%= resultsUsr[i].id %>" tabindex="-1"
+                                                                aria-labelledby="exampleModal<%= resultsUsr[i].id %>Label"
+                                                                aria-hidden="true">
+                                                                <div
+                                                                    class="modal-dialog modal-dialog-centered ">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h1 class="modal-title fs-5"
+                                                                                id="exampleModal<%= resultsUsr[i].id %>Label">
+                                                                                Cambio de contraseña
+                                                                            </h1>
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <section class="">
+                                                                                <div class="container">
+                                                                                    <div
+                                                                                        class="row d-flex justify-content-center align-items-center">
+                                                                                        <div class="col-xl-10">
+                                                                                            <div class="row g-0">
+                                                                                                <div class="col-lg-12">
+                                                                                                    <div
+                                                                                                        class="card-body p-md-5">
+                                                                                                        <div
+                                                                                                            class="text-center">
+
+                                                                                                        </div>
+                                                                                                       
+                                                                                                        <form
+                                                                                                            method="post"
+                                                                                                            action="/changePassByadmin">
+                                                                                                            <input
+                                                                                                                type="text"
+                                                                                                                value="<%= resultsUsr[i].id %>"
+                                                                                                                name="idUser"
+                                                                                                                hidden>
+                                                                                                            <input
+                                                                                                                type="text"
+                                                                                                                value="Usuario"
+                                                                                                                name="tipoUser"
+                                                                                                                hidden>
+                                                                                                            <input
+                                                                                                                type="text"
+                                                                                                                value=""
+                                                                                                                name="estadoPass"
+                                                                                                                hidden>
+                                                                                                            <div
+                                                                                                                class="form-outline mb-4">
+                                                                                                                <div
+                                                                                                                    class="input-group mb-3">
+                                                                                                                    <input
+                                                                                                                        type="text"
+                                                                                                                        class="form-control"
+                                                                                                                        id="newPassword"
+                                                                                                                        name="pass"
+                                                                                                                        placeholder="Nueva contraseña"
+                                                                                                                        aria-label="Recipient's username"
+                                                                                                                        aria-describedby="button-addon2"
+                                                                                                                        required>
+                                                                                                                    
+                                                                                                                </div>
+                                                                                                                <div
+                                                                                                                    class="input-group mb-3">
+                                                                                                                    <input
+                                                                                                                        type="text"
+                                                                                                                        class="form-control"
+                                                                                                                        id="confNewPassword"
+                                                                                                                        name="confNewPassword"
+                                                                                                                        placeholder="Confirma contraseña"
+                                                                                                                        aria-label="Recipient's username"
+                                                                                                                        aria-describedby="button-addon2"
+                                                                                                                        required>
+                                                                                                                    
+                                                                                                                </div>
+                                                                                                                
+                                                                                                            </div>
+
+
+                                                                                                            <div
+                                                                                                                class="text-center">
+                                                                                                                <button
+                                                                                                                    
+                                                                                                                    type="submit"
+                                                                                                                    id="enviarBtn"
+                                                                                                                    class="btn btn-danger btn-block fa-lg columna-login mb-3">
+                                                                                                                    <i class='bx bx-sm bx-check-shield'></i>
+                                                                                                                    Confirmar
+                                                                                                                    cambio
+                                                                                                                </button>
+                                                                                                            </div>
+
+                                                                                                        </form>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </section>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Close</button>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <% } %>
+                                                        <% } %>
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+                                <div class="tab-pane fade " id="configSerCorreo" role="tabpanel"
+                                    aria-labelledby="configSerCorreo-list">
+
+                                    <form class="row g-3" action="/guardarCambiosServidorCorreSend" method="post">
+                                        <div class="input-group mb-3">
+                                            <label for="staticEmail"
+                                                class="col-sm-2 col-form-label"><strong>Email</strong></label>
+                                            <input type="text" class="form-control" name="correoServidor"
+                                                value="" placeholder=""
+                                                aria-label="Recipient's username" aria-describedby="basic-addon2"
+                                                required>
+                                            <span class="input-group-text" id="basic-addon2">@ejemplo.com</span>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <label for="staticEmail"
+                                                class="col-sm-2 col-form-label"><strong>Contraseña</strong></label>
+                                            <input type="password" class="form-control" id="newPassword"
+                                                name="passServidorCorreo" id="inputPassword2"
+                                                value="" placeholder="" required>
+                                            <button class="btn btn-outline-secondary" onclick="mostrarPassword()"
+                                                type="button" id="viewPass"><i class='bx bx-low-vision'></i></button>
+                                            <span class="input-group-text" id="basic-addon2">bvhdsgckjst765d</span>
+                                        </div>
+
+                                        <div class="gap-3 d-md-flex justify-content-md-end mb-3">
+
+                                            <button type="submit" class="btn btn-dark mb-3">Confirmar Cambio</button>
+                                        </div>
+                                    </form>
+                                    <div class="gap-3 d-md-flex justify-content-md-end mb-3">
+                                        <form class="form" action="/enviarCorreoPrueba" method="post">
+                                            <button type="submit" class="btn btn-secondary mb-3">Enviar correo de
+                                                prueba</button>
+                                        </form>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="tab-pane fade " id="configSerSMS" role="tabpanel"
+                                    aria-labelledby="configSerSMS-list">
+
+                                   
+                                  
+
+
+
+                                </div>
+                                <div class="tab-pane fade " id="configSerNotifications" role="tabpanel"
+                                    aria-labelledby="configSerNotifications-list">
+
+                                    
+
+
+
+
+                                </div>
+
+                                <div class="tab-pane fade" id="identificacionBeneficiarioFinal" role="tabpanel"
+                                    aria-labelledby="configSerCorreo-list">
+
+                                </div>
+
+
+                                <% } %>
+                                    <% } %>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <% } %>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+            <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+            <script src="/js/main.js"> </script>
+
+            <script>
+                new DataTable('#example', {
+                    pageLength: 4,
+                });
+                new DataTable('#example2', {
+                    pageLength: 4,
+                });
+
+            </script>
+            
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    var contrasena = document.getElementById("newPassword");
+                    var confirmacion = document.getElementById("confNewPassword");
+                    var enviarBtn = document.getElementById("enviarBtn");
+
+                    function validarContrasena() {
+                        var contrasenaValor = contrasena.value;
+                        var confirmacionValor = confirmacion.value;
+
+                        if (contrasenaValor === confirmacionValor) {
+                            contrasena.classList.remove("error");
+                            confirmacion.classList.remove("error");
+                            enviarBtn.disabled = false;
+                        } else {
+                            contrasena.classList.add("error");
+                            confirmacion.classList.add("error");
+                            enviarBtn.disabled = true;
+                        }
+                    }
+
+                    contrasena.addEventListener("input", validarContrasena);
+                    confirmacion.addEventListener("input", validarContrasena);
+                });
+            </script>
+            <P></P>
+
+            <%- include('./partials/footers/footer.ejs') %>

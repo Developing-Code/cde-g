@@ -31,7 +31,7 @@
 
 
 
-    <div class="container" style="margin-top: 80px; ">
+    <div class="container" style="margin-top: 150px; ">
       <div class="row justify-content-center mt-5 ">
         <div class=" col-lg-6 col-md-12 col-sm-12">
           <div class="card">
@@ -46,12 +46,12 @@
                       <div class="mb-3">
                         <h6 for="fecha">Fecha</h6>
                         <input id="fecha" style="font-size: 12px;" type="date" class="form-control"
-                          name="fecha_registro" required>
+                          name="fecha_registro" >
                       </div>
                       <div class="mb-3">
                         <h6 for="hora">Hora</h6>
                         <input id="hora" style="font-size: 12px;" type="time" class="form-control" name="hora_registro"
-                          required>
+                          >
                       </div>
 
 
@@ -90,7 +90,7 @@
                           <option value="no">no</option>
                         </select>
                         <input style="font-size: 12px;" type="text" class="form-control mt-3"
-                          name="descrPreolores" placeholder="describa el olor" required>
+                          name="descrPreolores" placeholder="describa el olor" >
                       </div>
                        <div hidden class="mb-3">
                         <h6 for="usuario">Clima</h6>
@@ -104,10 +104,10 @@
                       <div hidden class="mb-3">
                         <h6 for="usuario">Coordenadas de la ubicación</h6>
                         <input style="font-size: 12px;" type="text" id="latloguser" class="form-control"
-                          name="coordenadas" required>
-                        <input style="font-size: 12px;" type="text" id="lat" class="form-control" name="lat" required
+                          name="coordenadas" >
+                        <input style="font-size: 12px;" type="text" id="lat" class="form-control" name="lat" 
                           hidden>
-                        <input style="font-size: 12px;" type="text" id="log" class="form-control" name="log" required
+                        <input style="font-size: 12px;" type="text" id="log" class="form-control" name="log" 
                           hidden>
                         <br>
                         <div class="marker-position" hidden>Abrir mapa</div>
@@ -126,9 +126,9 @@
                           </div>
                         </div>
                         <input style="font-size: 12px;" type="text" id="temperatura" class="form-control"
-                          name="temperatura" required hidden>
+                          name="temperatura"  hidden>
                         <input style="font-size: 12px;" type="text" id="humedad" class="form-control" name="humedad"
-                          required hidden>
+                           hidden>
                         <input hidden type="text" value="<%= ID%>" class="form-control" style="font-size: 12px;"
                           name="id_quienRegistra" required>
                         <input hidden type="text" value="<%= name%>" class="form-control" style="font-size: 12px;"
@@ -143,12 +143,11 @@
 
                   </div>
                   <div class="row">
-                    <input type="text" value="" name="id" hidden>
                     <div class="mb-3">
-                      <h6 for="usuario">Foto Compost</h6>
-                      <input type="file" class="form-control" name="evidencia_foto" required>
+                      <input class="form-check-input" type="checkbox" id="uploadSwitch" onchange="toggleUpload()">
+                      <label for="uploadSwitch">Foto Compost</label>
+                      <input type="file" id="fileInput" class="form-control" name="evidencia_foto" disabled>
                     </div>
-
                   </div>
                 </div>
 
@@ -178,6 +177,13 @@
       integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
       crossorigin="anonymous"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      function toggleUpload() {
+        const fileInput = document.getElementById('fileInput');
+        const uploadSwitch = document.getElementById('uploadSwitch');
+        fileInput.disabled = !uploadSwitch.checked;
+      }
+  </script>
     <% if(typeof alert !="undefined" ) { %>
       <script>
         Swal.fire({

@@ -58,6 +58,52 @@ controller.login = (req, res) => {
   }
 
 };
+
+funtions.configuracion = (req, res) => {
+  if (req.session.loggedin) {
+      id = req.session.ID;
+      req.getConnection((error, conn) => {
+        conn.query(
+            "SELECT * FROM usuarios ", (error, resultsUsr) => {
+                if (error) {
+                    console.log(error)
+                } else {
+                    req.getConnection((error, conn) => {
+                        conn.query(
+                            "SELECT * FROM usuarios WHERE id = ?",[id], (error, resultsUsrdata) => {
+                                if (error) {
+                                    console.log(error)
+                                } else {
+                                    res.render('panelConfiguracion', {
+                                        resultsUsr: resultsUsr,
+                                        resultsUsrdata: resultsUsrdata,
+                                        //passoOutlook: global.passoOutlook,
+                                        //correoOutlook: global.correoOutlook,
+                                        //smsUser: global.smsUser,
+                                        //smsPassword: global.smsPassword,
+                                        //smstoken: global.smstoken,
+                                        role: req.session.role,
+                                        IDuser: req.session.ID,
+                                        login: true,
+                                        nameUser: req.session.name,
+                                       // id_formulario: req.session.id_formulario
+                                    })
+                                }
+                            }
+                        )
+                    })
+                }
+            }
+        )
+    })
+      
+  } else {
+      res.redirect('/login')
+  }
+}
+
+
+
 controller.loginAuth = async (req, res) => {
   const user = req.body.user;
   const pass = req.body.pass;
@@ -1908,7 +1954,13 @@ controller.agregarBiomasaSend = (req, res) => {
 };
 controller.descargeCompostSend = (req, res) => {
   if (req.session.loggedin) {
-    let foto = req.file.filename;
+    let foto;
+    if (req.file) {
+      foto = req.file.filename;
+    } else {
+      foto = null;
+    }
+   
     let firma = 'firma';
     let serialCompostera = '0000000000';
     const fecha_registro = req.body.fecha_registro;
@@ -1975,7 +2027,13 @@ controller.descargeCompostSend = (req, res) => {
 };
 controller.compostMaduradoSend = (req, res) => {
   if (req.session.loggedin) {
-    let foto = req.file.filename;
+    let foto;
+    if (req.file) {
+      foto = req.file.filename;
+    } else {
+      foto = null;
+    }
+    
     let firma = 'firma';
     let serialCompostera = '0000000000';
     const fecha_registro = req.body.fecha_registro;
@@ -2555,39 +2613,42 @@ controller.registrosOperacion = (req, res) => {
     var fechaACTUAL = String(value);
     console.log(fechaACTUAL);
     req.getConnection((error, conn) => {
-      conn.query("SELECT * FROM registrodiarioestadooperacion WHERE TipoRegistro != 'INICIAL' ORDER BY `registrodiarioestadooperacion`.`id` DESC ", (error, results) => {
+      conn.query("SELECT ro.*,  u.id AS id_usuario,  u.nombre AS nombre_usuario,  u.identificacion, c.id AS id_compostera, c.codBenefic AS codBenefic_compostera,  c.nombre_responsable AS responsable_compostera FROM   registrodiarioestadooperacion ro JOIN  usuarios u ON ro.id_quienRegistra = u.id JOIN composteras c ON ro.id_compostera = c.id;", (error, results) => {
         if (error) {
           console.log(error);
         } else {
           req.getConnection((error, conn) => {
-            conn.query("SELECT DISTINCT (id_compostera) FROM registrodiarioestadooperacion WHERE fecha_registro != ?", [fechaACTUAL], (error, resultado) => {
+            conn.query("SELECT DISTINCT ro.id_compostera, c.codBenefic AS codBenefic_compostera, c.nombre_responsable FROM registrodiarioestadooperacion ro JOIN composteras c ON ro.id_compostera = c.id", (error, resltCompost) => {
               if (error) {
                 console.log(error);
               } else {
                 req.getConnection((error, conn) => {
-                  conn.query("SELECT DISTINCT (id_compostera) FROM registrodiarioestadooperacion WHERE TipoRegistro !='INICIAL' AND fecha_registro = ?", [fechaACTUAL], (error, resultadoRegistros) => {
+                  conn.query("SELECT COUNT(*) AS total_registros FROM registrodiarioestadooperacion",(error, totalRegistros) => {
                     if (error) {
                       console.log(error);
                     } else {
                       req.getConnection((error, conn) => {
-                        conn.query("SELECT DISTINCT (id_compostera) FROM registrodiarioestadooperacion WHERE TipoRegistro = ?", ['INICIAL'], (error, resultadoRegistrosInicial) => {
+                        conn.query("SELECT COUNT(DISTINCT id_compostera) AS total_composteras_activas FROM registrodiarioestadooperacion WHERE fecha_registro BETWEEN CURDATE() - INTERVAL 15 DAY AND CURDATE();",  (error, activosRegistros) => {
                           if (error) {
                             console.log(error);
                           } else {
                             req.getConnection((error, conn) => {
-                              conn.query("SELECT * FROM registrodiarioestadooperacion ", (error, resTotalRegistros) => {
+                              conn.query("SELECT DISTINCT ro.id_quienRegistra, u.nombre AS nombre_usuario FROM registrodiarioestadooperacion ro JOIN usuarios u ON ro.id_quienRegistra = u.id", (error, resSupervisores) => {
                                 if (error) {
                                   console.log(error);
                                 } else {
-                                  console.log(resultadoRegistros);
+                                  let inactivas = totalRegistros[0].total_registros - activosRegistros[0].total_composteras_activas;
                                   res.render("tablaRegistrosOperacion", {
                                     total: false,
                                     results: results,
-                                    resultado: resultado,
-                                    resultadoRegistros: resultadoRegistros,
-                                    resultadoRegistrosInicial: resultadoRegistrosInicial,
-                                    resTotalRegistros: resTotalRegistros,
+                                    resltCompost: resltCompost,
+                                    totalRegistros: totalRegistros,
+                                    activosRegistros: activosRegistros,
+                                    inactivas:inactivas,
+                                    resSupervisores: resSupervisores,
                                     fechaACTUAL: fechaACTUAL,
+                                    statsData:true,
+                                    statsData2:false,
                                     login: true,
                                     name: req.session.name,
                                     role: req.session.role,
@@ -2616,6 +2677,117 @@ controller.registrosOperacion = (req, res) => {
     res.redirect("/login");
   }
 };
+
+controller.filtrarregistrosOperacion = (req, res) => {
+  if (req.session.loggedin) {
+    var fecha = new Date(); //Fecha actual
+    var mes = fecha.getMonth() + 1; //obteniendo mes
+    var dia = fecha.getDate();
+    var ano = fecha.getFullYear(); //obteniendo aÃ±o
+    if (dia < 10) dia = "0" + dia; //agrega cero si el menor de 10
+    if (mes < 10) mes = "0" + mes; //agrega cero si el menor de 10
+    var value = ano + "-" + mes + "-" + dia;
+    var fechaACTUAL = String(value);
+  
+    const fechaInicial = req.body.fecha_inicial;
+    const fechaFinal= req.body.fecha_final;
+    const beneficiario= req.body.beneficiario;
+    const supervisor= req.body.supervisor;
+    const estadoCompostera= req.body.estadoCompostera;
+    console.log(fechaInicial)
+
+
+    let query = 'SELECT ro.*,  u.id AS id_usuario,  u.nombre AS nombre_usuario,  u.identificacion, c.id AS id_compostera, c.codBenefic AS codBenefic_compostera,  c.nombre_responsable AS responsable_compostera FROM   registrodiarioestadooperacion ro JOIN  usuarios u ON ro.id_quienRegistra = u.id JOIN composteras c ON ro.id_compostera = c.id WHERE ro.TipoRegistro != "INICIAL"';
+    if (fechaInicial && fechaInicial !== '') {
+      query += ` AND ro.fecha_registro >= '${fechaInicial}'`;
+    }
+    if (fechaFinal  && fechaFinal !== '') {
+      query += ` AND ro.fecha_registro <= '${fechaFinal}'`;
+    }
+    if (beneficiario && beneficiario.toLowerCase() !== 'todos') {
+      query += ` AND ro.id_compostera = '${beneficiario}'`;
+    }
+    if (supervisor && supervisor.toLowerCase() !== 'todos') {
+      query += ` AND ro.id_quienRegistra = '${supervisor}'`;
+    }
+    if (estadoCompostera && estadoCompostera.toLowerCase() == 'activa' && fechaInicial !== '' && fechaFinal !== '') {
+      query += ` AND ro.fecha_registro BETWEEN '${fechaInicial}' AND '${fechaFinal}'`;
+    } else if (estadoCompostera &&  estadoCompostera.toLowerCase() == 'inactivas' && fechaInicial !== '' && fechaFinal !== ''){
+      query += ` AND ro.fecha_registro NOT BETWEEN '${fechaInicial}' AND '${fechaFinal}'`;
+    } else if (estadoCompostera &&  estadoCompostera.toLowerCase() == 'activa' && fechaInicial == '' && fechaFinal == ''){
+      query += ` AND ro.fecha_registro BETWEEN CURDATE() - INTERVAL 15 DAY AND CURDATE()`;
+    } else if (estadoCompostera &&  estadoCompostera.toLowerCase() == 'inactivas' && fechaInicial == '' && fechaFinal == ''){
+      query += ` AND ro.fecha_registro NOT BETWEEN CURDATE() - INTERVAL 15 DAY AND CURDATE()`;
+    }
+
+    req.getConnection((error, conn) => {
+      conn.query(query, (error, results) => {
+        if (error) {
+          console.log(error);
+        } else {
+          req.getConnection((error, conn) => {
+            conn.query("SELECT DISTINCT ro.id_compostera, c.codBenefic AS codBenefic_compostera, c.nombre_responsable FROM registrodiarioestadooperacion ro JOIN composteras c ON ro.id_compostera = c.id", (error, resltCompost) => {
+              if (error) {
+                console.log(error);
+              } else {
+                req.getConnection((error, conn) => {
+                  conn.query("SELECT COUNT(*) AS total_registros FROM registrodiarioestadooperacion",(error, totalRegistros) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      req.getConnection((error, conn) => {
+                        conn.query("SELECT COUNT(DISTINCT id_compostera) AS total_composteras_activas FROM registrodiarioestadooperacion WHERE fecha_registro BETWEEN CURDATE() - INTERVAL 15 DAY AND CURDATE();",  (error, activosRegistros) => {
+                          if (error) {
+                            console.log(error);
+                          } else {
+                            req.getConnection((error, conn) => {
+                              conn.query("SELECT DISTINCT ro.id_quienRegistra, u.nombre AS nombre_usuario FROM registrodiarioestadooperacion ro JOIN usuarios u ON ro.id_quienRegistra = u.id", (error, resSupervisores) => {
+                                if (error) {
+                                  console.log(error);
+                                } else {
+                                  console.log(resSupervisores)
+                                  let inactivas = totalRegistros[0].total_registros - activosRegistros[0].total_composteras_activas;
+                                  res.render("tablaRegistrosOperacion", {
+                                    total: false,
+                                    results: results,
+                                    resltCompost: resltCompost,
+                                    totalRegistros: results.length,
+                                    activosRegistros: activosRegistros,
+                                    inactivas:inactivas,
+                                    resSupervisores: resSupervisores,
+                                    fechaACTUAL: fechaACTUAL,
+                                    statsData:false,
+                                    statsData2:true,
+                                    login: true,
+                                    name: req.session.name,
+                                    role: req.session.role,
+                                    id_user: req.session.ID,
+                                  });
+
+                                }
+                              })
+                            })
+
+                          }
+                        })
+                      })
+
+                    }
+                  })
+                })
+              }
+            })
+          })
+
+        }
+      });
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+
+
 controller.detallesRegitroOperacion = (req, res) => {
   if (req.session.loggedin) {
     var fecha = new Date(); //Fecha actual

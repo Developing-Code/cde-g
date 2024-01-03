@@ -1,276 +1,110 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+
+
 <%- include('./partials/nav.ejs') %>
-
-  <head>
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-
-    <style>
-      .btn-morado1 {
-        color: #ffffff;
-        background-color: #453D81;
-        border-color: #453D81;
-      }
-    </style>
-    <style>
-      .cartdising {
-        max-width: 400px;
-        height: 240px;
-        border-radius: 5px;
-        border: solid 5px rgb(15, 157, 88);
-        background-image: url(https://redline.net.co/wp-content/uploads/2021/12/fondo-tarjeta1.png);
-        /* background-image: url(https://redline.net.co/wp-content/uploads/2021/12/fondo-tarjeta.png); */
-        background-color: rgb(15, 157, 88);
-        display: inline-flex;
-      }
-
-      .cartdising3 {
-        max-width: 400px;
-        height: 240px;
-        border-radius: 5px;
-        border: solid 5px rgb(244, 180, 0);
-        background-image: url(https://redline.net.co/wp-content/uploads/2021/12/fondo-tarjeta1.png);
-        /* background-image: url(https://redline.net.co/wp-content/uploads/2021/12/fondo-tarjeta.png); */
-        background-color: rgb(244, 180, 0);
-        display: inline-flex;
-      }
-
-      .cartdising2 {
-        max-width: 400px;
-        height: 240px;
-        border-radius: 5px;
-        border: solid 5px rgb(219, 68, 55);
-        /* background-image: url(https://redline.net.co/wp-content/uploads/2021/12/fondo-tarjeta.png); */
-        background-image: url(https://redline.net.co/wp-content/uploads/2021/12/fondo-tarjeta1.png);
-        background-color: rgb(219, 68, 55);
-        display: inline-flex;
-      }
-
-
-
-
-
-      .Fo {
-        font-weight: 700;
-        padding-left: 10px;
-        font-size: 14px;
-        border-radius: 10px;
-        width: 18px;
-
-        display: inline-block;
-        margin-left: 60px;
-        margin-top: 0px;
-        color: white;
-        background-color: blueviolet;
-        border: white 1px solid;
-      }
-
-      .Fo2 {
-        font-weight: 700;
-        padding-left: 10px;
-        font-size: 14px;
-        border-radius: 10px;
-        width: 18px;
-
-        display: inline-block;
-        margin-left: 2px;
-        margin-top: 0px;
-        color: white;
-        background-color: blueviolet;
-        border: white 1px solid;
-      }
-
-      .SI {
-        font-weight: bold;
-        padding-left: 10px;
-        font-size: 14px;
-        border-radius: 10px;
-        width: 18px;
-
-        display: inline-block;
-        margin-left: 40px;
-        margin-top: 0px;
-        color: white;
-        background-color: blueviolet;
-        border: white 1px solid;
-      }
-
-      .Re2 {
-        padding-left: 10px;
-        font-size: 14px;
-        border-radius: 10px;
-        width: 18px;
-
-        display: inline-block;
-        margin-left: 2px;
-        margin-top: 0px;
-        color: black;
-        font-weight: 700;
-        background-color: rgb(245, 204, 40);
-        border: white 1px solid;
-      }
-
-      .Re {
-        padding-left: 10px;
-        font-size: 14px;
-        border-radius: 10px;
-        width: 18px;
-
-        display: inline-block;
-        margin-left: 60px;
-        margin-top: 0px;
-        color: black;
-        font-weight: 700;
-        background-color: rgb(245, 204, 40);
-        border: white 1px solid;
-      }
-
-      /* .salto{
-      margin-left: 160px
-
+  <style>
+    .btn-morado1 {
+      color: #ffffff;
+      background-color: #453D81;
+      border-color: #453D81;
     }
-    .salto1{
-      display: none;
-      margin-left: 100px
-
+  </style>
+  <style>
+    .btn-morado1 {
+      color: #fff;
+      background-color: #453D81;
+      border-color: #453D81;
     }
-    .salto2{
-      display: inline-block;
-    } */
 
-
-
-
-      .btn-sample {
-        color: #ffffff;
-        background-color: #691DCC;
-        border-color: #130269;
-
-      }
-
-      .btn-sample:hover,
-      .btn-sample:focus,
-      .btn-sample:active,
-      .btn-sample.active,
-      .open .dropdown-toggle.btn-sample {
-        color: #ffffff;
-        background-color: #49247A;
-        border-color: #130269;
-      }
-
-      .btn-sample:active,
-      .btn-sample.active,
-      .open .dropdown-toggle.btn-sample {
-        background-image: none;
-      }
-
-      .btn-sample.disabled,
-      .btn-sample[disabled],
-      fieldset[disabled] .btn-sample,
-      .btn-sample.disabled:hover,
-      .btn-sample[disabled]:hover,
-      fieldset[disabled] .btn-sample:hover,
-      .btn-sample.disabled:focus,
-      .btn-sample[disabled]:focus,
-      fieldset[disabled] .btn-sample:focus,
-      .btn-sample.disabled:active,
-      .btn-sample[disabled]:active,
-      fieldset[disabled] .btn-sample:active,
-      .btn-sample.disabled.active,
-      .btn-sample[disabled].active,
-      fieldset[disabled] .btn-sample.active {
-        background-color: #691DCC;
-        border-color: #130269;
-      }
-
-      .btn-sample .badge {
-        color: #691DCC;
-        background-color: #ffffff;
-      }
-
-      /* .salto3{
-  margin-bottom: 2px; margin-left: 100px;
-} */
-      @media screen and (max-width: 600px) {
-        .cartdising {
-          max-width: 400px;
-          height: 480px;
-          border-radius: 5px;
-          border: solid 5px rgb(15, 157, 88);
-          background-color: rgb(15, 157, 88);
-          display: inline-flex;
-        }
-
-
-
-        .cartdising3 {
-          max-width: 400px;
-          height: 480px;
-          border-radius: 5px;
-          border: solid 5px rgb(244, 180, 0);
-          background-color: rgb(244, 180, 0);
-          display: inline-flex;
-
-        }
-      }
-
-      @media screen and (max-width: 600px) {
-        .cartdising2 {
-          max-width: 400px;
-          height: 480px;
-          border-radius: 5px;
-          border: solid 5px rgb(219, 68, 55);
-          background-color: rgb(219, 68, 55);
-          display: inline-flex;
-        }
-
-        /* .salto{
-      margin-left: 0px;
-      display: inline-block;
-      margin-top: 2px;
-
+    .btn-morado1:hover {
+      color: #fff;
+      background-color: #5214a1;
+      border-color: #5214a1;
     }
-    .salto1{
-      display: block;
-      margin-top: 2px;
-      
 
+    .btn-morado1:focus,
+    .btn-morado1.focus {
+      box-shadow: 0 0 0 0.2rem rgba(25, 0, 255, 0.5);
     }
-    .salto2{
-      margin-left: 0px;
-      display: inline-block;
-      margin-top: 2px;
+
+    tfoot input {
+      width: 100%;
+      padding: 3px;
+      box-sizing: border-box;
     }
-    .salto3{
-      margin-bottom: 0px; margin-left: 6px; margin-top: 3px;
-    } */
-      }
 
-      #barChart {
-        max-width: 600px;
-        /* Ajusta el valor según tus necesidades */
-        max-height: 300px;
-        /* Ajusta el valor según tus necesidades */
-      }
 
-      .btn-morado1 {
-        color: #fff;
-        background-color: #453D81;
-        border-color: #453D81;
-      }
+    .border-left-primary {
+      border-left: 0.25rem solid #4e73df !important;
+    }
 
-      .btn-morado1:hover {
-        color: #fff;
-        background-color: #5214a1;
-        border-color: #5214a1;
-      }
+    .border-bottom-primary {
+      border-bottom: 0.25rem solid #4e73df !important;
+    }
 
-      .btn-morado1:focus,
-      .btn-morado1.focus {
-        box-shadow: 0 0 0 0.2rem rgba(25, 0, 255, 0.5);
-      }
-    </style>
+    .border-left-secondary {
+      border-left: 0.25rem solid #858796 !important;
+    }
+
+    .border-bottom-secondary {
+      border-bottom: 0.25rem solid #858796 !important;
+    }
+
+    .border-left-success {
+      border-left: 0.25rem solid #1cc88a !important;
+    }
+
+    .border-bottom-success {
+      border-bottom: 0.25rem solid #1cc88a !important;
+    }
+
+    .border-left-info {
+      border-left: 0.25rem solid #36b9cc !important;
+    }
+
+    .border-bottom-info {
+      border-bottom: 0.25rem solid #36b9cc !important;
+    }
+
+    .border-left-warning {
+      border-left: 0.25rem solid #f6c23e !important;
+    }
+
+    .border-bottom-warning {
+      border-bottom: 0.25rem solid #f6c23e !important;
+    }
+
+    .border-left-danger {
+      border-left: 0.25rem solid #e74a3b !important;
+    }
+
+    .border-bottom-danger {
+      border-bottom: 0.25rem solid #e74a3b !important;
+    }
+
+    .border-left-light {
+      border-left: 0.25rem solid #f8f9fc !important;
+    }
+
+    .border-bottom-light {
+      border-bottom: 0.25rem solid #f8f9fc !important;
+    }
+
+    .border-left-dark {
+      border-left: 0.25rem solid #5a5c69 !important;
+    }
+
+    .border-bottom-dark {
+      border-bottom: 0.25rem solid #5a5c69 !important;
+    }
+  </style>
   </head>
 
 
@@ -278,54 +112,215 @@
 
   <body style="font-size: 15px">
 
-
-
-
-
-
     <div class="container-fluid " style="margin-top: 150px; text-align: center">
 
-      <div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card shadow border-0">
+            <h5 class="card-header border-0 text-center text-light"
+              style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">Filtrar</h5>
+            <div class="card-body">
+              
+             
+              <form action="/filtrarregistrosOperacionsend" method="POST">
+                <div class="row ">
+                  <div class="col-md-12 col-sm-12 col-lg-3">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">Fecha Inicial: </span>
+                      <input type="date" class="form-control" id="fecha_inicial" name="fecha_inicial" >
+                      <span class="input-group-text">Fecha Final: </span>
+                      <input type="date" class="form-control" id="fecha_final" name="fecha_final" >
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-lg-3">
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">Beneficiario</span>
+                      <select class="form-select" aria-label="Default select example" name="beneficiario">
+                        <option value="todos" selected>Todos</option>
+                        <% resltCompost.forEach((coms)=> {%>
+                          <option value="<%= coms.id_compostera %>">
+                            <%= coms.codBenefic_compostera %> - <%= coms.nombre_responsable%>
+                          </option>
+                          <% }) %>
+                      </select>
 
-      </div>
-      <br>
-      <div class="pt-1">
+                    </div>
+                  </div>
 
-      </div>
-      <% if(role=='admin' || role=='supervisor' ){ %>
 
-        <div class=" pt-2" hidden>
-          <form action="/cronogramaBuscarTel" method="post">
-            <div class="container">
-              <div class="row">
-                <div class="col-11">
-                  <input class="form-control" type="text" name="BuscarTel" placeholder="Buscar por numero">
 
                 </div>
-                <div class="col-1">
-                  <button class="btn btn-outline-dark" type="submit">Buscar</button>
+                <hr>
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-lg-2">
+                    <label for="">Supervisor</label>
+                    <select class="form-select" aria-label="Default select example" name="supervisor" id="supervisor">
+                      <option value="todos" selected>Todos</option>
+                      <% resSupervisores.forEach((usrs)=> {%>
+                        <option value="<%= usrs.id_quienRegistra %>">
+                          <%= usrs.id_quienRegistra %> - <%= usrs.nombre_usuario %>
+                        </option>
+                        <% }) %>
+                    </select>
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-lg-2">
+                    <label for="">Estado Compostera</label>
+                    <select class="form-select" aria-label="Default select example" name="estadoCompostera" title="Necesitas seleccionar fechas ">
+                      <option value="todos" selected>Todos</option>
+                      <option value="activa">Activas</option>
+                      <option value="inactivas">Inactivas</option>
 
+                    </select>
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-lg-2">
+                    
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-lg-2">
+                    
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-lg-2">
+                   
+                  </div>
+                  <div class="col-md-12 col-sm-12 col-lg-2">
+                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <% if ( statsData) {%>
+        <div class="row mt-5"> <!-- Total -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> <strong>Total
+                        registros</strong>
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  <%= totalRegistros[0].total_registros %>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                  </div>
                 </div>
               </div>
             </div>
-          </form>
+          </div>
+
+          <!-- Earnings (Monthly) Card Example -->
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      <strong>Registros activos</strong>
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <%= activosRegistros[0].total_composteras_activas%>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      <strong>Registros Inactivos</strong>
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                      <%=inactivas %>
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+         
+
+          <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-darnger shadow h-100 py-2">
+              <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                  <div class="col mr-2">
+                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1"> <strong>Registros </strong>
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+
+                    </div>
+                  </div>
+                  <div class="col-auto">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
 
 
         </div>
-        <% }%>
-
+        <% } %>
+        <% if ( statsData2) {%>
+          <div class="row mt-5"> <!-- Total -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> <strong>Total
+                          registros</strong>
+                      </div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                    <%= totalRegistros %>
+                      </div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+  
+  
+  
+          </div>
+          <% } %>
 
           <% if ( role=='admin' || role=='supervisor' ) {%>
-            <div class="container-fluid" style="margin-top:100px">
+            <div class="container-fluid" >
               <div class="row">
                 <div class="col-12">
-                  <table id="users" class="table display nowrap responsive" style="font-size: 14px; width: 100%;">
+                  <table id="users" class="table  dt-responsive nowrap table  table-hover table-bordered"
+                    style="font-size: 14px; width: 100%;">
                     <thead>
                       <tr>
                         <th>id registro</th>
-                        <th>id_compostera</th>
+                        <th>Codigo beneficiario</th>
                         <th>Fecha</th>
-                        <th>Hora</th>
+                        <th>Tipo registro</th>
+                        <th>Supervisor</th>
                         <th>Clima</th>
                         <th>Temperatura</th>
                         <th>Humedad</th>
@@ -335,7 +330,7 @@
                         <th>Cnt Material estructurante</th>
                         <th>Cnt Material organico</th>
                         <th>Cnt Producto</th>
-                        <th>Tipo registro</th>
+                        
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -349,13 +344,16 @@
                             <%= data1.id %>
                           </td>
                           <td>
-                            <%= data1.id_compostera %>
+                            <%= data1.codBenefic_compostera %>
                           </td>
                           <td>
                             <%= data1.fecha_registro %>
                           </td>
                           <td>
-                            <%= data1.hora_registro %>
+                            <%= data1.TipoRegistro %>
+                          </td>
+                          <td>
+                            <%= data1.nombre_usuario %>
                           </td>
                           <td>
                             <%= data1.clima %>
@@ -384,9 +382,7 @@
                           <td>
                             <%= data1.cantidadCompost %>
                           </td>
-                          <td>
-                            <%= data1.TipoRegistro %>
-                          </td>
+                          
                           <td>
                             <a href="/detallesRegitroOperacion/<%= data1.id %>" title="Detalles"
                               class="btn btn-sm btn-morado1" type="button"><i
@@ -412,84 +408,99 @@
 
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js" ></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" defer></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js" ></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
 
+    <script src="js/bootstrap-datepicker.min.js"></script>
     <script>
 
+      $('.input-daterange').datepicker({
+        keyboardNavigation: false,
+        forceParse: false,
+        autoclose: true,
+        language: "es",
+        orientation: "bottom auto",
+        todayHighlight: true,
+        format: 'yyyy-mm-dd'
+      });
 
+    </script>
+    <script>
       $(document).ready(function () {
-        // Setup - add a text input to each footer cell
-        $('#users thead tr')
-          .clone(true)
-          .addClass('filters')
-          .appendTo('#users thead');
+
+
 
         var table = $('#users').DataTable({
-          responsive: true,
-          order: [[0, 'desc']],
-          dom: 'Bfrtip',
-          buttons: ['colvis'],
-          orderCellsTop: true,
-          fixedHeader: true,
           initComplete: function () {
-            var api = this.api();
-
-            // For each column
-            api
+            this.api()
               .columns()
-              .eq(0)
-              .each(function (colIdx) {
-                // Set the header cell to contain the input element
-                var cell = $('.filters th').eq(
-                  $(api.column(colIdx).header()).index()
-                );
-                var title = $(cell).text();
-                $(cell).html('<input type="text" placeholder="' + title + '" />');
+              .every(function () {
+                let column = this;
+                let title = column.footer().textContent;
 
-                // On every keypress in this input
-                $(
-                  'input',
-                  $('.filters th').eq($(api.column(colIdx).header()).index())
-                )
-                  .off('keyup change')
-                  .on('change', function (e) {
-                    // Get the search value
-                    $(this).attr('title', $(this).val());
-                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
+                // Create input element
+                let input = document.createElement('input');
+                input.placeholder = title;
+                column.footer().replaceChildren(input);
 
-                    var cursorPosition = this.selectionStart;
-                    // Search the column for that value
-                    api
-                      .column(colIdx)
-                      .search(
-                        this.value != ''
-                          ? regexr.replace('{search}', '(((' + this.value + ')))')
-                          : '',
-                        this.value != '',
-                        this.value == ''
-                      )
-                      .draw();
-                  })
-                  .on('keyup', function (e) {
-                    e.stopPropagation();
-
-                    $(this).trigger('change');
-                    $(this)
-                      .focus()[0]
-                      .setSelectionRange(cursorPosition, cursorPosition);
-                  });
+                // Event listener for user input
+                input.addEventListener('keyup', () => {
+                  if (column.search() !== this.value) {
+                    column.search(input.value).draw();
+                  }
+                });
               });
           },
+          fixedHeader: true,
+          order: [[0, 'desc']],
+          scrollX: true,
+          searching: true,
+          dom: 'Bfrtip',
+          buttons: [],
+          pageLength: 10,
+          language: {
+            search: 'Buscar',
+            zeroRecords: 'No hay registros para mostrar.',
+            emptyTable: 'La tabla está vaciá.',
+            info: "Mostrando _START_ de _END_ de _TOTAL_ Registros.",
+            infoFiltered: "(Filtrados de _MAX_ Registros.)",
+            paginate: {
+              first: 'Primero',
+              previous: 'Anterior',
+              next: 'Siguiente',
+              last: 'Último'
+            }
+          },
+          columnDefs: [
+            {
+              target: 2,
+              visible: false,
+              searchable: false
+            },
+            {
+              target: 3,
+              visible: false
+            }
+          ]
         });
+
+
+
+
+
+
       });
 
 
 
+    
 
     </script>
 
@@ -524,21 +535,13 @@
 
 
 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"></script>
+
     <%- include('./partials/footer.ejs') %>
-
-      <script src="https://unpkg.com/boxicons@2.0.9/dist/boxicons.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
-        crossorigin="anonymous"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
-        crossorigin="anonymous"></script>
-
-
   </body>
 
   </html>
