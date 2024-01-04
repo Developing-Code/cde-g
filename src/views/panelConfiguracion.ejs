@@ -1,4 +1,4 @@
-<%- include('./partials/navs/nav.ejs') %>
+<%- include('./partials/nav.ejs') %>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
 
     <style>
@@ -7,9 +7,9 @@
         }
     </style>
 
-    <% if(role=='dev' || role=='Administrador' || role=='AuxiliarF' || role=='Vendedor' || role=='asistenteVentas' ){ %>
+    <% if(role=='admin' || role=='Administrador' || role=='AuxiliarF' || role=='Vendedor' || role=='asistenteVentas' ){ %>
 
-        <div class="container ">
+        <div class="container " style="margin-top:150px">
             <div class=" mb-4 mt-4 bannerbg ">
                 <div class="justify-content-center m-4">
                     <h1 class="text-center fa-rotate-180 ">Configuración de Aplicación</h1>
@@ -19,29 +19,24 @@
                 <div class="col-md-2 col-sm-12 ">
                     <a hidden class=" " id="" href="/7110eda4d09e062aa5e4a390b0a572ac0d2c0220/<%=  IDuser %>">btn</a>
                     <div class="list-group" id="list-tab" role="tablist">
-                        <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' || role=='Vendedor' ||  role=='asistenteVentas' ){ %>
+                        <% if(role=='admin' || role=='AuxiliarF' || role=='Administrador' || role=='Vendedor' ||  role=='asistenteVentas' ){ %>
                             <a class="list-group-item list-group-item-action active" id="ConfiPerfilUser-list"
                                 data-bs-toggle="list" href="#ConfiPerfilUser" role="tab"
                                 aria-controls="ConfiPerfilUser">Configuración de perfil</a>
-                                <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' || role=='asistenteVentas'){ %>
-                                <a class="list-group-item list-group-item-action " id="AdminUsr-list"
-                                    data-bs-toggle="list" href="#AdminUsr" role="tab"
-                                    aria-controls="AdminUsr">Administración de usuarios</a>
-                                    <% } %>
-                                    <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' ){ %>
+                               
+                                
+                                    <% if(role=='admin' || role=='AuxiliarF' || role=='Administrador' ){ %>
                                 <a class="list-group-item list-group-item-action " id="configSerCorreo-list"
                                     data-bs-toggle="list" href="#configSerCorreo" role="tab"
                                     aria-controls="configSerSMS">Configuracion servidor de correo</a>
-                                <a class="list-group-item list-group-item-action " id="configSerSMS-list"
-                                    data-bs-toggle="list" href="#configSerSMS" role="tab" aria-controls="configSerSMS">
-                                    SMS</a>
+                               
                                 <a class="list-group-item list-group-item-action " id="configSerNotifications-list"
                                     data-bs-toggle="list" href="#configSerNotifications" role="tab"
                                     aria-controls="configSerNotifications"> Notificaciones push</a>
                                 <a class="list-group-item list-group-item-action "
-                                    id="identificacionBeneficiarioFinal-list" data-bs-toggle="list"
-                                    href="#identificacionBeneficiarioFinal" role="tab"
-                                    aria-controls="identificacionBeneficiarioFinal">Manual</a>
+                                    id="logsapp-list" data-bs-toggle="list"
+                                    href="#logsapp" role="tab"
+                                    aria-controls="logsapp">Logs</a>
 
                                 <% } %>
                                     <% } %>
@@ -52,14 +47,14 @@
                 <div class="col-md-10 col-sm-12 bg-white ">
 
                     <div class="tab-content m-3" id="nav-tabContent">
-                        <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' || role=='Vendedor' ||  role=='asistenteVentas' ){ %>
+                        <% if(role=='admin' || role=='AuxiliarF' || role=='Administrador' || role=='Vendedor' ||  role=='asistenteVentas' ){ %>
                             <div class="tab-pane fade active show" id="ConfiPerfilUser" role="tabpanel"
                                 aria-labelledby="ConfiPerfilUser-list">
                                 
                                 <ul class="profile-list">
                                     <li>
                                         <strong>Nombre:</strong>
-                                        <%= resultsUsrdata[0].nombre_completo%>
+                                        <%= resultsUsrdata[0].nombre%>
                                     </li>
                                     <li>
                                         <strong>Usuario:</strong>
@@ -67,7 +62,7 @@
                                     </li>
                                     <li>
                                         <strong>Correo:</strong>
-                                        <%= resultsUsrdata[0].correo%>
+                                        <%= resultsUsrdata[0].email%>
                                     </li>
                                     <li>
                                         <strong>Celular:</strong>
@@ -75,16 +70,9 @@
                                     </li>
                                     <li>
                                         <strong>Cédula:</strong>
-                                        <%= resultsUsrdata[0].cedula%>
+                                        <%= resultsUsrdata[0].identificacion%>
                                     </li>
-                                    <li>
-                                        <strong>Pin:</strong>
-                                        <%= resultsUsrdata[0].pinSeguridad%>
-                                    </li>
-                                    <li>
-                                        <strong>Código Vendedor:</strong>
-                                        <%= resultsUsrdata[0].codigoV%>
-                                    </li>
+                                    
                                 </ul>
 
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -100,188 +88,17 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <form action="/updateUserangeByadmin" method="post">
-                                                <div class="modal-body">
-                                                    <input type="text" value="<%= IDuser %>" name="idUser" hidden>
-
-                                                    <div class="form-group">
-                                                        <label for="nombre"><strong>Nombre</strong></label>
-                                                        <input type="text" class="form-control" name="nombre"
-                                                            id="nombre" value="<%= resultsUsrdata[0].nombre_completo%>"
-                                                            placeholder="Ingrese su nombre" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="usuario"> <strong>Cédula</strong> </label>
-                                                        <input type="text" class="form-control" name="cedula"
-                                                            id="cedula" value="<%= resultsUsrdata[0].cedula%>"
-                                                            placeholder="Ingrese su cédula" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="contrasena"><strong>Celular</strong> </label>
-                                                        <input type="text" class="form-control" name="celular"
-                                                            id="celular" value="<%= resultsUsrdata[0].celular%>"
-                                                            placeholder="Ingrese su celular" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="email"> <strong>Email</strong></label>
-                                                        <input type="email" class="form-control" name="email" id="email"
-                                                            value="<%= resultsUsrdata[0].correo%>"
-                                                            placeholder="Ingrese su correo electrónico" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="telefono"><strong>Codigo Vendedor</strong></label>
-                                                        <input type="text" class="form-control" name="codigov"
-                                                            id="codigov" value="<%= resultsUsrdata[0].codigoV%>"
-                                                            placeholder="Ingrese su codigo vendedor">
-                                                    </div>
-
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-danger">Guardar
-                                                        Cambios</button>
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Close</button>
-
-                                                </div>
-                                            </form>
+                                            
                                         </div>
                                     </div>
                                 </div>
 
 
 
-                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal">
+                                <a href="/password/<%= resultsUsrdata[0].id %>" type="button" class="btn btn-secondary" >
                                     Cambiar contraseña de usuario
-                                </button>
-                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-xl">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Cambio de contraseña
-                                                </h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <section class="">
-                                                    <div class="container">
-                                                        <div
-                                                            class="row d-flex justify-content-center align-items-center">
-                                                            <div class="col-xl-10">
-                                                                <div class="row g-0">
-                                                                    <div class="col-lg-12">
-                                                                        <div class="card-body p-md-5">
-                                                                            <div class="text-center">
-
-                                                                            </div>
-                                                                            <div class="text-center">
-                                                                                <script
-                                                                                    src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-                                                                                <lottie-player
-                                                                                    src="https://assets10.lottiefiles.com/packages/lf20_b8txxdvv.json"
-                                                                                    background="transparent" speed="1"
-                                                                                    style="width: 100px; height: 100px; margin:auto"
-                                                                                    loop autoplay>
-                                                                                </lottie-player>
-                                                                            </div>
-                                                                            <form method="post"
-                                                                                action="/changePassByadmin">
-                                                                                <input type="text" value="<%= IDuser %>"
-                                                                                    name="idUser" hidden>
-                                                                                <input type="text" value="Usuario"
-                                                                                    name="tipoUser" hidden>
-                                                                                <input type="text" value=""
-                                                                                    name="estadoPass" hidden>
-                                                                                <div class="form-outline mb-4">
-                                                                                    <div class="input-group mb-3">
-                                                                                        <input type="password"
-                                                                                            class="form-control"
-                                                                                            id="newPassword" name="pass"
-                                                                                            placeholder="Nueva contraseña"
-                                                                                            aria-label="Recipient's username"
-                                                                                            aria-describedby="button-addon2"
-                                                                                            required>
-                                                                                        <button
-                                                                                            class="btn btn-outline-secondary"
-                                                                                            onclick="mostrarPassword()"
-                                                                                            type="button"
-                                                                                            id="viewPass"><i
-                                                                                                class='bx bx-low-vision'></i></button>
-                                                                                    </div>
-                                                                                    <div class="input-group mb-3">
-                                                                                        <input type="password"
-                                                                                            class="form-control"
-                                                                                            id="confNewPassword"
-                                                                                            name="confNewPassword"
-                                                                                            placeholder="Confirma nueva contraseña"
-                                                                                            aria-label="Recipient's username"
-                                                                                            aria-describedby="button-addon2"
-                                                                                            required>
-                                                                                        <button
-                                                                                            class="btn btn-outline-secondary"
-                                                                                            onclick="mostrarConfPassword()"
-                                                                                            type="button"
-                                                                                            id="viewPass"><i
-                                                                                                class='bx bx-low-vision'></i></button>
-                                                                                    </div>
-                                                                                    <script type="text/javascript">
-                                                                                        function mostrarPassword() {
-                                                                                            var viewNewPass = document.getElementById("newPassword");
-                                                                                            if (viewNewPass.type == "password") {
-                                                                                                viewNewPass.type = "text";
-                                                                                                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
-                                                                                            } else {
-                                                                                                viewNewPass.type = "password";
-                                                                                                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
-                                                                                            }
-                                                                                        }
-
-                                                                                        function mostrarConfPassword() {
-                                                                                            var viewConfNewPass = document.getElementById("confNewPassword");
-                                                                                            if (viewConfNewPass.type == "password") {
-                                                                                                viewConfNewPass.type = "text";
-                                                                                                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
-                                                                                            } else {
-                                                                                                viewConfNewPass.type = "password";
-                                                                                                $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
-                                                                                            }
-                                                                                        }
-
-                                                                                    </script>
-                                                                                </div>
-
-
-                                                                                <div class="text-center">
-                                                                                    <button disabled type="submit"
-                                                                                        id="enviarBtn"
-                                                                                        class="btn btn-danger btn-block fa-lg columna-login mb-3">
-                                                                                        <i
-                                                                                            class='bx bx-sm bx-check-shield'></i>
-                                                                                        Confirmar cambio de contraseña
-                                                                                    </button>
-                                                                                </div>
-
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </section>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Close</button>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </a>
+                               
 
 
 
@@ -292,10 +109,10 @@
 
 
                             </div>
-                            <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' ||  role=='asistenteVentas'){ %>
+                            <% if(role=='admin' || role=='AuxiliarF' || role=='Administrador' ||  role=='asistenteVentas'){ %>
                                 <div class="tab-pane fade " id="AdminUsr" role="tabpanel"
                                     aria-labelledby="AdminUsr-list">
-                                    <% if(role=='dev' || role=='AuxiliarF' || role=='Administrador' ){ %>
+                                    <% if(role=='admin' || role=='AuxiliarF' || role=='Administrador' ){ %>
                                     <h5 class="text-center fa-rotate-180 ">Listado de usuarios</h5>
                                     <table id="example" class="display" style="width:100%">
                                         <thead>
@@ -672,8 +489,40 @@
 
                                 </div>
 
-                                <div class="tab-pane fade" id="identificacionBeneficiarioFinal" role="tabpanel"
-                                    aria-labelledby="configSerCorreo-list">
+                                <div class="tab-pane fade" id="logsapp" role="tabpanel"
+                                    aria-labelledby="logsapp-list">
+                                    <div class="mx-auto"
+                                                        style="background: #f4f4f4;  text-align: center;">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    <th scope="col">Fecha</th>
+                                                                    <th scope="col">Realizado por</th>
+                                                                    <th scope="col">Actividad</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <% logsapp.forEach(( dataLogs)=> {%>
+                                                                    <tr>
+                                                                        <th scope="row">
+                                                                            <%= dataLogs.fecha %>
+                                                                        </th>
+                                                                        <td>
+                                                                            <%= dataLogs.responsable %>
+                                                                        </td>
+                                                                        <td>
+                                                                            <%= dataLogs.descripcion %>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <%}) %>
+
+                                                            </tbody>
+                                                        </table>
+
+
+
+                                                    </div>
 
                                 </div>
 
@@ -732,6 +581,6 @@
                     confirmacion.addEventListener("input", validarContrasena);
                 });
             </script>
-            <P></P>
+            
 
-            <%- include('./partials/footers/footer.ejs') %>
+            <%- include('./partials/footer.ejs') %>

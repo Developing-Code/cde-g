@@ -61,44 +61,55 @@ controller.login = (req, res) => {
 
 controller.configuracion = (req, res) => {
   if (req.session.loggedin) {
-      id = req.session.ID;
-      req.getConnection((error, conn) => {
-        conn.query(
-            "SELECT * FROM usuarios ", (error, resultsUsr) => {
-                if (error) {
+    id = req.session.ID;
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM usuarios ", (error, resultsUsr) => {
+          if (error) {
+            console.log(error)
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query(
+                "SELECT * FROM usuarios WHERE id = ?", [id], (error, resultsUsrdata) => {
+                  if (error) {
                     console.log(error)
-                } else {
+                  } else {
                     req.getConnection((error, conn) => {
-                        conn.query(
-                            "SELECT * FROM usuarios WHERE id = ?",[id], (error, resultsUsrdata) => {
-                                if (error) {
-                                    console.log(error)
-                                } else {
-                                    res.render('panelConfiguracion', {
-                                        resultsUsr: resultsUsr,
-                                        resultsUsrdata: resultsUsrdata,
-                                        //passoOutlook: global.passoOutlook,
-                                        //correoOutlook: global.correoOutlook,
-                                        //smsUser: global.smsUser,
-                                        //smsPassword: global.smsPassword,
-                                        //smstoken: global.smstoken,
-                                        role: req.session.role,
-                                        IDuser: req.session.ID,
-                                        login: true,
-                                        nameUser: req.session.name,
-                                       // id_formulario: req.session.id_formulario
-                                    })
-                                }
-                            }
-                        )
+                      conn.query(
+                        "SELECT * FROM softlogs LIMIT 100", (error, logsapp) => {
+                          if (error) {
+                            console.log(error)
+                          } else {
+                            res.render('panelConfiguracion', {
+                              resultsUsr: resultsUsr,
+                              resultsUsrdata: resultsUsrdata,
+                              logsapp:logsapp,
+                              //passoOutlook: global.passoOutlook,
+                              //correoOutlook: global.correoOutlook,
+                              //smsUser: global.smsUser,
+                              //smsPassword: global.smsPassword,
+                              //smstoken: global.smstoken,
+                              role: req.session.role,
+                              IDuser: req.session.ID,
+                              login: true,
+                              nameUser: req.session.name,
+                              // id_formulario: req.session.id_formulario
+                            })
+                          }
+                        }
+                      )
                     })
+                  }
                 }
-            }
-        )
+              )
+            })
+          }
+        }
+      )
     })
-      
+
   } else {
-      res.redirect('/login')
+    res.redirect('/login')
   }
 }
 
@@ -1534,15 +1545,25 @@ controller.composterasNewSend = async (req, res) => {
                                                         timer: 3000,
                                                       });
                                                     } else {
-                                                      res.render("notification", {
-                                                        alert: true,
-                                                        alertTitle: "Notificacion",
-                                                        alertMessage: "Se ha creado exitosamente",
-                                                        alertIcon: "success",
-                                                        showConfirmButton: false,
-                                                        ruta: "home",
-                                                        timer: 3000,
-                                                      });
+                                                      req.getConnection((error, conn) => {
+                                                        conn.query('INSERT INTO softlogs SET ?', { descripcion: 'Nueva compostera creada', id_usuario: req.session.ID, responsable: req.session.name },
+                                                            (error) => {
+                                                                if (error) {
+                                                                    console.log(error)
+                                                                } else {
+                                                                  res.render("notification", {
+                                                                    alert: true,
+                                                                    alertTitle: "Notificacion",
+                                                                    alertMessage: "Se ha creado exitosamente",
+                                                                    alertIcon: "success",
+                                                                    showConfirmButton: false,
+                                                                    ruta: "home",
+                                                                    timer: 3000,
+                                                                  });
+                                                                }
+                                                            });
+                                                    });
+                                                     
                                                     }
                                                   }
                                                 );
@@ -1960,7 +1981,7 @@ controller.descargeCompostSend = (req, res) => {
     } else {
       foto = null;
     }
-   
+
     let firma = 'firma';
     let serialCompostera = '0000000000';
     const fecha_registro = req.body.fecha_registro;
@@ -2033,7 +2054,7 @@ controller.compostMaduradoSend = (req, res) => {
     } else {
       foto = null;
     }
-    
+
     let firma = 'firma';
     let serialCompostera = '0000000000';
     const fecha_registro = req.body.fecha_registro;
@@ -2623,12 +2644,12 @@ controller.registrosOperacion = (req, res) => {
                 console.log(error);
               } else {
                 req.getConnection((error, conn) => {
-                  conn.query("SELECT COUNT(*) AS total_registros FROM registrodiarioestadooperacion",(error, totalRegistros) => {
+                  conn.query("SELECT COUNT(*) AS total_registros FROM registrodiarioestadooperacion", (error, totalRegistros) => {
                     if (error) {
                       console.log(error);
                     } else {
                       req.getConnection((error, conn) => {
-                        conn.query("SELECT COUNT(DISTINCT id_compostera) AS total_composteras_activas FROM registrodiarioestadooperacion WHERE fecha_registro BETWEEN CURDATE() - INTERVAL 15 DAY AND CURDATE();",  (error, activosRegistros) => {
+                        conn.query("SELECT COUNT(DISTINCT id_compostera) AS total_composteras_activas FROM registrodiarioestadooperacion WHERE fecha_registro BETWEEN CURDATE() - INTERVAL 15 DAY AND CURDATE();", (error, activosRegistros) => {
                           if (error) {
                             console.log(error);
                           } else {
@@ -2644,11 +2665,11 @@ controller.registrosOperacion = (req, res) => {
                                     resltCompost: resltCompost,
                                     totalRegistros: totalRegistros,
                                     activosRegistros: activosRegistros,
-                                    inactivas:inactivas,
+                                    inactivas: inactivas,
                                     resSupervisores: resSupervisores,
                                     fechaACTUAL: fechaACTUAL,
-                                    statsData:true,
-                                    statsData2:false,
+                                    statsData: true,
+                                    statsData2: false,
                                     login: true,
                                     name: req.session.name,
                                     role: req.session.role,
@@ -2688,12 +2709,12 @@ controller.filtrarregistrosOperacion = (req, res) => {
     if (mes < 10) mes = "0" + mes; //agrega cero si el menor de 10
     var value = ano + "-" + mes + "-" + dia;
     var fechaACTUAL = String(value);
-  
+
     const fechaInicial = req.body.fecha_inicial;
-    const fechaFinal= req.body.fecha_final;
-    const beneficiario= req.body.beneficiario;
-    const supervisor= req.body.supervisor;
-    const estadoCompostera= req.body.estadoCompostera;
+    const fechaFinal = req.body.fecha_final;
+    const beneficiario = req.body.beneficiario;
+    const supervisor = req.body.supervisor;
+    const estadoCompostera = req.body.estadoCompostera;
     console.log(fechaInicial)
 
 
@@ -2701,7 +2722,7 @@ controller.filtrarregistrosOperacion = (req, res) => {
     if (fechaInicial && fechaInicial !== '') {
       query += ` AND ro.fecha_registro >= '${fechaInicial}'`;
     }
-    if (fechaFinal  && fechaFinal !== '') {
+    if (fechaFinal && fechaFinal !== '') {
       query += ` AND ro.fecha_registro <= '${fechaFinal}'`;
     }
     if (beneficiario && beneficiario.toLowerCase() !== 'todos') {
@@ -2712,11 +2733,11 @@ controller.filtrarregistrosOperacion = (req, res) => {
     }
     if (estadoCompostera && estadoCompostera.toLowerCase() == 'activa' && fechaInicial !== '' && fechaFinal !== '') {
       query += ` AND ro.fecha_registro BETWEEN '${fechaInicial}' AND '${fechaFinal}'`;
-    } else if (estadoCompostera &&  estadoCompostera.toLowerCase() == 'inactivas' && fechaInicial !== '' && fechaFinal !== ''){
+    } else if (estadoCompostera && estadoCompostera.toLowerCase() == 'inactivas' && fechaInicial !== '' && fechaFinal !== '') {
       query += ` AND ro.fecha_registro NOT BETWEEN '${fechaInicial}' AND '${fechaFinal}'`;
-    } else if (estadoCompostera &&  estadoCompostera.toLowerCase() == 'activa' && fechaInicial == '' && fechaFinal == ''){
+    } else if (estadoCompostera && estadoCompostera.toLowerCase() == 'activa' && fechaInicial == '' && fechaFinal == '') {
       query += ` AND ro.fecha_registro BETWEEN CURDATE() - INTERVAL 15 DAY AND CURDATE()`;
-    } else if (estadoCompostera &&  estadoCompostera.toLowerCase() == 'inactivas' && fechaInicial == '' && fechaFinal == ''){
+    } else if (estadoCompostera && estadoCompostera.toLowerCase() == 'inactivas' && fechaInicial == '' && fechaFinal == '') {
       query += ` AND ro.fecha_registro NOT BETWEEN CURDATE() - INTERVAL 15 DAY AND CURDATE()`;
     }
 
@@ -2731,12 +2752,12 @@ controller.filtrarregistrosOperacion = (req, res) => {
                 console.log(error);
               } else {
                 req.getConnection((error, conn) => {
-                  conn.query("SELECT COUNT(*) AS total_registros FROM registrodiarioestadooperacion",(error, totalRegistros) => {
+                  conn.query("SELECT COUNT(*) AS total_registros FROM registrodiarioestadooperacion", (error, totalRegistros) => {
                     if (error) {
                       console.log(error);
                     } else {
                       req.getConnection((error, conn) => {
-                        conn.query("SELECT COUNT(DISTINCT id_compostera) AS total_composteras_activas FROM registrodiarioestadooperacion WHERE fecha_registro BETWEEN CURDATE() - INTERVAL 15 DAY AND CURDATE();",  (error, activosRegistros) => {
+                        conn.query("SELECT COUNT(DISTINCT id_compostera) AS total_composteras_activas FROM registrodiarioestadooperacion WHERE fecha_registro BETWEEN CURDATE() - INTERVAL 15 DAY AND CURDATE();", (error, activosRegistros) => {
                           if (error) {
                             console.log(error);
                           } else {
@@ -2753,11 +2774,11 @@ controller.filtrarregistrosOperacion = (req, res) => {
                                     resltCompost: resltCompost,
                                     totalRegistros: results.length,
                                     activosRegistros: activosRegistros,
-                                    inactivas:inactivas,
+                                    inactivas: inactivas,
                                     resSupervisores: resSupervisores,
                                     fechaACTUAL: fechaACTUAL,
-                                    statsData:false,
-                                    statsData2:true,
+                                    statsData: false,
+                                    statsData2: true,
                                     login: true,
                                     name: req.session.name,
                                     role: req.session.role,
