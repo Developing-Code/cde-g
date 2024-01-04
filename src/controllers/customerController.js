@@ -59,7 +59,7 @@ controller.login = (req, res) => {
 
 };
 
-funtions.configuracion = (req, res) => {
+controller.configuracion = (req, res) => {
   if (req.session.loggedin) {
       id = req.session.ID;
       req.getConnection((error, conn) => {
