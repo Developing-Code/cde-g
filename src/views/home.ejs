@@ -46,16 +46,45 @@
 
     
     <style>
+      *{
+        box-sizing: border-box;
+      }
+
+      body{
+        background-color: #f4f4f4;
+      }
       .section1-home{
         display: flex;
+        flex-direction: row;
         justify-content: space-between;
         align-items: top;
         width: 100%;
         padding: 4rem 2rem;
+        padding-bottom: 0rem;
         margin-top: 50px;
+        gap: 1rem;
+  
       }
+      @media screen and (max-width: 768px) { /* Target tablets */
+  .section1-home {
+    flex-direction: column; /* Stack sections vertically */
+  }
+
+  .section1-home > * { /* Expand inner sections */
+    width: 100%;
+  }
+}
       .mapa-container{
         flex: 3;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 1.5rem ;
+         transition: all 0.4s ease-in-out;
+      }
+      .mapa-container:hover{
+         transition: all 0.4s ease-in-out;
+        box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
+        transform: translateY(-5px);
       }
       .resumen-composteras{
         display: flex;
@@ -63,46 +92,125 @@
         padding: 1rem;
         gap: 1rem;
         flex: 1;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 1.5rem ;
+      }
+      .resumen-composteras:hover{
+         transition: all 0.4s ease-in-out;
+        box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
+        transform: translateY(-5px);
       }
 
       .card-resumen{
         padding: 1rem;
         display: flex;
         flex-direction: column;
-        border-left: 3px solid #E76E09;
-        transition: all 0.4s ease-in;
+        background-color: #f8f8f8;
+        border-radius: 0 15px 15px 0    ;
+        transition: all 0.4s ease-in-out;
         color: #6e6e6e;
+        cursor: default;
+        border-left: 2px solid #E76E09;
       }
+      
       .card-resumen:hover{
         transition: all 0.4s ease-in-out;
         transform: translateX(10px);
         color: #222222;
+        border-left: 2px solid #E76E09;
+        box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
       }
 
       .graficos-section2{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
-       
+        gap: 1rem;
         width: 100%;
-        height: 800px;
+        padding: 2rem 1.5rem; 
       }
 
       .estadisticas-total-container{
-        height: 400px;
-        width: 100%;
-        padding: 2rem;
-        width: 70%;
+        height: 500px;
+ 
+        padding: 1rem;
+        width:100%;
+
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 2rem ;
+         transition: all 0.4s ease-in-out;
+
+          &:hover{
+         transition: all 0.4s ease-in-out;
+        box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
+        transform: translateY(-5px);
+      }
       }
 
       .graficos-linea{
+   
+        width:100%;
+        padding: 2rem;
+    
+    
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+
+
+        border-radius: 16px;
+        padding: 2rem ;
+         transition: all 0.4s ease-in-out;
+
+       
+      }
+
+      .grafico-linea1{
+        width: 48%;
+        flex:1;
+        height: 600px;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 2rem ;
+        padding-bottom: 4rem;
+
+        &:hover{
+         transition: all 0.4s ease-in-out;
+        box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
+        transform: translateY(-5px);
+        }
+        
+      }
+      .grafico-linea2{
+        width: 48%;
+        flex:1;
         height: 400px;
+        
+      }
+
+
+      .bento-style-card{
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 2rem ;
+      }
+
+      .section-3{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        flex-direction: row;
         width: 100%;
         padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        width: 30%;
+        height: 800px;
       }
+      .section-3 > * { /* Expand inner sections */
+    width: 100%;
+    height: 100%;
+  }
     </style>
   <div class="section1-home">
 
@@ -110,12 +218,12 @@
     <div class="mapa-container">
       <h2>Mapa de composteras</h2>
       <br>
-      <div id="map" style="width: 100%; height: 500px;"></div>
+      <div id="map" style="width: 100%; height: 500px; border-radius: 26px;"></div>
     </div>
 
     <!-- aqui las targetas -->
     <div class="resumen-composteras">
-      <h2>Resumen rapido</h2>
+      <h2>Resumen rápido</h2>
       
       <!-- card de resument -->
       <div class="card-resumen">
@@ -141,9 +249,10 @@
 
     </div>
   </div>
+  
 
     <% if (role=='user1' || role=='admin' || role=='supervisor' ) {%>
-      <div class="" style="margin-top: 150px;">
+      <div class="">
         <div class=""
           style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex-wrap: wrap; ">
           <% if ( role=='admin' || role=='supervisor' ) {%>
@@ -156,28 +265,45 @@
             <div class="estadisticas-total-container">
               <h3>Estadisticas totales</h3>
               <canvas id="barChart"></canvas>
-              <canvas id="barChart1"></canvas>
-              
-            </div>
+            </div>  
 
             <div class="graficos-linea">
-              <canvas id="barChart2"></canvas>
+                 <div class="grafico-linea1">
+                  <h3>Graficos de linea</h3>
+                  <canvas class="line1-chard" id="barChart2"></canvas>
+                </div>
 
-              <canvas id="barChart3"></canvas>
+                <div class="grafico-linea1">
+                  <h3>Graficos de line2</h3>
+                  <canvas class="line2-chard" id="barChart3"></canvas>
+                </div>
+
+
             </div>
-          </div>
 
 
-          <div style="height: 800px; display: flex; flex-direction: column; width: 100%;" >
 
-            <canvas id="pieChart1"></canvas>
-            
-            <canvas id="pieChart2"></canvas>
-            
-            
+        </div>
+
+        <div class="section-3">
+          <div class="bento-style-card" style="flex: 1;padding-bottom: 4rem;">
+            <h3> Cantidad de compost descargado por mes</h3>
             <canvas id="barChart1"></canvas>
           </div>
 
+          
+          <div class="bento-style-card"  style="flex: 2;padding-bottom: 4rem;">
+            <h3> Cantidad de registros por localidad</h3>
+            <canvas id="barChartFromPieData"></canvas>
+          </div>
+          
+          <div class="bento-style-card" style="flex: 1;padding-bottom: 4rem;">
+            <h3> Biomasa cargada por mes</h3>
+            <canvas id="pieChart2"></canvas>
+          </div>
+
+
+        </div>
       
       <% } %>
 
@@ -249,82 +375,69 @@
                       })
                         <% }); %>// Tu código JavaScript para crear el mapa va aquí
                 </script>
+ <script>
+  // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
+  if ('<%- chartData %>') {
+              const datos = JSON.parse('<%- chartData %>');
 
-                <script>
-        // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
-        if ('<%- chartData %>') {
-                    const datos = JSON.parse('<%- chartData %>');
+              const meses = datos.map(dato => 'Mes ' + dato.mes);
+              const data1 = datos.map(dato => dato.total_kilos);
 
-                    const meses = datos.map(dato => 'Mes ' + dato.mes);
-                    const data1 = datos.map(dato => dato.total_kilos);
+              // Obtén una referencia al elemento canvas
+              const canvas = document.getElementById('barChart');
 
-                    // Obtén una referencia al elemento canvas
-                    const canvas = document.getElementById('barChart');
+              // Configura el gráfico utilizando los datos
+              const ctx = canvas.getContext('2d');
+              const chart = new Chart(ctx, {
+                type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+                data: {
+                  labels: meses, // Etiquetas para el eje X (vendedores)
+                  datasets: [{
+                    label: 'Cantidad Biomasa cargada por mes (kg)',
+                    data: data1, // Datos para el eje Y (cantidad de clientes)
+                    backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
+                    borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
+                    borderWidth: 2 // Ancho del borde de las barras
+                  }]
+                },
+                options: {
+                  responsive: true,
 
-                    // Configura el gráfico utilizando los datos
-                    const ctx = canvas.getContext('2d');
-                    const chart = new Chart(ctx, {
-                      type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
-                      data: {
-                        labels: meses, // Etiquetas para el eje X (vendedores)
-                        datasets: [{
-                          label: 'Cantidad Biomasa cargada por mes (kg)',
-                          data: data1, // Datos para el eje Y (cantidad de clientes)
-                          backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
-                          borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
-                          borderWidth: 2 // Ancho del borde de las barras
-                        }]
-                      },
-                      options: {
-                        responsive: true,
-
-                        maintainAspectRatio: false,
-                        scales: {
-                          y: {
-                            beginAtZero: true // Comienza el eje Y en cero
-                          }
-                        }
-                      }
-                    });
+                  maintainAspectRatio: false,
+                  scales: {
+                    y: {
+                      beginAtZero: true // Comienza el eje Y en cero
+                    }
                   }
+                }
+              });
+            }
 
-                </script>
+          </script>
                 <script>
                   // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
                   if ('<%- ctnporlocalidad %>') {
 
-                    function getRandomColors(numColors) {
-                      const colors = [];
-                      for (let i = 0; i < numColors; i++) {
-                        const r = Math.floor(Math.random() * 256);
-                        const g = Math.floor(Math.random() * 256);
-                        const b = Math.floor(Math.random() * 256);
-                        const a = 0.8;
-                        colors.push(`rgba(${r}, ${g}, ${b}, ${a}`);
-                      }
-                      return colors;
-                    }
                     const datos = JSON.parse('<%- ctnporlocalidad %>');
 
                     const localidades = datos.map(dato => dato.localidad_compostera);
                     const data1 = datos.map(dato => dato.cantidad_de_registros);
-                    const numCategories = datos.length;
-                    const randomColors = getRandomColors(numCategories);
-                    console.log(numCategories)
-                    // Obtén una referencia al elemento canvas
-                    const canvas = document.getElementById('pieChart1');
 
-                    // Configura el gráfico utilizando los datos
+                    // Obtén una referencia al elemento canvas
+                    const canvas = document.getElementById('barChartFromPieData');
+
+                    // Configura el gráfico utilizando los datos en un gráfico de barras
                     const ctx = canvas.getContext('2d');
                     const chart = new Chart(ctx, {
-                      type: 'doughnut', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
+                      type: 'bar', // Cambiado a gráfico de barras
                       data: {
-                        labels: localidades, // Etiquetas para el eje X (vendedores)
+                        labels: localidades, // Etiquetas para el eje X (localidades)
                         datasets: [{
-                          data: data1, // Datos para el eje Y (cantidad de clientes)
-                          backgroundColor: randomColors, // Color de fondo de las barras
-                          borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
-                          borderWidth: 2 // Ancho del borde de las barras
+                          label: 'Cantidad de Registros por Localidad', // Etiqueta del dataset
+                          data: data1, // Datos para el eje Y (cantidad de registros)
+                          backgroundColor: 'rgba(54, 162, 235, 0.6)', // Color de fondo de las barras
+                          borderColor: 'rgba(54, 162, 235, 1)', // Color del borde de las barras
+                          borderWidth: 1 // Ancho del borde de las barras
                         }]
                       },
                       options: {
@@ -338,7 +451,6 @@
                       }
                     });
                   }
-
                 </script>
                 <script>
                   // Obtén los datos del servidor (reemplaza 'datos' con tus datos reales)
