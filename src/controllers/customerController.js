@@ -190,7 +190,7 @@ controller.welcome = (req, res) => {
 controller.home = (req, res) => {
   if (req.session.loggedin) {
     id_usuario = req.session.ID
-    if (req.session.role === "admin" || req.session.role == 'supervisor') {
+    if (req.session.role === "admin" || req.session.role == 'supervisor' || req.session.role == 'tecnico') {
       req.getConnection((error, conn) => {
         conn.query("SELECT  YEAR(fecha_registro) AS ano,  MONTH(fecha_registro) AS mes, SUM(CantidadMO) AS total_kilos  FROM registrodiarioestadooperacion GROUP BY  ano, mes  ORDER BY ano, mes;", (error, chartData) => {
           if (error) {
@@ -1437,7 +1437,7 @@ controller.composterasNewSend = async (req, res) => {
                   "INSERT INTO usuarios SET ?",
                   {
                     nombre: nombreResponsable,
-                    user: email,
+                    user: codBenefic,
                     password: passwordHaash,
                     email: email,
                     celular: celularResponsable,
