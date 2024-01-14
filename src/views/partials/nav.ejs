@@ -137,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     Home</a>
                 </li>
                 <% } %>
-                  <% if ( role=='admin' || role=='supervisor') {%>
+                  <% if ( role=='admin' || role=='supervisor' ) {%>
                     <li class="text-dark p-2 m-2" style="background-color: #ffffff; border-radius: 15px; color:#ffffff;">
                       <a href="/register" class="nav-link text-dark"> 
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -147,7 +147,8 @@ document.addEventListener("DOMContentLoaded", function () {
                           
                         Panel usuarios</a>
                     </li>
-                    <% if ( role=='admin' ) {%>
+                    <% } %>
+                    <% if ( role=='admin' || role=='tecnico' ) {%>
                       <li class="text-dark p-2 m-2" style="background-color: #ffffff; border-radius: 15px; color:#ffffff;">
                         <a href="/agregarNuevaCompostera" class="nav-link text-dark">
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -164,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
                           Configuración de aplicación</a>
                       </li>
                       <% } %>
-
+                      <% if ( role=='admin' || role=='supervisor' ) {%>
                       <li class="text-dark p-2 m-2" style="background-color: #ffffff; border-radius: 15px; color:#ffffff;">
                         <a href="/totalcomposteraslist" class="nav-link text-dark"> 
                           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
