@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+
+
+<style>
+  .login {
+    background-color: rgb(238, 238, 238);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+
+
+  }
+
+  .listaUsuarios {
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+
+  }
+
+
+
+  .signature-pad {
+    border: 2px rgb(211, 211, 211) solid;
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+    /* max-width: 400px;
+  max-height: 200px; */
+    /* touch-action: none; */
+  }
+
+  @media screen and (max-width: 799px) {
+    .signature-pad {
+      width: 100%;
+      height: 400px;
+      /* max-width: 400px;
+  max-height: 200px; */
+      /* touch-action: none; */
+    }
+  }
+</style>
+
+<body class="login">
+
+  <%- include('./partials/nav.ejs') %>
+
+
+
+
+
+    <div class="container-fluid" style="margin-top: 150px; ">
+      <div class="row justify-content-center mt-5 ">
+        <div class=" col-lg-12 col-md-12 col-sm-12">
+          <div class="card">
+            <div class="card-title text-center border-bottom">
+              <h2 class="p-3">Formulario Análisis de laboratorio</h2>
+            </div>
+            <div class="card-body">
+              <form id="formvisitaseguimientosend" action="/formAnalisisLaboratorioSend" method="POST"
+                enctype="multipart/form-data">
+                <div class="container-fluid ">
+                  <div class="row justify-content-evenly">
+                    <div class="col-lg-4 col-sm-12">
+                      <div hidden class="mb-3">
+                        <h6 for="fecha">Fecha</h6>
+                        <input id="fecha" style="font-size: 12px;" type="date" class="form-control"
+                          name="fecha_registro" required>
+                      </div>
+                      <div hidden class="mb-3">
+                        <h6 for="hora">Hora</h6>
+                        <input id="hora" style="font-size: 12px;" type="time" class="form-control" name="hora_registro"
+                          required>
+                      </div>
+                      <div hidden class="mb-3">
+                        <input hidden type="text" value="<%= ID%>" class="form-control" style="font-size: 12px;"
+                          name="id_quienRegistra" required>
+                        <input hidden type="text" value="<%= name%>" class="form-control" style="font-size: 12px;"
+                          name="nombre_quienRegistra" required>
+                        <input hidden type="text" value="<%= idCompost%>" class="form-control"
+                          style="font-size: 12px;" name="idCompost" required>
+
+                      </div>
+                      
+
+                      <div class="mb-3">
+                        <h6 for="ctnDescargada">Humedad</h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Humedad" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="pH">pH</h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="pH" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="CE">CE</h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="CE" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Ret_Hum">Ret. Hum.</h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Ret_Hum" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Cenizas">Cenizas</h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Cenizas" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Perdidas_volatilización">Perdidas por volatilización
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Perdidas_volatilización" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="CIC">CIC
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="CIC" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Densidad">Densidad
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Densidad" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="COOt">COOt
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="COOt" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="RelacionCN">Relación C:N
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="RelacionCN" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="NT">NT
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="NT" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="NO">NO
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="NO" required>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                     
+                      <div class="mb-3">
+                        <h6 for="P2O5">P2O5
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="P2O5" required>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <h6 for="K2O">K2O
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="K2O" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="CaO">CaO
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="CaO" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="MgO">MgO
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="MgO" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="S">S
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="S" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Fe">Fe
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Fe" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Mn">Mn
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Mn" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Cu">Cu
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Cu" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Zn">Zn
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Zn" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="B">B
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="B" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Na">Na
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Na" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="SiO2">SiO2
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="SiO2" required>
+                        </div>
+                      </div>
+                      
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                      <div class="mb-3">
+                        <h6 for="Residuo_in_acido">Residuo insoluble en ácido
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Residuo_in_acido" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="As">As
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="As" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Hg">Hg
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Hg" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Cd">Cd
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Cd" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Cr">Cr
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Cr" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Ni">Ni
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Ni" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Pb">Pb
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Pb" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="NMPCTg">NMP CT/g
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="NMPCTg" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="NMPCFg">NMP CF/g
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="NMPCFg" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Nematodos25g">Nematodos/25g
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Nematodos25g" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Salmonella25g">Salmonella/25g
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Salmonella25g" required>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <h6 for="Hongosfitopatogenos">Hongos fitopatógenos
+                        </h6>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon1">#</span>
+                          <input pattern="[0-9]+([.,][0-9]+)?" step="any" style="font-size: 12px;" type="number"
+                            class="form-control" name="Hongosfitopatogenos" required>
+                        </div>
+                      </div>
+                      
+                     
+                      
+                    </div>
+
+                  </div>
+                </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-success">Continuar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+      crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(typeof alert !="undefined" ) { %>
+      <script>
+        Swal.fire({
+          title: '<%=alertTitle %>',
+          text: '<%= alertMessage%>',
+          icon: '<%=alertIcon %>',
+          showConfirmButton: '<%= showConfirmButton %>',
+          timer: '<%= timer %>'
+        }).then(() => {
+          window.location = '/<%= ruta %>'
+        })
+      </script>
+      <% } %>
+        <script>
+          var inputs = $("input[type=text]");
+          for (var i = 0; i < inputs.length; i++) {
+            var aux = $(inputs[i]).val().trim();
+            $(inputs[i]).val(aux);
+          }
+        </script>
+
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
+
+
+
+        <script>
+          $(document).ready(function () {
+
+            var now = new Date();
+
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var hour = (now.getHours() < 10 ? '0' : '') + now.getHours() + ":" + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
+            $("#fecha").val(today);
+            $("#hora").val(hour);
+
+
+          });
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+        <script>
+          var canvas = document.getElementById('signature-pad');
+
+          // Adjust canvas coordinate space taking into account pixel ratio,
+          // to make it look crisp on mobile devices.
+          // This also causes canvas to be cleared.
+          function resizeCanvas() {
+            // When zoomed out to less than 100%, for some very strange reason,
+            // some browsers report devicePixelRatio as less than 1
+            // and only part of the canvas is cleared then.
+            var ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+          }
+
+          window.onresize = resizeCanvas;
+          resizeCanvas();
+
+          var signaturePad = new SignaturePad(canvas, {
+            backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+          });
+
+          document.getElementById('clear').addEventListener('click', function () {
+            signaturePad.clear();
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: 'Firma borrada con éxito',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          });
+
+          document.getElementById('formvisitaseguimientosend').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evitar que el formulario se envíe por defecto
+
+            if (signaturePad.isEmpty()) {
+              return Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Porfavor Firmar',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            } else {
+              var data = signaturePad.toDataURL('image/png');
+
+              $("#firmaText").val(data);
+              Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Firma guardada con éxito',
+                showConfirmButton: false,
+                timer: 1000
+              }).then(function () {
+                // Ahora sí, enviar el formulario con la firma guardada
+                document.getElementById('formvisitaseguimientosend').submit();
+              });
+            }
+          });
+        </script>
+
+
+        <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

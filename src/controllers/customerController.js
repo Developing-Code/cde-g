@@ -1287,6 +1287,44 @@ controller.formVisitaSeguimiento = (req, res) => {
     res.redirect("/login");
   }
 };
+controller.formAnalisisLaboratorio = (req, res) => {
+  if (req.session.loggedin) {
+    var idCompost = req.params.id;
+
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM usuarios ",
+        (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query("SELECT * FROM composteras WHERE id = ?", [idCompost], (error, resultscompost) => {
+                if (error) {
+                  console.log(error);
+                } else {
+
+                  res.render("formarAnalisisLaboratorio", {
+                    results: results,
+                    resultscompost: resultscompost,
+                    login: true,
+                    ID: req.session.ID,
+                    name: req.session.name,
+                    role: req.session.role,
+                    idCompost: idCompost
+                  });
+                }
+              }
+              );
+            });
+          }
+        }
+      );
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
 
 
 controller.formCargeBiomasa = (req, res) => {
@@ -1774,6 +1812,148 @@ controller.formVisitaSeguimientoSend = (req, res) => {
           } else {
             req.getConnection((error, conn) => {
               conn.query("SELECT * FROM registrodiarioestadooperacion ORDER BY id DESC LIMIT 1;", (error, result) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  req.getConnection((error, conn) => {
+                    conn.query("UPDATE composteras SET ? WHERE id=?", [{ estado: 'COMPLETADO' }, idCompost], (error) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        res.render("seguimientofoto1", {
+                          login: true,
+                          ID: req.session.ID,
+                          name: req.session.name,
+                          role: req.session.role,
+                          result: result
+                        });
+                      }
+                    }
+                    );
+                  });
+                }
+              }
+              );
+            });
+          }
+        }
+      );
+    });
+
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.formAnalisisLaboratorioSend = (req, res) => {
+  if (req.session.loggedin) {
+    let foto;
+    if (req.file) {
+      foto = req.file.filename;
+    } else {
+      foto = null;
+    }
+    
+    const fecha_registro = req.body.fecha_registro;
+    const hora_registro = req.body.hora_registro;
+    const id_compostera = req.body.idCompost;
+    const id_responsable = req.body.id_quienRegistra;
+
+    const Humedad = req.body.Humedad;
+    const pH = req.body.pH;
+    const CE = req.body.CE;
+    const Ret_Hum = req.body.Ret_Hum;
+    const Cenizas = req.body.Cenizas;
+    const Perdidas_volatilizacion = req.body.Perdidas_volatilización;
+    const CIC = req.body.CIC;
+    const Densidad = req.body.Densidad;
+    const COOt = req.body.COOt;
+    const RelacionCN = req.body.RelacionCN;
+    const NT = req.body.NT;
+    const NO = req.body.NO;
+    const P2O5 = req.body.P2O5;
+    const K2O = req.body.K2O;
+    const CaO = req.body.CaO;
+    const MgO = req.body.MgO;
+    const S = req.body.S;
+    const Fe = req.body.Fe;
+    const Mn = req.body.Mn;
+    const Cu = req.body.Cu;
+    const Zn = req.body.Zn;
+    const B = req.body.B;
+    const Na = req.body.Na;
+    const SiO2 = req.body.SiO2;
+    const Residuo_insoluble_acido = req.body.Residuo_in_acido;
+    const AS = req.body.As;
+    const Hg = req.body.Hg;
+    const Cd = req.body.Cd;
+    const Cr = req.body.Cr;
+    const Ni = req.body.Ni;
+    const Pb = req.body.Pb;
+    const NMPCTg = req.body.NMPCTg;
+    const NMPCFg = req.body.NMPCFg;
+    const Nematodos25g = req.body.Nematodos25g;
+    const Salmonella25g = req.body.Salmonella25g;
+    const Hongos_fitopatogenos = req.body.Hongosfitopatogenos;
+    req.getConnection((error, conn) => {
+      conn.query(
+        "INSERT INTO analisis_laboratorio SET ?",
+        {
+          id_compostera: id_compostera,
+          fecha_registro: fecha_registro,
+          hora_registro: hora_registro,
+          id_responsable: id_responsable,
+          Humedad: Humedad,
+          pH: pH,
+          CE: CE,
+          Ret_Hum: Ret_Hum,
+          Cenizas: Cenizas,
+          Perdidas_volatilizacion: Perdidas_volatilizacion,
+          CIC: CIC,
+          Densidad: Densidad,
+          COOt: COOt,
+          RelacionCN: RelacionCN,
+          NT: NT,
+          NO: NO,
+          P2O5: P2O5,
+          K2O: K2O,
+          CaO: CaO,
+          MgO: MgO,
+          S: S,
+          Fe: Fe,
+          Mn: Mn,
+          Cu: Cu,
+          Zn: Zn,
+          B: B,
+          Na: Na,
+          SiO2: SiO2,
+          Residuo_insoluble_acido: Residuo_insoluble_acido,
+          AS: AS,
+          Hg: Hg,
+          Cd: Cd,
+          Cr: Cr,
+          Ni: Ni,
+          Pb: Pb,
+          NMPCTg: NMPCTg,
+          NMPCFg: NMPCFg,
+          Nematodos25g: Nematodos25g,
+          Salmonella25g: Salmonella25g,
+          Hongos_fitopatogenos: Hongos_fitopatogenos,
+        },
+        (error) => {
+          if (error) {
+            console.log(error);
+            res.render("notification", {
+              alert: true,
+              alertTitle: "Notificacion",
+              alertMessage: error,
+              alertIcon: "danger",
+              showConfirmButton: false,
+              ruta: "totalcomposteras",
+              timer: 3000,
+            });
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query("SELECT * FROM analisis_laboratorio ORDER BY id DESC LIMIT 1;", (error, result) => {
                 if (error) {
                   console.log(error);
                 } else {
