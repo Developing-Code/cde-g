@@ -171,7 +171,7 @@
       .grafico-linea1{
         width: 48%;
         flex:1;
-        height: 600px;
+        height: 300px;
         background-color: #ffffff;
         border-radius: 16px;
         padding: 2rem ;
@@ -270,12 +270,12 @@
 
             <div class="graficos-linea">
                  <div class="grafico-linea1">
-                  <h3>Graficos de linea</h3>
+                  <h3>Promedio mes temperatura ambiente</h3>
                   <canvas class="line1-chard" id="barChart2"></canvas>
                 </div>
 
                 <div class="grafico-linea1">
-                  <h3>Graficos de line2</h3>
+                  <h3>Promedio mes humedad ambiente</h3>
                   <canvas class="line2-chard" id="barChart3"></canvas>
                 </div>
 
@@ -392,7 +392,7 @@
               const chart = new Chart(ctx, {
                 type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
                 data: {
-                  labels: meses, // Etiquetas para el eje X (vendedores)
+                  labels: ['Mes 1','Mes 2','Mes 3','Mes 4','Mes 5','Mes 6','Mes 7','Mes 8','Mes 9','Mes 10','Mes 11','Mes 12'],// Etiquetas para el eje X (vendedores)
                   datasets: [{
                     label: 'Cantidad Biomasa cargada por mes (kg)',
                     data: data1, // Datos para el eje Y (cantidad de clientes)
@@ -507,7 +507,7 @@
                     const chart = new Chart(ctx1, {
                       type: 'bar', // Tipo de gráfico (puedes cambiarlo según tus necesidades)
                       data: {
-                        labels: meses, // Etiquetas para el eje X (vendedores)
+                        labels:  ['Mes 1','Mes 2','Mes 3','Mes 4','Mes 5','Mes 6','Mes 7','Mes 8','Mes 9','Mes 10','Mes 11','Mes 12'], // Etiquetas para el eje X (vendedores)
                         datasets: [{
                           label: 'Cantidad Compost descargado por mes (kg)',
                           data: data1, // Datos para el eje Y (cantidad de clientes)
@@ -533,8 +533,8 @@
                   const datos2 = JSON.parse('<%- chartData2 %>');
                   const ctx2 = document.getElementById('barChart2').getContext('2d');
 
-                  const fechas = datos2.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
-                  const temperaturas = datos2.map(d => d.temperatura);
+                  const fechas = datos2.map(item => `${item.mes}/${item.ano}`);
+                  const temperaturas = datos2.map(d => d.promedio_temperatura);
 
                   new Chart(ctx2, {
                     type: 'line',
@@ -562,8 +562,8 @@
                   const datos3 = JSON.parse('<%- chartData3 %>');
                   const ctx3 = document.getElementById('barChart3').getContext('2d');
 
-                  const fechas3 = datos3.map(d => d.ano + '-' + (d.mes < 10 ? '0' + d.mes : d.mes));
-                  const humedad = datos3.map(d => d.humedad);
+                  const fechas3 = datos3.map(item => `${item.mes}/${item.ano}`);
+                  const humedad = datos3.map(d => d.promedio_humedad);
 
                   new Chart(ctx3, {
                     type: 'line',

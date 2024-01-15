@@ -192,22 +192,22 @@ controller.home = (req, res) => {
     id_usuario = req.session.ID
     if (req.session.role === "admin" || req.session.role == 'supervisor' || req.session.role == 'tecnico') {
       req.getConnection((error, conn) => {
-        conn.query("SELECT  YEAR(fecha_registro) AS ano,  MONTH(fecha_registro) AS mes, SUM(CantidadMO) AS total_kilos  FROM registrodiarioestadooperacion GROUP BY  ano, mes  ORDER BY ano, mes;", (error, chartData) => {
+        conn.query("SELECT  YEAR(fecha_registro) AS ano,  MONTH(fecha_registro) AS mes, SUM(CantidadMO) AS total_kilos  FROM registrodiarioestadooperacion WHERE YEAR(fecha_registro) = YEAR(CURDATE()) GROUP BY  ano, mes  ORDER BY ano, mes;", (error, chartData) => {
           if (error) {
             console.log(error)
           } else {
             req.getConnection((error, conn) => {
-              conn.query("SELECT  YEAR(fecha_registro) AS ano,  MONTH(fecha_registro) AS mes, SUM(cantidadCompost) AS total_kilos  FROM registrodiarioestadooperacion GROUP BY  ano, mes  ORDER BY ano, mes;", (error, chartData1) => {
+              conn.query("SELECT  YEAR(fecha_registro) AS ano,  MONTH(fecha_registro) AS mes, SUM(cantidadCompost) AS total_kilos  FROM registrodiarioestadooperacion WHERE YEAR(fecha_registro) = YEAR(CURDATE())  GROUP BY  ano, mes  ORDER BY ano, mes;", (error, chartData1) => {
                 if (error) {
                   console.log(error)
                 } else {
                   req.getConnection((error, conn) => {
-                    conn.query("SELECT YEAR(fecha_registro) as ano, MONTH(fecha_registro) as mes, temperatura FROM registrodiarioestadooperacion WHERE temperatura IS NOT NULL ORDER BY YEAR(fecha_registro) ASC, MONTH(fecha_registro) ASC;", (error, chartData2) => {
+                    conn.query("SELECT YEAR(fecha_registro) as ano, MONTH(fecha_registro) as mes, AVG(temperatura) AS promedio_temperatura FROM registrodiarioestadooperacion WHERE temperatura IS NOT NULL AND TipoRegistro != 'VISITASEGUIMIENTO' AND fecha_registro >= DATE_ADD(LAST_DAY(CURDATE()), INTERVAL -11 MONTH) GROUP BY ano, mes ORDER BY ano ASC, mes ASC;", (error, chartData2) => {
                       if (error) {
                         console.log(error)
                       } else {
                         req.getConnection((error, conn) => {
-                          conn.query("SELECT YEAR(fecha_registro) as ano, MONTH(fecha_registro) as mes, humedad FROM registrodiarioestadooperacion   WHERE humedad IS NOT NULL ORDER BY YEAR(fecha_registro) ASC, MONTH(fecha_registro) ASC;", (error, chartData3) => {
+                          conn.query("SELECT YEAR(fecha_registro) as ano, MONTH(fecha_registro) as mes, AVG(humedad) AS promedio_humedad FROM registrodiarioestadooperacion WHERE humedad IS NOT NULL AND TipoRegistro != 'VISITASEGUIMIENTO' AND fecha_registro >= DATE_ADD(LAST_DAY(CURDATE()), INTERVAL -11 MONTH) GROUP BY ano, mes ORDER BY ano ASC, mes ASC;", (error, chartData3) => {
                             if (error) {
                               console.log(error)
                             } else {
