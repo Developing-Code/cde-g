@@ -3367,6 +3367,22 @@ controller.graficoCompost = (req, res) => {
 
 
 
+//panel manual de usuario
+controller.manualusuario = (req, res) => {
+  if (req.session.loggedin) {
+    res.render("manualusuario", {
+      login: true,
+      name: req.session.name,
+      role: req.session.role,
+    });
+  } else {
+    res.render("login", {
+      login: false,
+    });
+  }
+};
+
+
 
 
 

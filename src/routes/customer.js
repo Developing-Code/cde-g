@@ -60,7 +60,6 @@ router.get('/graficoCompost/:id', customerController.graficoCompost)
 
 
 
-
 //panel recursos humanos
 router.get('/panelSSG', customerController.panelSSG)
 //pimasd
@@ -140,5 +139,7 @@ router.get('/cronogamaFibraOptica', customerController.cronogramaFibraOptica)
 router.post('/cronogramaOrganizarPorFecha', customerController.cronogramaOrganizarFecha)
 
 
+//manual de usuario
+router.get('/manual', customerController.manualusuario)
 
 module.exports = router; 
