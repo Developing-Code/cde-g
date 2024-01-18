@@ -1,0 +1,951 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+
+<%- include('./partials/nav.ejs') %>
+
+  <style>
+    * {
+
+      font-family: 'Poppins', sans-serif;
+
+    }
+
+    .scrollable-content {
+      width: 100%;
+      /* Tamaño fijo del div, puedes ajustarlo según tus necesidades */
+      height: 235px;
+      /* Tamaño fijo del div, puedes ajustarlo según tus necesidades */
+      overflow: auto;
+      /* Agrega una barra de desplazamiento cuando el contenido exceda el tamaño del div */
+    }
+
+    .border-left-primary {
+      border-left: 5px solid #1EA4E9;
+      /* Cambia "red" al color que desees */
+    }
+
+    .border-left-warning {
+      border-left: 3px solid #E76E09;
+      /* Cambia "red" al color que desees */
+    }
+
+    .border-left-danger {
+      border-left: 3px solid #e91e1e;
+      /* Cambia "red" al color que desees */
+    }
+
+    .border-left-success {
+      border-left: 3px solid #36e91e;
+      /* Cambia "red" al color que desees */
+    }
+  </style>
+
+  <body>
+
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #f4f4f4;
+      }
+
+      .section1-home {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: top;
+        width: 100%;
+        padding: 4rem 2rem;
+        padding-bottom: 0rem;
+        margin-top: 50px;
+        gap: 1rem;
+
+      }
+
+      @media screen and (max-width: 768px) {
+
+        /* Target tablets */
+        .section1-home {
+          flex-direction: column;
+          /* Stack sections vertically */
+        }
+
+        .section1-home>* {
+          /* Expand inner sections */
+          padding-top: 50px;
+          width: 100%;
+        }
+      }
+
+      .mapa-container {
+        flex: 3;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.4s ease-in-out;
+      }
+
+      .mapa-container:hover {
+        transition: all 0.4s ease-in-out;
+        box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
+        transform: translateY(-5px);
+      }
+
+      .resumen-composteras {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+        flex: 1;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 1.5rem;
+      }
+
+      .resumen-composteras:hover {
+        transition: all 0.4s ease-in-out;
+        box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
+        transform: translateY(-5px);
+      }
+
+      .card-resumen {
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        background-color: #f8f8f8;
+        border-radius: 0 15px 15px 0;
+        transition: all 0.4s ease-in-out;
+        color: #6e6e6e;
+        cursor: default;
+        border-left: 2px solid #1da375;
+      }
+
+      .card-resumen:hover {
+        transition: all 0.4s ease-in-out;
+        transform: translateX(10px);
+        color: #222222;
+        border-left: 2px solid #1da375;
+        box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
+      }
+
+      .graficos-section2 {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 1rem;
+        width: 100%;
+        padding: 2rem 1.5rem;
+      }
+
+      .estadisticas-total-container {
+        height: 650px;
+
+        padding: 1rem;
+        width: 100%;
+
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 2rem;
+        transition: all 0.4s ease-in-out;
+
+        &:hover {
+          transition: all 0.4s ease-in-out;
+          box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
+          transform: translateY(-5px);
+        }
+      }
+
+      .graficos-linea {
+
+        width: 100%;
+        padding: 0rem;
+
+
+        display: flex;
+        flex-direction: row;
+        gap: 2rem;
+
+
+        border-radius: 16px;
+        padding: 0rem;
+        transition: all 0.4s ease-in-out;
+
+
+      }
+
+      .grafico-linea1 {
+        width: 48%;
+        flex: 1;
+        height: 650px;
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 2rem;
+        padding-bottom: 4rem;
+
+        &:hover {
+          transition: all 0.4s ease-in-out;
+          box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
+          transform: translateY(-5px);
+        }
+
+      }
+
+      .grafico-linea2 {
+        width: 48%;
+        flex: 1;
+        height: 400px;
+
+      }
+
+
+      .bento-style-card {
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 2rem;
+      }
+
+      .section-3 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        flex-direction: row;
+        width: 100%;
+        padding: 2rem;
+        height: 800px;
+      }
+
+      .section-3>* {
+        /* Expand inner sections */
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <div class="section1-home">
+
+      <!-- aqui va el mapa -->
+      <div class="mapa-container">
+        <h2>Lista de composteras</h2>
+        <br>
+        <div class="container-fluid container" style="margin-top:10px">
+          <div class="row">
+            <table id="users" class="table  dt-responsive nowrap   table-hover table-bordered" style="font-size: 14px;">
+              <thead>
+                <tr>
+                  <th>Código beneficiario</th>
+                  <th style="min-width: 100px;">Acciones</th>
+                  <th>Responsable</th>
+                  <th>Contacto</th>
+                  <th>Dirección</th>
+                  <th>Capacidad</th>
+                  <th>Id usuario</th>
+                  <th>Nota</th>
+                  <th>Estado</th>
+                  <th>Fecha entrega</th>
+
+                </tr>
+              </thead>
+
+              <tbody>
+                <% results.forEach((data1)=> {%>
+
+
+                  <tr>
+                    <td>
+                      <%= data1.codBenefic %>
+                    </td>
+                    <td style="min-width: 100px;">
+                      <a href="/perfilCompost/<%= data1.id %>" title="Perfil de compostera"
+                        class="btn btn-sm text-light" style="background-color: #1da375;" type="button"><i
+                          class='bx bx-dots-vertical-rounded'></i></a>
+                      <a href="/formVisitaSeguimiento/<%= data1.id %>" title="Visita de Seguimiento"
+                        class="btn btn-sm text-light" style="background-color: #1da375;" type="button"><i
+                          class='bx bxs-book-content'></i></a>
+                      <a href="/formAnalisisLaboratorio/<%= data1.id %>" title="Análisis de laboratorio"
+                        class="btn btn-sm text-light" style="background-color: #1da375;" type="button"><i
+                          class='bx bxs-vial'></i></a>
+
+
+
+                      <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
+
+                    </td>
+                    <td>
+                      <%= data1.nombre_responsable %>
+                    </td>
+                    <td>
+                      <%= data1.celular_responsable %>
+                    </td>
+                    <td>
+                      <%= data1.Direccion_compostera %>
+                    </td>
+                    <td>
+                      <%= data1.Capacidad_compostera %>
+                    </td>
+                    <td>
+                      <%= data1.id_usuario %>
+                    </td>
+                    <td>
+                      <%= data1.Nota %>
+                    </td>
+                    <td>
+                      <%= data1.estado %>
+                    </td>
+                    <td>
+                      <%= data1.fecha_inicial %>
+                    </td>
+
+                  </tr>
+                  <% }) %>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+
+
+
+
+      </div>
+
+      <!-- aqui las targetas -->
+      <div class="resumen-composteras">
+        <h2>Resumen rápido</h2>
+
+        <!-- card de resument -->
+        <div class="card-resumen">
+          <h5 class="card-title">Entregadas</h5>
+          <h4 class="card-text"></h4>
+        </div>
+        <!-- card de resument -->
+        <div class="card-resumen">
+          <h5 class="card-title">Operando</h5>
+          <h4 class="card-text"></h4>
+        </div>
+        <!-- card de resument -->
+        <div class="card-resumen">
+          <h5 class="card-title">Biomasa cargada</h5>
+          <h4 class="card-text">kg</h4>
+        </div>
+        <!-- card de resument -->
+        <div class="card-resumen">
+          <h5 class="card-title">Compost descargado</h5>
+          <h4 class="card-text"> kg</h4>
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <% if (role=='supervisor' ) {%>
+      <div class="">
+        <div class=""
+          style="display: flex; flex-direction: column; justify-content: center; align-items: center; flex-wrap: wrap; ">
+          <% if ( role=='supervisor' ) {%>
+
+
+
+
+            <div class="graficos-section2">
+
+              <div class="estadisticas-total-container">
+                <h3>Total registros de operación</h3>
+
+                <table id="roperacion" class="table  dt-responsive nowrap   table-hover table-bordered"
+                  style="font-size: 14px;">
+                  <thead>
+                    <tr>
+                      <th>id registro</th>
+                      <th>Codigo beneficiario</th>
+                      <th>Acciones</th>
+                      <th>Fecha</th>
+                      <th>Tipo registro</th>
+                      <th>Supervisor</th>
+                      <th>Clima</th>
+                      <th>Temperatura</th>
+                      <th>Humedad</th>
+                      <th>Insectos</th>
+                      <th>Roedores</th>
+                      <th>Presencia lixiviados</th>
+                      <th>Cnt Material estructurante</th>
+                      <th>Cnt Material organico</th>
+                      <th>Cnt Producto</th>
+
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% roperacionresults.forEach((data1)=> {%>
+
+
+                      <tr>
+                        <td>
+                          <%= data1.id %>
+                        </td>
+                        <td>
+                          <%= data1.codBenefic_compostera %>
+                        </td>
+                        <td>
+                          <a href="/detallesRegitroOperacion/<%= data1.id %>" style="background-color: #1da375;" title="Detalles"
+                            class="btn btn-sm text-light" type="button"><i class='bx bx-dots-vertical-rounded'></i></a>
+                          <a href="/imprimirRegitroOperacion/<%= data1.id %>" style="background-color: #1da375;" title="Imprimir reporte"
+                            class="btn btn-sm text-light" type="button"><i class='bx bxs-printer'></i></a>
+
+                          <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
+                          <a onclick="alertDelate('<%= data1.id %>')" style="background-color: #E9710C;" class="btn btn-sm text-light" type="button"><i
+                              class='bx bxs-trash'></i></a>
+                        </td>
+                        <td>
+                          <%= data1.fecha_registro %>
+                        </td>
+                        <td>
+                          <%= data1.TipoRegistro %>
+                        </td>
+                        <td>
+                          <%= data1.nombre_usuario %>
+                        </td>
+                        <td>
+                          <%= data1.clima %>
+                        </td>
+                        <td>
+                          <%= data1.temperatura %> C
+                        </td>
+                        <td>
+                          <%= data1.humedad %> %
+                        </td>
+                        <td>
+                          <%= data1.Pinsectos %>
+                        </td>
+                        <td>
+                          <%= data1.Proedores %>
+                        </td>
+                        <td>
+                          <%= data1.prelixiviados %>
+                        </td>
+                        <td>
+                          <%= data1.CantidadME %> kg
+                        </td>
+                        <td>
+                          <%= data1.CantidadMO %> kg
+                        </td>
+                        <td>
+                          <%= data1.cantidadCompost %>
+                        </td>
+
+
+
+                      </tr>
+                      <% }) %>
+                  </tbody>
+                </table>
+
+
+
+
+
+
+              </div>
+
+              <div class="graficos-linea">
+                <div class="grafico-linea1">
+                  <h3>Registros análisis de laboratorio</h3>
+                  <table id="regsitroslaboratorio" class="table  dt-responsive nowrap table  table-hover table-bordered"
+                    style="font-size: 14px;">
+                    <thead>
+                      <tr>
+                        <th>id registro</th>
+                        <th>Compostera</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Humedad</th>
+                        <th>pH</th>
+                        <th>CE</th>
+                        <th>Ret_Hum</th>
+                        <th>Cenizas</th>
+                        <th>Perdidas_volatilizacion</th>
+                        <th>CIC</th>
+                        <th>Densidad</th>
+                        <th>COOt</th>
+                        <th>RelacionCN</th>
+                        <th>NT</th>
+                        <th>NO</th>
+                        <th>P2O5</th>
+                        <th>K2O</th>
+                        <th>CaO</th>
+                        <th>MgO</th>
+                        <th>S</th>
+                        <th>Fe</th>
+                        <th>Mn</th>
+                        <th>Cu</th>
+                        <th>Zn</th>
+                        <th>B</th>
+                        <th>Na</th>
+                        <th>SiO2</th>
+                        <th>Residuo_insoluble_acido</th>
+                        <th>AS</th>
+                        <th>Hg</th>
+                        <th>Cd</th>
+                        <th>Cr</th>
+                        <th>Ni</th>
+                        <th>Pb</th>
+                        <th>NMPCTg</th>
+                        <th>NMPCFg</th>
+                        <th>Nematodos25g</th>
+                        <th>Salmonella25g</th>
+                        <th>Hongos_fitopatogenos</th>
+                        <th>Acciones</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <% laboratorioresults.forEach((dataLaboratoriodata)=> {%>
+
+
+
+                        <tr>
+                          <td>
+                            <%= dataLaboratoriodata.id %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.id_compostera %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.fecha_registro %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.hora_registro %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Humedad %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.pH %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.CE %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Ret_Hum %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Cenizas %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Perdidas_volatilizacion %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.CIC %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Densidad %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.COOt %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.RelacionCN %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.NT %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.NO %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.P2O5 %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.K2O %> C
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.CaO %> %
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.MgO %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.S %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Fe %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Mn %> kg
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Cu %> kg
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Zn %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.B %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Na %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.SiO2 %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Residuo_insoluble_acido %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.AS %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Hg %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Cd %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Cr %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Ni %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Pb %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.NMPCTg %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.NMPCFg %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Nematodos25g %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Salmonella25g %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Hongos_fitopatogenos %>
+                          </td>
+                          <td>
+                            <a href="/detallesRegitroOperacion/<%= dataLaboratoriodata.id %>"
+                              class="btn btn-sm btn-morado1" type="button"><span class="badge text-bg-dark">Detalles <i
+                                  class='bx bx-dots-vertical-rounded'></i></span></a>
+                            <a href="/imprimirRegitroOperacion/<%= dataLaboratoriodata.id %>" title="Imprimir reporte"
+                              class="btn btn-sm btn-morado1" type="button"><i class='bx bxs-printer'></i></a>
+                            <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
+
+                          </td>
+                        </tr>
+
+                        <% }) %>
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+
+
+
+            </div>
+
+            <div class="section-3">
+              <div class="bento-style-card" style="flex: 1;padding-bottom: 4rem;">
+                <h3> Cantidad de compost descargado por mes</h3>
+
+              </div>
+
+
+              <div class="bento-style-card" style="flex: 2;padding-bottom: 4rem;">
+                <h3> Cantidad de registros por localidad</h3>
+
+              </div>
+
+              <div class="bento-style-card" style="flex: 1;padding-bottom: 4rem;">
+                <h3> Biomasa cargada por mes</h3>
+
+              </div>
+
+
+            </div>
+
+            <% } %>
+
+
+
+
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+
+      <% } %>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
+        <script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+
+
+
+
+
+
+        <script>
+          $(document).ready(function () {
+
+
+
+            var table = $('#users').DataTable({
+              initComplete: function () {
+                this.api()
+                  .columns()
+                  .every(function () {
+                    let column = this;
+                    let title = column.footer().textContent;
+
+                    // Create input element
+                    let input = document.createElement('input');
+                    input.placeholder = title;
+                    column.footer().replaceChildren(input);
+
+                    // Event listener for user input
+                    input.addEventListener('keyup', () => {
+                      if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                      }
+                    });
+                  });
+              },
+              fixedHeader: true,
+              order: [[0, 'desc']],
+              scrollX: false,
+              searching: true,
+              dom: 'Bfrtip',
+              buttons: [],
+              pageLength: 10,
+              language: {
+                search: 'Buscar',
+                zeroRecords: 'No hay registros para mostrar.',
+                emptyTable: 'La tabla está vaciá.',
+                info: "Mostrando _START_ de _END_ de _TOTAL_ Registros.",
+                infoFiltered: "(Filtrados de _MAX_ Registros.)",
+                paginate: {
+                  first: 'Primero',
+                  previous: 'Anterior',
+                  next: 'Siguiente',
+                  last: 'Último'
+                }
+              },
+              columnDefs: [
+                {
+                  target: 2,
+                  visible: false,
+                  searchable: false
+                },
+                {
+                  target: 3,
+                  visible: false
+                }
+              ]
+            });
+
+
+
+
+
+
+          });
+
+
+
+
+
+        </script>
+        <script>
+          $(document).ready(function () {
+
+
+
+            var table = $('#roperacion').DataTable({
+              initComplete: function () {
+                this.api()
+                  .columns()
+                  .every(function () {
+                    let column = this;
+                    let title = column.footer().textContent;
+
+                    // Create input element
+                    let input = document.createElement('input');
+                    input.placeholder = title;
+                    column.footer().replaceChildren(input);
+
+                    // Event listener for user input
+                    input.addEventListener('keyup', () => {
+                      if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                      }
+                    });
+                  });
+              },
+              fixedHeader: true,
+              order: [[0, 'desc']],
+              scrollX: false,
+              searching: true,
+              dom: 'Bfrtip',
+              buttons: [],
+              pageLength: 10,
+              language: {
+                search: 'Buscar',
+                zeroRecords: 'No hay registros para mostrar.',
+                emptyTable: 'La tabla está vaciá.',
+                info: "Mostrando _START_ de _END_ de _TOTAL_ Registros.",
+                infoFiltered: "(Filtrados de _MAX_ Registros.)",
+                paginate: {
+                  first: 'Primero',
+                  previous: 'Anterior',
+                  next: 'Siguiente',
+                  last: 'Último'
+                }
+              },
+              columnDefs: [
+                {
+                  target: 2,
+                  visible: false,
+                  searchable: false
+                },
+                {
+                  target: 3,
+                  visible: false
+                }
+              ]
+            });
+
+
+
+
+
+
+          });
+
+
+
+
+
+        </script>
+        <script>
+          $(document).ready(function () {
+
+
+
+            var table = $('#regsitroslaboratorio').DataTable({
+              initComplete: function () {
+                this.api()
+                  .columns()
+                  .every(function () {
+                    let column = this;
+                    let title = column.footer().textContent;
+
+                    // Create input element
+                    let input = document.createElement('input');
+                    input.placeholder = title;
+                    column.footer().replaceChildren(input);
+
+                    // Event listener for user input
+                    input.addEventListener('keyup', () => {
+                      if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                      }
+                    });
+                  });
+              },
+              fixedHeader: true,
+              order: [[0, 'desc']],
+              scrollX: false,
+              searching: true,
+              dom: 'Bfrtip',
+              buttons: [],
+              pageLength: 10,
+              language: {
+                search: 'Buscar',
+                zeroRecords: 'No hay registros para mostrar.',
+                emptyTable: 'La tabla está vaciá.',
+                info: "Mostrando _START_ de _END_ de _TOTAL_ Registros.",
+                infoFiltered: "(Filtrados de _MAX_ Registros.)",
+                paginate: {
+                  first: 'Primero',
+                  previous: 'Anterior',
+                  next: 'Siguiente',
+                  last: 'Último'
+                }
+              },
+              columnDefs: [
+                {
+                  target: 2,
+                  visible: false,
+                  searchable: false
+                },
+                {
+                  target: 3,
+                  visible: false
+                }
+              ]
+            });
+
+
+
+
+
+
+          });
+
+
+
+
+
+        </script>
+
+        <% if(typeof alert !="undefined" ) { %>
+          <script>
+            Swal.fire({
+              title: '<%=alertTitle %>',
+              text: '<%= alertMessage%>',
+              icon: '<%=alertIcon %>',
+              showConfirmButton: '<%= showConfirmButton %>',
+              timer: '<%= timer %>'
+            }).then(() => {
+              window.location = '<%= ruta %>'
+            })
+          </script>
+          <% } %>
+
+
+
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+              integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+              crossorigin="anonymous"></script>
+
+            <%- include('./partials/footer.ejs') %>
+
+
+  </body>
+
+  </html>

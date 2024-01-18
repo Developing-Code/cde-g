@@ -190,7 +190,7 @@ controller.welcome = (req, res) => {
 controller.home = (req, res) => {
   if (req.session.loggedin) {
     id_usuario = req.session.ID
-    if (req.session.role === "admin" || req.session.role == 'supervisor' || req.session.role == 'tecnico') {
+    if (req.session.role === "admin" || req.session.role == 'tecnico') {
       req.getConnection((error, conn) => {
         conn.query("SELECT  YEAR(fecha_registro) AS ano,  MONTH(fecha_registro) AS mes, SUM(CantidadMO) AS total_kilos  FROM registrodiarioestadooperacion WHERE YEAR(fecha_registro) = YEAR(CURDATE()) GROUP BY  ano, mes  ORDER BY ano, mes;", (error, chartData) => {
           if (error) {
@@ -316,7 +316,7 @@ controller.home = (req, res) => {
           if (error) {
             console.log(error);
           } else {
-            console.log(results);
+            
             req.getConnection((error, conn) => {
               conn.query("SELECT * FROM registrodiarioestadooperacion WHERE id_compostera IN (SELECT id FROM composteras WHERE id_usuario = ?) AND Pinsectos != 'no' AND Polor != 'no' AND prelixiviados != 'no'", [id_usuario], (error, roperacionresults) => {
                 if (error) {
@@ -331,6 +331,43 @@ controller.home = (req, res) => {
                     role: req.session.role,
                     id: req.session.ID,
                   });
+                }
+              })
+            })
+          }
+        })
+      })
+
+    } else if (req.session.role === "supervisor") {
+      req.getConnection((error, conn) => {
+        conn.query("SELECT * FROM composteras;", (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            
+            req.getConnection((error, conn) => {
+              conn.query("SELECT ro.*,  u.id AS id_usuario,  u.nombre AS nombre_usuario,  u.identificacion, c.id AS id_compostera, c.codBenefic AS codBenefic_compostera,  c.nombre_responsable AS responsable_compostera FROM   registrodiarioestadooperacion ro JOIN  usuarios u ON ro.id_quienRegistra = u.id JOIN composteras c ON ro.id_compostera = c.id;", (error, roperacionresults) => {
+                if (error) {
+                  console.log(error);
+                } else {
+
+                  req.getConnection((error, conn) => {
+                    conn.query("SELECT * FROM analisis_laboratorio ", (error, laboratorioresults) => {
+                      if (error) {
+                        console.log(error);
+                      } else {
+                        res.render("homeSupervisor", {
+                          results: results,
+                          roperacionresults: roperacionresults,
+                          laboratorioresults:laboratorioresults,
+                          login: true,
+                          name: req.session.name,
+                          role: req.session.role,
+                          id: req.session.ID,
+                        });
+                      }
+                    })
+                  })
                 }
               })
             })
@@ -712,21 +749,32 @@ controller.perfilCompost = (req, res) => {
                                             if (error) {
                                               console.log(error)
                                             } else {
-                                              const datacasa = false;
-                                              res.render("perfilCompostera", {
-                                                results: results,
-                                                chartData: JSON.stringify(chartData),
-                                                chartData1: JSON.stringify(chartData1),
-                                                chartData2: JSON.stringify(chartData2),
-                                                chartData3: JSON.stringify(chartData3),
-                                                dischartData2: chartData2,
-                                                userdata: userdata,
-                                                resTotalRegistros: resTotalRegistros,
-                                                login: true,
-                                                name: req.session.name,
-                                                role: req.session.role,
-                                                id: req.session.ID,
-                                              });
+                                              req.getConnection((error, conn) => {
+                                                conn.query("SELECT * FROM analisis_laboratorio WHERE id_compostera=?", [idCompost], (error, dataLaboratorio) => {
+                                                  if (error) {
+                                                    console.log(error)
+                                                  } else {
+                                                    const datacasa = false;
+                                                    res.render("perfilCompostera", {
+                                                      results: results,
+                                                      chartData: JSON.stringify(chartData),
+                                                      chartData1: JSON.stringify(chartData1),
+                                                      chartData2: JSON.stringify(chartData2),
+                                                      chartData3: JSON.stringify(chartData3),
+                                                      dischartData2: chartData2,
+                                                      userdata: userdata,
+                                                      resTotalRegistros: resTotalRegistros,
+                                                      dataLaboratorio:dataLaboratorio,
+                                                      login: true,
+                                                      name: req.session.name,
+                                                      role: req.session.role,
+                                                      id: req.session.ID,
+                                                    });
+      
+                                                  }
+                                                })
+      
+                                              })
 
                                             }
                                           })
@@ -1846,12 +1894,7 @@ controller.formVisitaSeguimientoSend = (req, res) => {
 };
 controller.formAnalisisLaboratorioSend = (req, res) => {
   if (req.session.loggedin) {
-    let foto;
-    if (req.file) {
-      foto = req.file.filename;
-    } else {
-      foto = null;
-    }
+   
     
     const fecha_registro = req.body.fecha_registro;
     const hora_registro = req.body.hora_registro;
@@ -1957,22 +2000,7 @@ controller.formAnalisisLaboratorioSend = (req, res) => {
                 if (error) {
                   console.log(error);
                 } else {
-                  req.getConnection((error, conn) => {
-                    conn.query("UPDATE composteras SET ? WHERE id=?", [{ estado: 'COMPLETADO' }, idCompost], (error) => {
-                      if (error) {
-                        console.log(error);
-                      } else {
-                        res.render("seguimientofoto1", {
-                          login: true,
-                          ID: req.session.ID,
-                          name: req.session.name,
-                          role: req.session.role,
-                          result: result
-                        });
-                      }
-                    }
-                    );
-                  });
+                  res.redirect('/perfilCompost/'+id_compostera)
                 }
               }
               );

@@ -15,7 +15,38 @@
   background-color: #453D81;
   border-color: #453D81;
 }
+
+.btn-verdeuaesp {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375;
+    }
+
+    .btn-verdeuaesp:hover {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375 !important;
+    }
+
+    .btn-verdeuaesp:active {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375 !important;
+    }
+
+    .btn-naranjaab {
+      color: #fff !important;
+      background-color: #E9710C !important;
+      border-color: #E9710C !important;
+    }
+
+    .btn-naranjaab:hover {
+      color: #fff !important;
+      background-color: #E9710C !important;
+      border-color: #E9710C !important;
+    }
   </style>
+  
 </head>
 <br>
 <br>
@@ -55,9 +86,9 @@
           <td><%= user.email %></td>
           <td><%= user.cargo %></td>
           <td>
-            <a href="/registerUsersEdit/<%= user.id %>" class="btn btn-sm btn-morado1" type="button"><i class='bx bx-pencil'></i></a>
-            <a onclick="alertDelate('<%= user.id %>')" class="btn btn-sm btn-morado1" type="button"><i class='bx bxs-trash'></i></a>
-            <a hidden href="/perfilUsuario/<%= user.id %>" class="btn btn-sm btn-morado1" type="button"><i class='bx bx-dots-vertical-rounded'></i></a>
+            <a href="/registerUsersEdit/<%= user.id %>" class="btn btn-sm btn-verdeuaesp" type="button"><i class='bx bx-pencil'></i></a>
+            <a onclick="alertDelate('<%= user.id %>')" class="btn btn-sm btn-naranjaab" type="button"><i class='bx bxs-trash'></i></a>
+            <a hidden href="/perfilUsuario/<%= user.id %>" class="btn btn-sm btn-naranjaab" type="button"><i class='bx bx-dots-vertical-rounded'></i></a>
             <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
           </td>
         </tr>

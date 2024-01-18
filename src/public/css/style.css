@@ -1,7 +1,7 @@
 /********** Template CSS **********/
 :root {
-    --primary: #F07C1C;
-    --secondary: #525368;
+    --primary: #1da375;
+    --secondary: #E9710C;
     --light: #E8F5E9;
     --dark: rgb(66, 46, 15);
 }
@@ -166,7 +166,7 @@ h6,
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: rgba(66, 44, 15, 0.6);
+    background: rgba(29, 163, 116, 0.438);
     z-index: 1;
 }
 
@@ -227,7 +227,7 @@ h6,
 /*** Facts & Quote ***/
 .facts,
 .quote {
-    background: rgba(66, 46, 15, 0.6);
+    background: rgba(29, 163, 116, 0.438);
 }
 
 

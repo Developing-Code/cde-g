@@ -37,7 +37,7 @@
     }
 
     .border-left-success {
-      border-left: 3px solid #36e91e;
+      border-left: 3px solid #1da375;
       /* Cambia "red" al color que desees */
     }
   </style>
@@ -112,14 +112,14 @@
         transition: all 0.4s ease-in-out;
         color: #6e6e6e;
         cursor: default;
-        border-left: 2px solid #E76E09;
+        border-left: 2px solid #1da375;
       }
       
       .card-resumen:hover{
         transition: all 0.4s ease-in-out;
         transform: translateX(10px);
         color: #222222;
-        border-left: 2px solid #E76E09;
+        border-left: 2px solid #1da375;
         box-shadow: 5px 5px 9.5px 0px rgba(0, 0, 0, 0.07);
       }
 
@@ -396,8 +396,8 @@
                   datasets: [{
                     label: 'Cantidad Biomasa cargada por mes (kg)',
                     data: data1, // Datos para el eje Y (cantidad de clientes)
-                    backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
-                    borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
+                    backgroundColor: 'rgba(29, 163, 117, 0.2)', // Color de fondo de las barras
+                    borderColor: 'rgba(29, 163, 117, 1)', // Color del borde de las barras
                     borderWidth: 2 // Ancho del borde de las barras
                   }]
                 },
@@ -436,8 +436,8 @@
                         datasets: [{
                           label: 'Cantidad de Registros por Localidad', // Etiqueta del dataset
                           data: data1, // Datos para el eje Y (cantidad de registros)
-                          backgroundColor: 'rgba(54, 162, 235, 0.6)', // Color de fondo de las barras
-                          borderColor: 'rgba(54, 162, 235, 1)', // Color del borde de las barras
+                          backgroundColor: 'rgba(29, 163, 117, 0.6)', // Color de fondo de las barras
+                          borderColor: 'rgba(29, 163, 117, 1)', // Color del borde de las barras
                           borderWidth: 1 // Ancho del borde de las barras
                         }]
                       },
@@ -473,8 +473,8 @@
                         datasets: [{
                           label: 'Cantidad Biomasa cargada por mes (kg)',
                           data: data1, // Datos para el eje Y (cantidad de clientes)
-                          backgroundColor: 'rgba(250, 129, 16, 0.2)', // Color de fondo de las barras
-                          borderColor: 'rgba(250, 129, 16, 1)', // Color del borde de las barras
+                          backgroundColor: 'rgba(29, 163, 117, 0.2)', // Color de fondo de las barras
+                          borderColor: 'rgba(29, 163, 117)', // Color del borde de las barras
                           borderWidth: 2 // Ancho del borde de las barras
                         }]
                       },
@@ -511,8 +511,8 @@
                         datasets: [{
                           label: 'Cantidad Compost descargado por mes (kg)',
                           data: data1, // Datos para el eje Y (cantidad de clientes)
-                          backgroundColor: 'rgba(44, 191, 174, 0.2)', // Color de fondo de las barras
-                          borderColor: 'rgba(44, 191, 174, 1)', // Color del borde de las barras
+                          backgroundColor: 'rgba(29, 163, 117, 0.2)', // Color de fondo de las barras
+                          borderColor: 'rgba(29, 163, 117)', // Color del borde de las barras
                           borderWidth: 2 // Ancho del borde de las barras
                         }]
                       },
@@ -543,7 +543,7 @@
                       datasets: [{
                         label: 'Variación ambiente de Temperatura total',
                         data: temperaturas,
-                        borderColor: 'blue',
+                        borderColor: 'rgb(29, 163, 117)',
                         fill: false
                       }]
                     },
@@ -572,7 +572,7 @@
                       datasets: [{
                         label: 'Variación ambiente de Humedad total',
                         data: humedad,
-                        borderColor: 'rgb(239, 82, 97)',
+                        borderColor: 'rgb(29, 163, 117)',
                         fill: false
                       }]
                     },
@@ -606,21 +606,7 @@
 
 
 
-                    <script>
-                      var x = document.getElementById("myAudio");
-
-
-
-                      const socket = io()
-
-                      socket.on('cromfinalizado', (msg) => {
-                        toastr.options.positionClass = "toast-bottom-right"
-                        toastr.success('Nuevo servicio finalizado' + msg)
-                        x.play();
-
-                      })
-
-                    </script>
+                  
 
 
 

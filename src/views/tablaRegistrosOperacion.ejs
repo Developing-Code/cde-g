@@ -9,24 +9,29 @@
 
 
 <%- include('./partials/nav.ejs') %>
-  <style>
-    .btn-morado1 {
-      color: #ffffff;
-      background-color: #453D81;
-      border-color: #453D81;
-    }
-  </style>
+ 
   <style>
     .btn-morado1 {
       color: #fff;
-      background-color: #453D81;
-      border-color: #453D81;
+      background-color: #1da375;
+      border-color: #1da375;
     }
 
     .btn-morado1:hover {
       color: #fff;
-      background-color: #5214a1;
-      border-color: #5214a1;
+      background-color: #1da375;
+      border-color: #1da375;
+    }
+    .btn-naranjaab {
+      color: #fff;
+      background-color: #E9710C;
+      border-color: #E9710C;
+    }
+
+    .btn-naranjaab:hover {
+      color: #fff;
+      background-color: #E9710C;
+      border-color: #E9710C;
     }
 
     .btn-morado1:focus,
@@ -42,27 +47,27 @@
 
 
     .border-left-primary {
-      border-left: 0.25rem solid #4e73df !important;
+      border-left: 0.25rem solid #1da375 !important;
     }
 
     .border-bottom-primary {
-      border-bottom: 0.25rem solid #4e73df !important;
+      border-bottom: 0.25rem solid #1da375 !important;
     }
 
     .border-left-secondary {
-      border-left: 0.25rem solid #858796 !important;
+      border-left: 0.25rem solid #E9710C !important;
     }
 
     .border-bottom-secondary {
-      border-bottom: 0.25rem solid #858796 !important;
+      border-bottom: 0.25rem solid #E9710C !important;
     }
 
     .border-left-success {
-      border-left: 0.25rem solid #1cc88a !important;
+      border-left: 0.25rem solid #1da375 !important;
     }
 
     .border-bottom-success {
-      border-bottom: 0.25rem solid #1cc88a !important;
+      border-bottom: 0.25rem solid #1da375 !important;
     }
 
     .border-left-info {
@@ -105,6 +110,31 @@
       border-bottom: 0.25rem solid #5a5c69 !important;
     }
   </style>
+  <style>
+    .btn-verdeuaesp {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375;
+    }
+
+    .btn-verdeuaesp:hover {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375 !important;
+    }
+
+    .btn-naranjaab {
+      color: #fff !important;
+      background-color: #E9710C !important;
+      border-color: #E9710C !important;
+    }
+
+    .btn-naranjaab:hover  {
+      color: #fff !important;
+      background-color: #E9710C !important;
+      border-color: #E9710C !important;
+    }
+  </style>
   </head>
 
 
@@ -118,7 +148,7 @@
         <div class="col-12">
           <div class="card shadow border-0">
             <h5 class="card-header border-0 text-center text-light"
-              style="border-radius: 22px 22px 0px 0px;background-color:#E76E09">Filtrar</h5>
+              style="border-radius: 22px 22px 0px 0px;background-color:#1da375">Filtrar</h5>
             <div class="card-body">
               
              
@@ -182,7 +212,7 @@
                    
                   </div>
                   <div class="col-md-12 col-sm-12 col-lg-2">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                    <button type="submit" class="btn btn-verdeuaesp">Filtrar</button>
                   </div>
                 </div>
               </form>
@@ -199,7 +229,7 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"> <strong>Total
+                    <div class="text-xs font-weight-bold text-dark text-uppercase mb-1"> <strong>Total
                         registros</strong>
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -220,7 +250,7 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                    <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                       <strong>Registros activos</strong>
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -239,7 +269,7 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                    <div class="text-xs font-weight-bold text-dark text-uppercase mb-1">
                       <strong>Registros Inactivos</strong>
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
@@ -261,7 +291,7 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1"> <strong>Registros </strong>
+                    <div class="text-xs font-weight-bold text-dark text-uppercase mb-1"> <strong>Registros </strong>
                     </div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">
 
@@ -391,7 +421,7 @@
                               class="btn btn-sm btn-morado1" type="button"><i class='bx bxs-printer'></i></a>
 
                             <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
-                            <a onclick="alertDelate('<%= data1.id %>')" class="btn btn-sm btn-danger" type="button"><i
+                            <a onclick="alertDelate('<%= data1.id %>')" class="btn btn-sm btn-naranjaab" type="button"><i
                                 class='bx bxs-trash'></i></a>
                           </td>
                         </tr>

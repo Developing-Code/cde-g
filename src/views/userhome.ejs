@@ -42,6 +42,31 @@
             border: 1px solid #ccc; /* Añade un borde para mayor claridad */
         }
   </style>
+  <style>
+    .btn-verdeuaesp {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375;
+    }
+
+    .btn-verdeuaesp:hover {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375 !important;
+    }
+
+    .btn-naranjaab {
+      color: #fff !important;
+      background-color: #E9710C !important;
+      border-color: #E9710C !important;
+    }
+
+    .btn-naranjaab:hover  {
+      color: #fff !important;
+      background-color: #E9710C !important;
+      border-color: #E9710C !important;
+    }
+  </style>
 
   <body>
     <% if ( role=='user1' ) {%>
@@ -62,11 +87,11 @@
           </div>
           <div class="row">
             <div class="btn-group" role="group" aria-label="Basic example">
-              <a type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/registrosdeoperacion">Registros
+              <a type="button" class="btn btn-verdeuaesp" style="margin-bottom: 2px;" href="/registrosdeoperacion">Registros
                 Operación <i class='bx bxs-book-content'></i></a>
-              <a type="button" class="btn btn-secondary" style="margin-bottom: 2px;"
+              <a type="button" class="btn btn-naranjaab" style="margin-bottom: 2px;"
                 href="/vistamapacomposteras">Informes <i class='bx bxs-detail'></i></a>
-              <a type="button" class="btn btn-dark" style="margin-bottom: 2px;" href="/vistamapacomposteras">Alertas
+              <a type="button" class="btn btn-verdeuaesp" style="margin-bottom: 2px;" href="/vistamapacomposteras">Alertas
                 <i class='bx bxs-error-circle'></i></a>
             </div>
           </div>
@@ -80,7 +105,7 @@
             <div class="col-md-4 col-sm-12 my-2">
               <div class="card shadow border-0 " style="border-radius: 22px ;">
                 <div class="card-header border-0 text-center  text-light"
-                  style="border-radius: 22px 22px 0px 0px;background-color:#FC7B3B">
+                  style="border-radius: 22px 22px 0px 0px;background-color:#1da375">
                   <strong>
                     Beneficiario:
                   </strong>
@@ -105,14 +130,14 @@
                             <%= data.Nota %>
                           </p>
                           <p class="card-text"><strong>Entregado por: </strong>
-                            <%= data.nombre_quientrega %>
+                            Aguas de Bogotá
                           </p>
                           <div style="width:100%">
-                            <a style="width: 100%;" class=" btn btn-sm btn-secondary mt-1" id="customLink"
+                            <a style="width: 100%;" class=" btn btn-sm btn-verdeuaesp mt-1" id="customLink"
                               href="/formCargeBiomasa/<%= data.id %>">Cargue de Biomasa</a> <br>
-                            <a style="width: 100%;" class="btn btn-sm btn-secondary mt-1" id="customLink"
+                            <a style="width: 100%;" class="btn btn-sm btn-verdeuaesp mt-1" id="customLink"
                               href="/formDescargeCompost/<%= data.id %>">Descargue de compost</a> <br>
-                            <a style="width: 100%;" class="btn btn-sm btn-secondary mt-1" id="customLink"
+                            <a style="width: 100%;" class="btn btn-sm btn-verdeuaesp mt-1" id="customLink"
                               href="/formCompostMadurado/<%= data.id %>">Compost madurado</a>
 
                           </div>
@@ -218,7 +243,7 @@
               <div class="col">
                 <div class="card shadow border-0 " style="border-radius: 22px ;">
                   <div class="card-header border-0 text-center  text-light"
-                    style="border-radius: 22px 22px 0px 0px;background-color:#FC7B3B">
+                    style="border-radius: 22px 22px 0px 0px;background-color:#1da375">
                     <strong>
                       Alertas
                     </strong>

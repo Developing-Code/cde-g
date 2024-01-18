@@ -18,14 +18,39 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    .btn-verdeuaesp {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375;
+    }
 
+    .btn-verdeuaesp:hover {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375 !important;
+    }
+
+    .btn-naranjaab {
+      color: #fff !important;
+      background-color: #E9710C !important;
+      border-color: #E9710C !important;
+    }
+
+    .btn-naranjaab:hover  {
+      color: #fff !important;
+      background-color: #E9710C !important;
+      border-color: #E9710C !important;
+    }
+  </style>
 
 </head>
 
 
 
 
-<body >
+
+<body>
 
 
   <%- include('./partials/nav.ejs') %>
@@ -37,19 +62,20 @@
         <div class="btn-group" role="group" aria-label="Basic example">
 
 
-          <a type="button" class="btn btn-outline-success" style="margin-bottom: 2px;" href="/agregarNuevaCompostera">Crear
+          <a type="button" class="btn btn-outline-success" style="margin-bottom: 2px;"
+            href="/agregarNuevaCompostera">Crear
             nueva compostera <i class='bx bx-add-to-queue'></i></a>
-          <a type="button" class="btn btn-outline-dark" style="margin-bottom: 2px;" href="/vistamapacomposteras">Vista Mapa <i
-              class='bx bxs-map'></i></a>
-          <a type="button" class="btn flex-column btn-outline-primary" style="margin-bottom: 2px;" href="/totalcomposteras"><i
-              class='bx bxs-notepad'></i> Tarjeta</a>
-          
+          <a type="button" class="btn btn-outline-dark" style="margin-bottom: 2px;" href="/vistamapacomposteras">Vista
+            Mapa <i class='bx bxs-map'></i></a>
+          <a type="button" class="btn flex-column btn-verdeuaesp" style="margin-bottom: 2px;"
+            href="/totalcomposteras"><i class='bx bxs-notepad'></i> Tarjeta</a>
+
 
         </div>
       </div>
-     
+
       <br>
-     
+
       <% if(role=='admin' || role=='supervisor' ){ %>
 
         <div class=" pt-2" hidden>
@@ -126,13 +152,13 @@
                           <%= data1.fecha_inicial %>
                         </td>
                         <td style="min-width: 100px;">
-                          <a href="/perfilCompost/<%= data1.id %>" class="btn btn-sm btn-morado1" type="button"><i
+                          <a href="/perfilCompost/<%= data1.id %>" class="btn btn-sm btn-verdeuaesp" type="button"><i
                               class='bx bx-dots-vertical-rounded'></i></a>
-                              
-                          <a href="/editCompostera/<%= data1.id %>" class="btn btn-sm btn-morado1" type="button"><i
+
+                          <a href="/editCompostera/<%= data1.id %>" class="btn btn-sm btn-verdeuaesp" type="button"><i
                               class='bx bx-pencil'></i></a>
                           <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
-                          <a onclick="alertDelate('<%= data1.id %>')" class="btn btn-sm btn-secondary" type="button"><i
+                          <a onclick="alertDelate('<%= data1.id %>')" class="btn btn-sm btn-naranjaab" type="button"><i
                               class='bx bxs-trash'></i></a>
                         </td>
                       </tr>
@@ -145,7 +171,7 @@
             <% } %>
 
 
-             
+
 
 
 
@@ -178,7 +204,7 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
 
-   
+
     <script>
       function alertDelate(id) {
         Swal.fire({

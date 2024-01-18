@@ -1,11 +1,17 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.css">
 
 
+
 <%- include('./partials/nav.ejs') %>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
   <style>
     .visor_imagenes {
       text-align: center;
@@ -39,6 +45,49 @@
       height: 400px;
     }
   </style>
+  <style>
+    .btn-verdeuaesp {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375;
+    }
+
+    .btn-verdeuaesp:hover {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375 !important;
+    }
+
+    .btn-verdeuaesp:active {
+      color: #fff !important;
+      background-color: #1da375 !important;
+      border-color: #1da375 !important;
+    }
+
+    .btn-naranjaab {
+      color: #fff !important;
+      background-color: #E9710C !important;
+      border-color: #E9710C !important;
+    }
+
+    .btn-naranjaab:hover {
+      color: #fff !important;
+      background-color: #E9710C !important;
+      border-color: #E9710C !important;
+    }
+
+    .nav-link {
+      color: black;
+    }
+
+    /* Color para el botón activo */
+    .nav-link.active {
+      background-color: #1da375 !important;
+      /* Cambia este valor al color que desees */
+      color: #ffffff !important;
+      /* Cambia este valor al color que desees para el texto */
+    }
+  </style>
   </head>
   <br>
   <br>
@@ -68,13 +117,19 @@
       <div class="col">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-              type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Información</button>
+            <button class="nav-link active " id="home-tab" data-bs-toggle="tab"
+              data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
+              aria-selected="true">Información</button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
               type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Tabla de
               registros</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="laboratorio-tab" data-bs-toggle="tab" data-bs-target="#laboratorio-tab-pane"
+              type="button" role="tab" aria-controls="laboratorio-tab-pane" aria-selected="false">Análisis de
+              laboratorio</button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
@@ -121,13 +176,13 @@
                         </p>
                       </div>
                       <div class="mt-4">
-                        <a style="width: 100%;" class=" btn btn-sm btn-success mt-1" id="customLink"
-                            href="/formCargeBiomasa/<%= results[0].id %>"><strong>Cargue de Biomasa</strong></a> <br>
-                            <a style="width: 100%;" class=" btn btn-sm btn-secondary mt-1" id="customLink"
-                            href="/formDescargeCompost/<%= results[0].id %>"><strong>Descargue de compost</strong></a>
-                            <a style="width: 100%;" class=" btn btn-sm btn-dark mt-1" id="customLink"
-                            href="/formCompostMadurado/<%= results[0].id %>"><strong>Compost madurado</strong></a>
-                          <br>
+                        <a style="width: 100%;" class=" btn btn-sm btn-verdeuaesp mt-1" id="customLink"
+                          href="/formCargeBiomasa/<%= results[0].id %>"><strong>Cargue de Biomasa</strong></a> <br>
+                        <a style="width: 100%;" class=" btn btn-sm btn-verdeuaesp mt-1" id="customLink"
+                          href="/formDescargeCompost/<%= results[0].id %>"><strong>Descargue de compost</strong></a>
+                        <a style="width: 100%;" class=" btn btn-sm btn-verdeuaesp mt-1" id="customLink"
+                          href="/formCompostMadurado/<%= results[0].id %>"><strong>Compost madurado</strong></a>
+                        <br>
 
                       </div>
 
@@ -162,7 +217,7 @@
                       </p>
 
                       <div class="mb-4">
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-verdeuaesp" data-bs-toggle="modal"
                           data-bs-target="#coordModal">
                           Actualizar ubicación <i class='bx bxs-map-pin'></i>
                         </button>
@@ -301,7 +356,204 @@
                             <a href="/imprimirRegitroOperacion/<%= resTotalRegistrosdata.id %>" title="Imprimir reporte"
                               class="btn btn-sm btn-morado1" type="button"><i class='bx bxs-printer'></i></a>
                             <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
-                          
+
+                          </td>
+                        </tr>
+                        <%} %>
+                          <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+          <div class="tab-pane fade" id="laboratorio-tab-pane" role="tabpanel" aria-labelledby="laboratorio-tab"
+            tabindex="0">
+            <div class="row">
+              <div class="col-12">
+
+                <table id="regsitroslaboratorio" class="table  dt-responsive nowrap table  table-hover table-bordered"
+                  style="font-size: 14px;">
+                  <thead>
+                    <tr>
+                      <th>id registro</th>
+                      <th>Compostera</th>
+                      <th>Fecha</th>
+                      <th>Hora</th>
+                      <th>Humedad</th>
+                      <th>pH</th>
+                      <th>CE</th>
+                      <th>Ret_Hum</th>
+                      <th>Cenizas</th>
+                      <th>Perdidas_volatilizacion</th>
+                      <th>CIC</th>
+                      <th>Densidad</th>
+                      <th>COOt</th>
+                      <th>RelacionCN</th>
+                      <th>NT</th>
+                      <th>NO</th>
+                      <th>P2O5</th>
+                      <th>K2O</th>
+                      <th>CaO</th>
+                      <th>MgO</th>
+                      <th>S</th>
+                      <th>Fe</th>
+                      <th>Mn</th>
+                      <th>Cu</th>
+                      <th>Zn</th>
+                      <th>B</th>
+                      <th>Na</th>
+                      <th>SiO2</th>
+                      <th>Residuo_insoluble_acido</th>
+                      <th>AS</th>
+                      <th>Hg</th>
+                      <th>Cd</th>
+                      <th>Cr</th>
+                      <th>Ni</th>
+                      <th>Pb</th>
+                      <th>NMPCTg</th>
+                      <th>NMPCFg</th>
+                      <th>Nematodos25g</th>
+                      <th>Salmonella25g</th>
+                      <th>Hongos_fitopatogenos</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% dataLaboratorio.forEach((dataLaboratoriodata)=> {%>
+                      <% if(dataLaboratoriodata.id_compostera==results[0].id ){ %>
+
+
+                        <tr>
+                          <td>
+                            <%= dataLaboratoriodata.id %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.id_compostera %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.fecha_registro %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.hora_registro %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Humedad %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.pH %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.CE %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Ret_Hum %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Cenizas %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Perdidas_volatilizacion %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.CIC %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Densidad %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.COOt %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.RelacionCN %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.NT %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.NO %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.P2O5 %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.K2O %> C
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.CaO %> %
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.MgO %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.S %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Fe %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Mn %> kg
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Cu %> kg
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Zn %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.B %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Na %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.SiO2 %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Residuo_insoluble_acido %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.AS %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Hg %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Cd %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Cr %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Ni %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Pb %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.NMPCTg %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.NMPCFg %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Nematodos25g %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Salmonella25g %>
+                          </td>
+                          <td>
+                            <%= dataLaboratoriodata.Hongos_fitopatogenos %>
+                          </td>
+                          <td>
+                            <a href="/detallesRegitroOperacion/<%= dataLaboratoriodata.id %>"
+                              class="btn btn-sm btn-morado1" type="button"><span class="badge text-bg-dark">Detalles <i
+                                  class='bx bx-dots-vertical-rounded'></i></span></a>
+                            <a href="/imprimirRegitroOperacion/<%= dataLaboratoriodata.id %>" title="Imprimir reporte"
+                              class="btn btn-sm btn-morado1" type="button"><i class='bx bxs-printer'></i></a>
+                            <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
+
                           </td>
                         </tr>
                         <%} %>
@@ -355,7 +607,7 @@
                 <div class="col-xs-12 col-md-6 col-xl-2">
                   <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem;">
                     <div class="card-body">
-                      <a style="width: 100%;" class=" btn btn-sm btn-warning mt-1 " id="customLink"
+                      <a style="width: 100%;" class=" btn btn-sm btn-verdeuaesp mt-1 " id="customLink"
                         href="/formVisitaSeguimiento/<%= results[0].id %>"> <strong>Reporte visita de
                           seguimiento</strong> </a> <br>
                     </div>
@@ -364,8 +616,9 @@
                 <div class="col-xs-12 col-md-6 col-xl-2">
                   <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem;">
                     <div class="card-body">
-                      <a style="width: 100%;" class=" btn btn-sm btn-warning mt-1 " id="customLink"
-                        href="/formAnalisisLaboratorio/<%= results[0].id %>"> <strong>Análisis de laboratorio</strong> </a> <br>
+                      <a style="width: 100%;" class=" btn btn-sm btn-verdeuaesp mt-1 " id="customLink"
+                        href="/formAnalisisLaboratorio/<%= results[0].id %>"> <strong>Análisis de laboratorio</strong>
+                      </a> <br>
                     </div>
                   </div>
                 </div>
@@ -376,7 +629,7 @@
                       <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem; ">
 
                         <div class="card-body">
-                          <a style="width: 100%;" class=" btn btn-sm btn-success mt-1" id="customLink"
+                          <a style="width: 100%;" class=" btn btn-sm btn-verdeuaesp mt-1" id="customLink"
                             href="/formCargeBiomasa/<%= results[0].id %>"><strong>Cargue de Biomasa</strong></a> <br>
                         </div>
                       </div>
@@ -385,7 +638,7 @@
                       <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem;">
 
                         <div class="card-body">
-                          <a style="width: 100%;" class=" btn btn-sm btn-secondary mt-1" id="customLink"
+                          <a style="width: 100%;" class=" btn btn-sm btn-verdeuaesp mt-1" id="customLink"
                             href="/formDescargeCompost/<%= results[0].id %>"><strong>Descargue de compost</strong></a>
                           <br>
                         </div>
@@ -395,7 +648,7 @@
                       <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem; ">
 
                         <div class="card-body">
-                          <a style="width: 100%;" class=" btn btn-sm btn-dark mt-1" id="customLink"
+                          <a style="width: 100%;" class=" btn btn-sm btn-verdeuaesp mt-1" id="customLink"
                             href="/formCompostMadurado/<%= results[0].id %>"><strong>Compost madurado</strong></a>
                           <br>
                         </div>
@@ -418,16 +671,21 @@
 
 
 
-  <div class="container shadow    rounded">
 
-  </div>
-  </body>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js" defer></script>
-  <script src="https://cdn.datatables.net/1.11.1/js/dataTables.bootstrap5.min.js" defer></script>
-  <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js" defer></script>
-  <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js" defer></script>
+  <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+
+
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.5/dist/sweetalert2.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -594,7 +852,7 @@
         datasets: [{
           label: 'Variación ambiente de Humedad total',
           data: humedad,
-          borderColor: 'rgb(239, 82, 97)',
+          borderColor: 'rgb(29, 163, 117)',
           fill: false
         }]
       },
@@ -609,6 +867,27 @@
       }
     });
   </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   <script>
     $(document).ready(function () {
       $('#dataTable').DataTable();
@@ -634,11 +913,87 @@
   </script>
 
 
+  <script>
+    $(document).ready(function () {
 
+
+
+      var table = $('#regsitroslaboratorio').DataTable({
+        initComplete: function () {
+          this.api()
+            .columns()
+            .every(function () {
+              let column = this;
+              let title = column.footer().textContent;
+
+              // Create input element
+              let input = document.createElement('input');
+              input.placeholder = title;
+              column.footer().replaceChildren(input);
+
+              // Event listener for user input
+              input.addEventListener('keyup', () => {
+                if (column.search() !== this.value) {
+                  column.search(input.value).draw();
+                }
+              });
+            });
+        },
+        fixedHeader: true,
+        order: [[0, 'desc']],
+        scrollX: true,
+        searching: true,
+        dom: 'Bfrtip',
+        buttons: [],
+        pageLength: 10,
+        language: {
+          search: 'Buscar',
+          zeroRecords: 'No hay registros para mostrar.',
+          emptyTable: 'La tabla está vaciá.',
+          info: "Mostrando _START_ de _END_ de _TOTAL_ Registros.",
+          infoFiltered: "(Filtrados de _MAX_ Registros.)",
+          paginate: {
+            first: 'Primero',
+            previous: 'Anterior',
+            next: 'Siguiente',
+            last: 'Último'
+          }
+        },
+        columnDefs: [
+          {
+            target: 2,
+            visible: false,
+            searchable: false
+          },
+          {
+            target: 3,
+            visible: false
+          }
+        ]
+      });
+
+
+
+
+
+
+    });
+
+
+
+
+
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
 
   <%- include('./partials/footer.ejs') %>
 
 
 
+    </body>
 
     </html>
