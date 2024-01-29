@@ -110,8 +110,18 @@ router.get('/formVisitaSeguimiento/:id', customerController.formVisitaSeguimient
 router.post('/formVisitaSeguimientoSend',uploadEF, customerController.formVisitaSeguimientoSend)
 router.get('/seguimientofoto1/:id', customerController.seguimientofoto1)
 router.post('/subirFoto',uploadEF, customerController.subirFoto)
+
+
+
+
 router.get('/formAnalisisLaboratorio/:id', customerController.formAnalisisLaboratorio)
 router.post('/formAnalisisLaboratorioSend',uploadEF, customerController.formAnalisisLaboratorioSend)
+
+
+//analisis de laboratorio
+router.get('/InformeRegitroLaboratorio/:id', customerController.InformeRegitroLaboratorio)
+
+
 
 
 

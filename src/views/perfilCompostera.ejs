@@ -377,6 +377,7 @@
                   <thead>
                     <tr>
                       <th>id registro</th>
+                      <th>Acciones</th>
                       <th>Compostera</th>
                       <th>Fecha</th>
                       <th>Hora</th>
@@ -416,7 +417,7 @@
                       <th>Nematodos25g</th>
                       <th>Salmonella25g</th>
                       <th>Hongos_fitopatogenos</th>
-                      <th>Acciones</th>
+                     
                     </tr>
                   </thead>
 
@@ -428,6 +429,19 @@
                         <tr>
                           <td>
                             <%= dataLaboratoriodata.id %>
+                          </td>
+                          <td>
+                            <a href="/InformeRegitroLaboratorio/<%= dataLaboratoriodata.id %>"
+                              class="btn btn-sm btn-morado1" title="Generar informe del analisis de laboratorio" type="button"><span class="badge text-bg-dark"><i class='bx bxs-book'></i> Informe</span></a>
+                              <% if(dataLaboratoriodata.estado==1){ %>
+                            <a href="/detallesRegitroOperacion/<%= dataLaboratoriodata.id %>"
+                              class="btn btn-sm btn-morado1" type="button"><span class="badge text-bg-dark">Detalles <i
+                                  class='bx bx-dots-vertical-rounded'></i></span></a>                 
+                            <a href="/imprimirRegitroOperacion/<%= dataLaboratoriodata.id %>" title="Imprimir reporte"
+                              class="btn btn-sm btn-morado1" type="button"><i class='bx bxs-printer'></i></a>
+                              <%} %>
+                            <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
+
                           </td>
                           <td>
                             <%= dataLaboratoriodata.id_compostera %>
@@ -546,15 +560,7 @@
                           <td>
                             <%= dataLaboratoriodata.Hongos_fitopatogenos %>
                           </td>
-                          <td>
-                            <a href="/detallesRegitroOperacion/<%= dataLaboratoriodata.id %>"
-                              class="btn btn-sm btn-morado1" type="button"><span class="badge text-bg-dark">Detalles <i
-                                  class='bx bx-dots-vertical-rounded'></i></span></a>
-                            <a href="/imprimirRegitroOperacion/<%= dataLaboratoriodata.id %>" title="Imprimir reporte"
-                              class="btn btn-sm btn-morado1" type="button"><i class='bx bxs-printer'></i></a>
-                            <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
-
-                          </td>
+                          
                         </tr>
                         <%} %>
                           <% }) %>

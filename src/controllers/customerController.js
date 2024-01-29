@@ -1374,6 +1374,47 @@ controller.formAnalisisLaboratorio = (req, res) => {
   }
 };
 
+controller.InformeRegitroLaboratorio = (req, res) => {
+  if (req.session.loggedin) {
+    var idreglaboratorio = req.params.id;
+
+    req.getConnection((error, conn) => {
+      conn.query(
+        "SELECT * FROM analisis_laboratorio WHERE id = ?", [idreglaboratorio], (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            var idCompost = results[0].id_compostera;
+            req.getConnection((error, conn) => {
+              conn.query("SELECT * FROM composteras WHERE id = ?", [idCompost], (error, resultscompost) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  res.render("informeanalilabor", {
+                    results: results,
+                    resultscompost: resultscompost,
+                    login: true,
+                    ID: req.session.ID,
+                    name: req.session.name,
+                    role: req.session.role,
+                    idCompost: idCompost
+                  });
+                }
+              }
+              );
+            });
+          }
+        }
+      );
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+
+
+
+
 
 controller.formCargeBiomasa = (req, res) => {
   if (req.session.loggedin) {
