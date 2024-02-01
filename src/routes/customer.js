@@ -120,6 +120,9 @@ router.post('/formAnalisisLaboratorioSend',uploadEF, customerController.formAnal
 
 //analisis de laboratorio
 router.get('/InformeRegitroLaboratorio/:id', customerController.InformeRegitroLaboratorio)
+router.post('/formInformeLaboratorioSend',uploadEF, customerController.formInformeLaboratorioSend)
+router.get('/detallesInformeLaboratorio/:id', customerController.detallesInformeLaboratorio)
+router.get('/imprimirInformeLaboratorio/:id', customerController.imprimirInformeLaboratorio)
 
 
 

@@ -15,6 +15,8 @@ const session = require('express-session');
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 
+const MySQLStore = require('express-mysql-session')
+
 
 
 io.on('connection', (socket) => {
@@ -25,13 +27,25 @@ io.on('connection', (socket) => {
     })
 })
 
+const options ={
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    port: 3306,
+    database: 'cdegpanel'
+
+}
+
+const sessionStore = new MySQLStore(options);
+
 
 app.use(session({
-    secret: 'keyboard cat',
-    cookie: { maxAge: 6000000 }, // value of maxAge is defined in milliseconds. 
-    resave: true,
-    rolling: false,
-    saveUninitialized: true
+    key: 'cookie_usuario',
+    secret: '54654564651',
+    store: sessionStore,
+    expiration: 86400000,
+    resave: false,
+    saveUninitialized: false
 }))
 
 

@@ -1385,6 +1385,7 @@ controller.InformeRegitroLaboratorio = (req, res) => {
             console.log(error);
           } else {
             var idCompost = results[0].id_compostera;
+            var idAnalisLab = results[0].id;
             req.getConnection((error, conn) => {
               conn.query("SELECT * FROM composteras WHERE id = ?", [idCompost], (error, resultscompost) => {
                 if (error) {
@@ -1397,7 +1398,8 @@ controller.InformeRegitroLaboratorio = (req, res) => {
                     ID: req.session.ID,
                     name: req.session.name,
                     role: req.session.role,
-                    idCompost: idCompost
+                    idCompost: idCompost,
+                    idAnalisLab: idAnalisLab
                   });
                 }
               }
@@ -1406,6 +1408,177 @@ controller.InformeRegitroLaboratorio = (req, res) => {
           }
         }
       );
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.formInformeLaboratorioSend = (req, res) => {
+  if (req.session.loggedin) {
+    const fecha_registro = req.body.fecha_registro;
+    const hora_registro = req.body.hora_registro;
+    const muetraCumpleNo = req.body.muetraCumpleNo;
+    const muestraContieneNo = req.body.muestraContieneNo;
+    const muestraObservacion = req.body.muestraObservacion;
+    const HumedadObservacion = req.body.HumedadObservacion;
+    const DensidadObservacion = req.body.DensidadObservacion;
+    const ConclusionHumedadDEnsidad = req.body.ConclusionHumedadDEnsidad;
+    const ctnNitrogeno = req.body.ctnNitrogeno;
+    const ctnFosforo = req.body.ctnFosforo;
+    const ctnPotacio = req.body.ctnPotacio;
+    const ctnCarbonoOx = req.body.ctnCarbonoOx;
+    const macronutrientesObservacion = req.body.macronutrientesObservacion;
+    const metalesPesadosCumpleNo = req.body.metalesPesadosCumpleNo;
+    const Recomendaciones = req.body.Recomendaciones;
+    const saveFirmaText = req.body.saveFirmaText;
+    const idAnalisLab = req.body.idAnalisLab
+    const idCompost = req.body.idCompost
+
+    req.getConnection((error, conn) => {
+      conn.query( "INSERT INTO informe_laboratorio SET ?",
+      {
+        fecha: fecha_registro,
+        hora: hora_registro,
+        muetraCumpleNo: muetraCumpleNo,
+        muestraContieneNo: muestraContieneNo,
+        muestraObservacion: muestraObservacion,
+        HumedadObservacion: HumedadObservacion,
+        DensidadObservacion: DensidadObservacion,
+        ConclusionHumedadDEnsidad: ConclusionHumedadDEnsidad,
+        ctnNitrogeno: ctnNitrogeno,
+        ctnFosforo: ctnFosforo,
+        ctnPotacio: ctnPotacio,
+        ctnCarbonoOx: ctnCarbonoOx,
+        macronutrientesObservacion: macronutrientesObservacion,
+        metalesPesadosCumpleNo: metalesPesadosCumpleNo,
+        Recomendaciones: Recomendaciones,
+        idAnalisisLaboratorio: idAnalisLab,   
+        firma:saveFirmaText
+      }, (error, results) => {
+          if (error) {
+            console.log(error);
+          } else {
+            req.getConnection((error, conn) => {
+              conn.query("UPDATE analisis_laboratorio SET ? WHERE id = ?", [{ estado: 1 }, idAnalisLab], (error, resultscompost) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                 res.redirect('perfilCompost/'+idCompost)
+                }
+              }
+              );
+            });
+          }
+        }
+      );
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.detallesInformeLaboratorio = (req, res) => {
+  if (req.session.loggedin) {
+    var fecha = new Date(); //Fecha actual
+    var mes = fecha.getMonth() + 1; //obteniendo mes
+    var dia = fecha.getDate();
+    var ano = fecha.getFullYear(); //obteniendo aÃ±o
+    if (dia < 10) dia = "0" + dia; //agrega cero si el menor de 10
+    if (mes < 10) mes = "0" + mes; //agrega cero si el menor de 10
+    var value = ano + "-" + mes + "-" + dia;
+    var fechaACTUAL = String(value);
+    console.log(fechaACTUAL);
+    var idregistro = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM registrodiarioestadooperacion WHERE id=?", [idregistro], (error, resultsRegistros) => {
+        if (error) {
+          console.log(error);
+        } else {
+          req.getConnection((error, conn) => {
+            conn.query("SELECT * FROM archivos_usuarios WHERE id_registro=?", [idregistro], (error, resultsArchivos) => {
+              if (error) {
+                console.log(error);
+              } else {
+                res.render("detallesRegistroCompost", {
+                  total: false,
+                  resultsRegistros: resultsRegistros,
+                  resultsArchivos: resultsArchivos,
+                  fechaACTUAL: fechaACTUAL,
+                  login: true,
+                  name: req.session.name,
+                  role: req.session.role,
+                  id_user: req.session.ID,
+                });
+              }
+            })
+          })
+
+        }
+      });
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+controller.imprimirInformeLaboratorio = (req, res) => {
+  if (req.session.loggedin) {
+    var fecha = new Date(); //Fecha actual
+    var mes = fecha.getMonth() + 1; //obteniendo mes
+    var dia = fecha.getDate();
+    var ano = fecha.getFullYear(); //obteniendo aÃ±o
+    if (dia < 10) dia = "0" + dia; //agrega cero si el menor de 10
+    if (mes < 10) mes = "0" + mes; //agrega cero si el menor de 10
+    var value = ano + "-" + mes + "-" + dia;
+    var fechaACTUAL = String(value);
+    console.log(fechaACTUAL);
+
+
+    var idregistro = req.params.id;
+    req.getConnection((error, conn) => {
+      conn.query("SELECT * FROM informe_laboratorio WHERE idAnalisisLaboratorio=?", [idregistro], (error, resultsInforme) => {
+        if (error) {
+          console.log(error);
+        } else {
+          req.getConnection((error, conn) => {
+            conn.query("SELECT * FROM analisis_laboratorio WHERE id=?", [idregistro], (error, resultsAnalisislab) => {
+              if (error) {
+                console.log(error);
+              } else {
+                let idcompostera = resultsAnalisislab[0].id_compostera;
+                let idSupervisor = resultsAnalisislab[0].id_responsable;
+                req.getConnection((error, conn) => {
+                  conn.query("SELECT * FROM composteras WHERE id=?", [idcompostera], (error, resultsCompost) => {
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      req.getConnection((error, conn) => {
+                        conn.query("SELECT * FROM usuarios WHERE id=?", [idSupervisor], (error, resultsUsers) => {
+                          if (error) {
+                            console.log(error);
+                          } else {
+                            res.render("imprimirInformeAnLabopdf", {
+                              total: false,
+                              resultsInforme: resultsInforme,
+                              resultsAnalisislab: resultsAnalisislab,
+                              fechaACTUAL: fechaACTUAL,
+                              resultsCompost: resultsCompost,
+                              resultsUsers: resultsUsers,
+                              login: true,
+                              name: req.session.name,
+                              role: req.session.role,
+                              id_user: req.session.ID,
+                            });
+                          }
+                        })
+                      })
+                    }
+                  })
+                })
+              }
+            })
+          })
+
+        }
+      });
     });
   } else {
     res.redirect("/login");

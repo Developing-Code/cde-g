@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <style>
+    body {
+      font-family: 'Calibri', sans-serif;
+      /* Si 'Calibri' no está disponible, utiliza una fuente genérica sans-serif */
+    }
+
+    .result p {
+      margin: 0;
+      /* Elimina el margen predeterminado */
+      line-height: 1;
+      /* Ajusta la altura de línea según tus necesidades */
+      font-size: 12px;
+
+    }
+
+    .informe p {
+      text-align: justify;
+
+    }
+    h6 {
+    text-align: center;
+}
+  </style>
+</head>
+
+<body>
+  <div class="informe container">
+
+    <h6>Informe de análisis de resultados laboratorio proyecto seguimiento de composteras In Situ</h6>
+
+
+    <p style="margin-top: 50px;">
+      <%=resultsInforme[0].fecha%>
+    </p>
+
+
+
+    <p style="margin-top:50px"><strong>Beneficiario No:</strong>
+      <%=resultsCompost[0].codBenefic%>
+    </p>
+    <p><strong>Responsable de la solución In Situ:</strong>
+      <%=resultsCompost[0].nombre_responsable%>
+    </p>
+    <p><strong>Ubicación :</strong>
+      <%=resultsCompost[0].Direccion_compostera%>
+    </p>
+
+
+    <p>Como parte del control de calidad del proceso de compostaje se realizó un muestreo y posterior análisis
+      fisicoquímico y microbiológico del producto de la etapa 1, según los resultados de laboratorio se puede concluir
+      que la muestra <span>
+        <%=resultsInforme[0].muetraCumpleNo%>
+      </span> con los parámetros microbiológicos mínimos exigidos por la NTC 5167 para
+      productos orgánicos susceptibles a ser usados como abonos, fertilizantes, enmiendas o acondicionadores de suelos,
+      ya qué, el material <span>
+        <%=resultsInforme[0].muestraContieneNo%>
+      </span> coliformes fecales y debe tener menor 1000 NMP/g de coliformes
+      fecales. <span>
+        <%=resultsInforme[0].muestraObservacion%>
+      </span></p>
+
+
+    <p>Otro de los parámetros importantes e indicativos del avance del proceso es la humedad, para este parámetro se
+      obtuvo un valor de <span>
+        <%=resultsAnalisislab[0].Humedad%>
+      </span>. <span>
+        <%=resultsInforme[0].HumedadObservacion%>
+      </span>. </p>
+
+
+    <p>Con respecto a la densidad, se espera que, realizando la mezcla recomendada de material biodegradable y
+      estructurante al inicio del proceso, y bajo un buen proceso de compostaje al final de la primera etapa (32 días de
+      proceso) la densidad debe estar cercana a 0.5 Kg/L, el valor encontrado para esta muestra fue de (<span>
+        <%=resultsAnalisislab[0].Densidad%>
+      </span>
+      Kg/L), por
+      esto,<span>
+        <%=resultsInforme[0].DensidadObservacion%>
+      </span>.</p>
+
+    <p>Por lo anterior y correlacionando los tres (3) parámetros analizados, se concluye que.
+      <span>
+        <%=resultsInforme[0].ConclusionHumedadDEnsidad%>
+      </span>
+    </p>
+    <p>Así mismo, en términos de los macronutrientes se obtuvo <span>
+        <%=resultsInforme[0].ctnNitrogeno%>
+      </span> de Nitrógeno,
+      <span>
+        <%=resultsInforme[0].ctnFosforo%>
+      </span> de Fosforo, <span>
+        <%=resultsInforme[0].ctnPotacio%>
+      </span>de
+      Potasio y <span>
+        <%=resultsInforme[0].ctnCarbonoOx%>
+      </span> de Carbono orgánico oxidable, con estos valores se puede
+      determinar que la muestra <span>
+        <%=resultsInforme[0].macronutrientesObservacion%> <span>.
+    </p>
+
+    <p>
+      Se determina que la muestra se encuentra en términos de los metales pesados <span>
+        <%=resultsInforme[0].metalesPesadosCumpleNo%><span>
+
+    </p>
+    <p>Recomendaciones: <span>
+        <%=resultsInforme[0].Recomendaciones%><span> </p>
+
+    <div class="row">
+      <div class=" result col-3">
+        <p>Humedad: </p>
+        <p>pH:</p>
+        <p>CE:</p>
+        <p>Ret_Hum:</p>
+        <p>Cenizas:</p>
+        <p>Perdidas_volatilizacion:</p>
+        <p>CIC</p>
+        <p>Densidad</p>
+        <p>COOt</p>
+        <p>RelacionCN</p>
+        <p>NT</p>
+        <p>NO</p>
+        <p> P2O5</p>
+        <p>K2O</p>
+        <p>CaO</p>
+        <p>MgO</p>
+        <p>S</p>
+        <p>Fe</p>
+      </div>
+      <div class=" result col-3">
+        <p>
+          <%=resultsAnalisislab[0].Humedad%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].pH%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].CE%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Ret_Hum%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Cenizas%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Perdidas_volatilizacion%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].CIC%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Densidad%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].COOt%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].RelacionCN%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].NT%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].NO%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].P2O5%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].K2O%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].CaO%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].MgO%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].S%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Fe%>
+        </p>
+      </div>
+      <div class="result col-3">
+        <p>Mn</p>
+        <p>Cu</p>
+        <p>Zn</p>
+        <p>B</p>
+        <p>Na</p>
+        <p>SiO2</p>
+        <p>Residuo_insoluble_acido</p>
+        <p>AS</p>
+        <p>Hg</p>
+        <p>Cd</p>
+        <p>Cr</p>
+        <p>Ni</p>
+        <p>Pb</p>
+        <p>NMPCTg</p>
+        <p>NMPCFg</p>
+        <p>Nematodos25g</p>
+        <p>Salmonella25g</p>
+        <p>Hongos_fitopatogenos</p>
+      </div>
+      <div class=" result col-3">
+        <p>
+          <%=resultsAnalisislab[0].Mn%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Cu%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Zn%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].B%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Na%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].SiO2%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Residuo_insoluble_acido%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].AS%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Hg%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Cd%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Cr%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Ni%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Pb%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].NMPCTg%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].NMPCFg%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Nematodos25g%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Salmonella25g%>
+        </p>
+        <p>
+          <%=resultsAnalisislab[0].Hongos_fitopatogenos%>
+        </p>
+      </div>
+    </div>
+
+
+
+    <div class="row mt-5">
+      <div class="col-6">
+        <% if (resultsInforme[0].firma !='null' || resultsInforme[0].firma != '') {%>
+
+          <img class="mx-auto" width="300px" height="90px" src="<%= resultsInforme[0].firma %>" alt="">
+          <p style="margin-bottom: 0px;">-----------------------------</p>
+          <p style="margin-bottom: 50px; margin-top: 0px">
+            <%=resultsUsers[0].nombre%>
+          </p>
+
+
+
+          <% }%>
+
+      </div>
+      <div class="col-6">
+
+      </div>
+      <div class="col-6">
+
+      </div>
+    </div>
+
+
+  </div>
+  <script>
+    // La función window.print() se utiliza para imprimir la página actual
+    window.print();
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
