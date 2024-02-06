@@ -46,6 +46,10 @@
     }
   </style>
   <style>
+    .text-bg-verdeuaesp {
+      color: #fff!important;
+    background-color: #1da375!important;
+    }
     .btn-verdeuaesp {
       color: #fff !important;
       background-color: #1da375 !important;
@@ -117,9 +121,8 @@
       <div class="col">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active " id="home-tab" data-bs-toggle="tab"
-              data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
-              aria-selected="true">Información</button>
+            <button class="nav-link active " id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+              type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Información</button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
@@ -279,11 +282,12 @@
             <div class="row">
               <div class="col-12">
 
-                <table id="regsitros" class="table table-light table-striped table-hover table-bordered text-center  "
+                <table id="regsitros" class="table  dt-responsive nowrap table  table-hover table-bordered "
                   style="font-size: 14px;">
                   <thead>
                     <tr>
                       <th>id registro</th>
+                      <th>Acciones</th>
                       <th>id_compostera</th>
                       <th>Fecha</th>
                       <th>Hora</th>
@@ -297,7 +301,7 @@
                       <th>Cnt Material organico</th>
                       <th>Cnt Producto</th>
                       <th>Tipo registro</th>
-                      <th>Acciones</th>
+
                     </tr>
                   </thead>
 
@@ -309,6 +313,15 @@
                         <tr>
                           <td>
                             <%= resTotalRegistrosdata.id %>
+                          </td>
+                          <td>
+                            <a href="/detallesRegitroOperacion/<%= resTotalRegistrosdata.id %>"
+                              class="btn btn-sm btn-morado1" type="button"><span class="badge text-bg-dark">Detalles <i
+                                  class='bx bx-dots-vertical-rounded'></i></span></a>
+                            <a href="/imprimirRegitroOperacion/<%= resTotalRegistrosdata.id %>" title="Imprimir reporte"
+                              class="btn btn-sm btn-morado1" type="button"><i class='bx bxs-printer'></i></a>
+                            <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
+
                           </td>
                           <td>
                             <%= resTotalRegistrosdata.id_compostera %>
@@ -349,15 +362,7 @@
                           <td>
                             <%= resTotalRegistrosdata.TipoRegistro %>
                           </td>
-                          <td>
-                            <a href="/detallesRegitroOperacion/<%= resTotalRegistrosdata.id %>"
-                              class="btn btn-sm btn-morado1" type="button"><span class="badge text-bg-dark">Detalles <i
-                                  class='bx bx-dots-vertical-rounded'></i></span></a>
-                            <a href="/imprimirRegitroOperacion/<%= resTotalRegistrosdata.id %>" title="Imprimir reporte"
-                              class="btn btn-sm btn-morado1" type="button"><i class='bx bxs-printer'></i></a>
-                            <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
 
-                          </td>
                         </tr>
                         <%} %>
                           <% }) %>
@@ -370,6 +375,15 @@
           <div class="tab-pane fade" id="laboratorio-tab-pane" role="tabpanel" aria-labelledby="laboratorio-tab"
             tabindex="0">
             <div class="row">
+              <div class="col">
+                <div class="card shadow mt-5" style="width: 10rem; border: 0cm; border-radius: 0.5rem;">
+                  <div class="card-body">
+                    <a style="width: 100%;" class=" btn btn-sm btn-verdeuaesp mt-1 " id="customLink"
+                      href="/formAnalisisLaboratorio/<%= results[0].id %>"> <strong>Análisis de laboratorio</strong>
+                    </a> <br>
+                  </div>
+                </div>
+              </div>
               <div class="col-12">
 
                 <table id="regsitroslaboratorio" class="table  dt-responsive nowrap table  table-hover table-bordered"
@@ -417,7 +431,7 @@
                       <th>Nematodos25g</th>
                       <th>Salmonella25g</th>
                       <th>Hongos_fitopatogenos</th>
-                     
+
                     </tr>
                   </thead>
 
@@ -432,17 +446,22 @@
                           </td>
                           <td>
                             <% if(dataLaboratoriodata.estado==0){ %>
-                            <a href="/InformeRegitroLaboratorio/<%= dataLaboratoriodata.id %>"
-                              class="btn btn-sm btn-morado1" title="Generar informe del analisis de laboratorio" type="button"><span class="badge text-bg-dark"><i class='bx bxs-book'></i> Informe</span></a>
+                              <a href="/InformeRegitroLaboratorio/<%= dataLaboratoriodata.id %>"
+                                class="btn btn-sm btn-morado1" title="Generar informe del analisis de laboratorio"
+                                type="button"><span class="badge text-bg-dark"><i class='bx bxs-book'></i>
+                                  Informe</span></a>
                               <%} %>
-                              <% if(dataLaboratoriodata.estado==1){ %>
-                            <a href="/detallesInformeLaboratorio/<%= dataLaboratoriodata.id %>"
-                              class="btn btn-sm btn-morado1" type="button"><span class="badge text-bg-dark">Detalles <i
-                                  class='bx bx-dots-vertical-rounded'></i></span></a>                 
-                            <a href="/imprimirInformeLaboratorio/<%= dataLaboratoriodata.id %>" title="Imprimir reporte"
-                              class="btn btn-sm btn-morado1" type="button">Imprimir<i class='bx bxs-printer'></i></a>
-                              <%} %>
-                            <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
+                                <% if(dataLaboratoriodata.estado==1){ %>
+                                  <a hidden href="/detallesInformeLaboratorio/<%= dataLaboratoriodata.id %>"
+                                    class="btn btn-sm btn-morado1" type="button"><span
+                                      class="badge text-bg-dark">Detalles <i
+                                        class='bx bx-dots-vertical-rounded'></i></span></a>
+                                  <a href="/imprimirInformeLaboratorio/<%= dataLaboratoriodata.id %>"
+                                    title="Imprimir reporte" class="btn btn-sm btn-morado1" type="button"><span
+                                    class="badge text-bg-verdeuaesp"><i
+                                    class='bx bxs-printer'></i> Imprimir</span></a>
+                                  <%} %>
+                                    <!-- <a href="/registerUsersDelate/" class="btn btn-danger" type="button"><i class='bx bxs-trash' ></i></a> -->
 
                           </td>
                           <td>
@@ -562,7 +581,7 @@
                           <td>
                             <%= dataLaboratoriodata.Hongos_fitopatogenos %>
                           </td>
-                          
+
                         </tr>
                         <%} %>
                           <% }) %>
@@ -911,14 +930,76 @@
   </script>
   <script>
     $(document).ready(function () {
+
+
+
       var table = $('#regsitros').DataTable({
-        responsive: true
+        initComplete: function () {
+          this.api()
+            .columns()
+            .every(function () {
+              let column = this;
+              let title = column.footer().textContent;
+
+              // Create input element
+              let input = document.createElement('input');
+              input.placeholder = title;
+              column.footer().replaceChildren(input);
+
+              // Event listener for user input
+              input.addEventListener('keyup', () => {
+                if (column.search() !== this.value) {
+                  column.search(input.value).draw();
+                }
+              });
+            });
+        },
+        fixedHeader: true,
+        order: [[0, 'desc']],
+        scrollX: true,
+        searching: true,
+        dom: 'Bfrtip',
+        buttons: [],
+        pageLength: 10,
+        language: {
+          search: 'Buscar',
+          zeroRecords: 'No hay registros para mostrar.',
+          emptyTable: 'La tabla está vaciá.',
+          info: "Mostrando _START_ de _END_ de _TOTAL_ Registros.",
+          infoFiltered: "(Filtrados de _MAX_ Registros.)",
+          paginate: {
+            first: 'Primero',
+            previous: 'Anterior',
+            next: 'Siguiente',
+            last: 'Último'
+          }
+        },
+        columnDefs: [
+          {
+            target: 2,
+            visible: false,
+            searchable: false
+          },
+          {
+            target: 3,
+            visible: false
+          }
+        ]
       });
 
-      new $.fn.dataTable.FixedHeader(table);
+
+
+
+
+
     });
 
+
+
+
+
   </script>
+
 
 
   <script>
